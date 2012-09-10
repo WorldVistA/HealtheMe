@@ -1,0 +1,6 @@
+[hooks]
+	url = http://code.osehra.org/VistA-FOIA.git
+[gerrit]
+	project = HealtheMe
+	site = http://review.code.osehra.org
+	pushurl = $username@review.code.osehra.org:HealtheMe
