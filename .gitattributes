@@ -1,3 +1,9 @@
 .git*            export-ignore
 
 *                text=auto
+
+*.gif            binary
+*.ico            binary
+*.jpg            binary
+*.pdf            binary
+*.png            binary

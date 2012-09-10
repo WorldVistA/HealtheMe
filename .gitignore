@@ -1,0 +1,8 @@
+.*DS_Store
+.classpath
+.project
+.settings/
+target/
+
+# NetBeans config (local)
+nb-configuration.xml
