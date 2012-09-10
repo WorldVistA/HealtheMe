@@ -28,3 +28,7 @@ scripts/GitSetup/tips
 # Rebase the master branch by default.
 git config rebase.stat true
 git config branch.master.rebase true
+
+# Record the version of this setup so scripts/GitSetup/pre-commit can check it.
+SetupForDevelopment_VERSION=1
+git config hooks.SetupForDevelopment ${SetupForDevelopment_VERSION}
