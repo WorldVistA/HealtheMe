@@ -1,0 +1,276 @@
+/**
+ * Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* --- LAYOUT --- */
+
+#auth {
+	border: 1px solid #666;
+    margin-bottom: 5px;
+}
+#auth .username,
+#auth .password {
+	display:block;
+}
+#auth .details { margin:5px 10px 0; }
+#auth-panel {
+	/*-moz-border-radius:5px;*/
+	/*border:1px solid #E7E7E7;*/
+	padding:10px 0 10px 10px;
+	margin:10px auto 0 auto;
+	width:730px;	
+}
+#container {
+	background:#FFFFFF none repeat scroll 0 0;
+	margin:0 auto;
+	width:960px;
+}
+#content {
+	/*min-height:400px;*/
+	/*padding-bottom: 10px;*/
+}
+#credentials #main {
+    padding:5px 8px 0 16px;
+    width:936px;
+}
+#data { 
+	padding: 10px 10px 2px 10px;
+}
+#header {
+    height: 125px;
+    width: 100%;
+    margin: 16px 0;
+}
+#header2 {
+	background:#EFEFEF url(img/header2.png) repeat-x scroll 0 -2px;
+	height:120px;
+	margin:0;
+	padding:16px 0;
+	width:100%;
+}
+#header-inset {
+	background:transparent url(img/header-bg.jpg) repeat-y scroll right 0;
+	height:122px;
+	position:relative;
+}
+#header .rightheadblock {
+    background: transparent url(img/header-bg.jpg) repeat-y;
+}
+#header-logo {
+	position: absolute;
+	left: 0;
+	/*z-index: 2;*/
+	padding: 20px;
+	/*background-color: #fff;*/
+}
+#header-section-label {
+	float: right;
+	margin-right: 14px;
+	margin-top: 96px;
+}
+#infolayer {
+	background:#FFFFFF none repeat scroll 0 0;
+	height:15px;
+	margin:0 0 0 176px;
+	padding-top:4px;
+	width:776px;
+}
+#infolayer #breadcrumb {
+	display: none;
+	float:left;
+	color: #999;
+	/*font-size: .9em;*/
+	/*font-weight: bold;*/
+}
+#infolayer #infoactions {
+	float:right;
+	/*font-size: .75em;*/
+}
+#left {
+	float: left;
+	background-color: #fff;
+	float:left;
+	width: 160px;
+	padding:4px 2px 20px 5px;
+}
+#login-container { 
+	margin:0 auto;
+}
+#login-container #auth {
+	margin: 0 auto;
+}
+#main, #main-home {
+	float: left;
+}
+#main { 
+    min-height: 300px;
+    padding:3px 10px 10px 10px;
+    width:586px;
+}
+#main-display-panel {
+	overflow:hidden;
+	padding:5px;
+}
+
+#main-home {
+    padding: 3px 10px;
+    width: 752px;
+}
+#outer-wrapper {
+	/*background:transparent url(img/lighter.gif) no-repeat scroll center top;*/
+	padding:5px 0;
+}
+#phr-hr-container {
+	border: 1px solid #FFF;
+	border-collapse:collapse;
+}
+#right2 {
+	float: left;
+	width: 180px;
+	background: transparent;
+	border: 0 none;
+	/*font-size: .8em;*/
+	padding: 3px 0;
+}
+#searchbutton {
+	padding-top: 1px;
+	padding-bottom: 0px;
+	margin: 0px;
+}
+#searchicon { padding-top: 4px }
+#sponsor {
+    margin: 10px 10px 0 0;
+}
+#tab-box {
+	background-color: #E7E7E7;
+	height: 30px;
+	position: absolute;
+	width: 350px;
+	bottom: 0;
+	right:0;
+}
+#tabnav li {
+	float: left;
+	margin-left: -1px;
+}
+#tabnav #tabnav-search input {
+	vertical-align: middle;
+}
+ul#tabnav {
+	bottom:0;
+	/*font-size:0.875em;*/
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+	margin:0;
+	padding:0;
+	position:absolute;
+	right:0;
+	/*z-index:5;*/
+	
+}
+
+/* --- TOP NAVIGATION -- */
+
+#tabnav a {
+	/*font-size: .875em;*/
+	font-weight: bold;
+	text-decoration: none;
+	display: block;
+	background: #fff;
+	padding: 6px 10px 4px 10px;
+	color: #030303;
+	text-align: center;
+	border: 1px solid #D5D5D5;
+   }
+#tabnav li a:hover {
+    background-color: #09096b;
+    color: #fff;
+}
+#tabnav #tabnav-search {
+	background: #eaeaea url(../images/search-icon.gif) no-repeat 4px 4px;
+	border: 1px solid #D5D5D5;
+	padding: 2px 10px 1px 22px;
+	height: 21px;
+}
+/* --- END - TOP NAVIGATION -- */
+
+.flt { float:left; }
+.frt { float:right; }
+.login-box { padding:2px 0px; }
+.loginbutton-box { float:right; }
+
+/* ===== GLOBAL FOOTER ===== */
+#footer {
+    background-color:#BEC3C6;
+    clear:both;
+    padding-top:10px;
+}
+#footer ul.footer-links {
+    float: left;
+    padding-right: 10px;
+    margin-right: 10px;
+}
+#footer ul.footer-links li ul {
+    margin: 10px 0;
+}
+#footer ul.footer-links ul li {
+    font-size: 0.75em;
+    margin: 6px 0 ;
+}
+#footer #attributions {
+    float: left;
+    width: 260px;
+}
+#footer #attributions p {
+    font-size: .9em;
+    line-height: 1.4em;
+    margin: 4px 0;
+    text-align: center;
+}
+#footer #license {
+    float: left;
+    line-height: 1.4;
+    margin: 10px 18px 10px 0;
+    text-align: center;
+    width: 270px;
+}
+#footer #license-logo {
+    float: right;
+    height: 55px;
+    position: relative;
+    background: url('../css/img/feather-small.png') top center no-repeat;
+    width: 100%;
+}
+#footer #license-text {
+    float: left;
+}
+#footer-bottom {
+    background:#FFFFFF url(img/footer.jpg) no-repeat scroll 0 0;
+    height:10px;
+}
+#footer-contents {
+    color: #666;
+    margin: 10px auto;
+    width: 900px;
+}
+#footer-contents a {
+    font-size: 1.1em;
+}
+#footer-contents .footer-link-group {
+    font-size: 1.2em;
+}
+#footer-contents #join {
+    text-transform: uppercase;
+}

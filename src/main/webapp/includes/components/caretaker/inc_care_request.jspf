@@ -1,0 +1,215 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+<%--
+    Document   : inc_care_request
+    Created on : Nov 22, 2011, 4:11:56 PM
+    Author     : cmccall
+--%>
+
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+
+<c:set var="ctx_base" value="${ ctx_caretaker }" />
+<c:set var="manageTitle" value="${tsep}Care Coordinator" />
+
+<head>
+    <meta name="requiresJQUI" content="true">
+    <title>${ manageTitle }</title>
+
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/manage.css" />
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/manage-additions.css" />
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/widget.css" />
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/paging.css" />
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/paging-additions.css" />
+
+    <script type="text/javascript" src="${ctx_static}/js/jquery.DOMWindow.js"></script>
+    <script type="text/javascript" src="${ctx_static}/js/jquery.pager.js"></script>
+    <script type="text/javascript" src="${ctx_static}/js/json2.js"></script>
+    <script type="text/javascript" src="${ctx_static}/js/date.format.js"></script>
+
+    <script type="text/javascript" src="${ctx_static}/js/hem.js"></script>
+    <script type="text/javascript" src="${ctx_static}/js/widget.js"></script>
+    <%@ include file="/includes/inc_hem_js.jspf" %>
+
+    <script type="text/javascript">
+        var ctx_base = '${ ctx_base }';
+        var area = '${ manage_area }';
+
+        function addPatient(filterUrlString){
+            $('#resultlisting').html('');
+            var url = HEM.env.apipath + '/care/add/';
+            if (filterUrlString != undefined) {
+                url += filterUrlString;
+            }
+
+            // *** perform AJAX get request for user data.
+            $.ajax({
+                url: url,
+                type: "GET",
+                processData: false,
+                contentType: "application/json",
+                timeout: 10000,
+                dataType: "text",  // not "json". postprocessed by JSON2.
+                success: responseHandler,
+                error: errorHandler
+            });
+        }
+
+        function responseHandler(data) {
+            // *** Parse with json library
+            try {
+                var result = JSON.parse(data);
+            }
+            catch (err) {
+                detectLogout(data);
+            }
+
+            if (result.error) {
+                notify(result.error);
+            } else if (result.success) {
+                notify(result.success);
+            } else {
+                notify("No Results returned. Please ensure you have chosen a valid username or email.");
+            }
+            
+            listRequests();
+        }
+
+        function errorHandler(xhr) {
+            if (xhr.responseText) {
+                if (xhr.statusText == "Precondition Failed") {
+                    notify("Please ensure you have chosen a valid username or email.");
+                } else {
+                    notify("An error occurred. Please try again.");
+                }
+            }
+            return;
+        }
+
+        function detectLogout(dataState) {
+            if(typeof(dataState) == "string") {
+                location.reload(true);
+                return;
+            }
+        }
+        
+        function listRequests(){
+            $.ajax({
+                url: HEM.env.apipath + '/care/listRequests/',
+                type: "GET",
+                contentType: "application/json",
+                timeout: 10000,
+                dataType: "json",
+                success: function(data) {
+                    // *** loop through user listings
+                    if (data instanceof Array && data.length > 0) {
+                        var userHtml = '<br /><b>Active patient care requests:</b><ul>';
+                        $.each(data, function(i,user) {
+                            userHtml += ('<li>'+ user + '</li>');
+                        });
+                        userHtml += '</ul>';
+                        $('#currentrequests').html(userHtml);
+                    } else {
+                        $('#currentrequests').html("<br /><b>Active patient care requests:</b><br />No active care requests.");
+                    }
+                },
+                error: function(data) {
+                    ('#currentrequests').html("<br /><b>Active patient care requests:</b><br />Unable to retrieve active care requests.");
+                }
+            });
+        }
+
+
+        $(document).ready(function() {
+            //form submit handlers
+            $('form#usernameForm').bind("submit",function(form){
+                var filter = "?u=" + $("#filter_username").val();
+                addPatient(filter);
+                form.preventDefault();
+                return false;
+            });
+
+            $('form#emailForm').bind("submit",function(form2){
+                var filter2 = "?e=" + $("#filter_email").val();
+                addPatient(filter2);
+                form2.preventDefault();
+                return false;
+            });
+            
+            listRequests();
+        });
+    </script>
+</head>
+<body id="manage-help" class="manage">
+
+    <%@ include file="/includes/components/caretaker/inc_care_leftnav.jspf" %>
+
+    <div id="user-display-panel">
+
+        <h1>${ pagetitle }</h1>
+
+        <div class="section-info">
+            <p>The Patient addition section allows you to send requests to patients to allow you access to their record. You may add by username or email address.</p>
+        </div>
+        
+        <div id="notifier">
+            <span class="notificationtext"></span>
+            <span class="closebutton"><a href="">X</a></span>
+        </div>
+
+        <div class="container-gen">
+            <div id="filter-panel">
+                <form action="./" id="usernameForm">
+
+                    <div class="filter-heading">
+                        <span class="filter-header">Add by Username:</span>
+                    </div>
+                    <div class="filter-input">
+                        <input type="text" id="filter_username" />
+                    </div>
+                    <div class="filter-heading">
+                        <input type="submit" value="Add"/>
+                    </div>
+                </form>
+            </div><!--/#filter-panel-->
+
+            <br />
+
+            <div id="filter-panel">
+                <form action="./" id="emailForm">
+
+                    <div class="filter-heading">
+                        <span class="filter-header">Add by Email Address:</span>
+                    </div>
+                    <div class="filter-input">
+                        <input type="text" id="filter_email" />
+                    </div>
+                    <div class="filter-heading">
+                        <input type="submit" value="Add"/>
+                    </div>
+                </form>
+            </div><!--/#filter-panel-->
+        </div><!--/.container-gen-->
+        
+        <div id="currentrequests" class="container-gen">
+        </div>
+        <div class="clear"></div>
+
+
+    </div><!-- /#user-display-panel -->
+</body>

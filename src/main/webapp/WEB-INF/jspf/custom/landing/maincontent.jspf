@@ -1,0 +1,56 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+<div class="slider-wrapper theme-light">
+    <div class="ribbon"></div>
+    
+    <div id="slider" class="nivoSlider">
+        <img src="${ctx_static}/images/rotate/rotate-1.png" alt="A nurse examines a newborn baby. by Official U.S. Navy Imagery, on Flickr" title="#htmlcaption-1" data-transition="fade" />
+        <img src="${ctx_static}/images/rotate/rotate-2.png" alt="" title="#htmlcaption-2" data-transition="sliceDown" />
+        <img src="${ctx_static}/images/rotate/rotate-3.png" alt="" title="#htmlcaption-3" data-transition="fold" />
+    </div>
+    <div id="htmlcaption-1" class="nivo-html-caption">
+        <p class="nivo-html-caption-header">Welcome to HealtheMe!<img src="${ctx_static}/css/img/80x15.png" /></p>
+        <p class="nivo-html-caption-content">Let's see what a <em>Personal Health &AMP; Wellness Management System (PHWMS)</em> can do for you...</p>
+        <p class="nivo-html-caption-attribution">by&nbsp;<a  class="external" href="http://www.flickr.com/people/usnavy/" target="new">&nbsp;Official U.S. Navy Imagery</a></p>
+    </div>
+    <div id="htmlcaption-2" class="nivo-html-caption">
+        <p class="nivo-html-caption-header">Your record is portable.</p>
+        <p class="nivo-html-caption-content">Take your health information with you wherever you go</p>
+        <p class="nivo-html-caption-attribution">by&nbsp;<a  class="external" href="http://www.flickr.com/people/wpreeves/" target="new">&nbsp;wpreeves</a></p>
+    </div>
+    <div id="htmlcaption-3" class="nivo-html-caption">
+        <p class="nivo-html-caption-header">Your record is secure.</p>
+        <p class="nivo-html-caption-content">Only you and those you share your record with have access</p>
+        <p class="nivo-html-caption-attribution">by&nbsp;<a  class="external" href="http://www.flickr.com/people/zivkovic/" target="new">&nbsp;Zdenko Zivkovic</a></p>
+        
+    </div>
+</div>
+<div id="attribution-logo"></div>
+<div id="main-content">
+    <h1>Your personalized platform for making health decisions.</h1>
+    <p>Have you ever been asked provide very specific information regarding dates, diagnoses, medications, dosages and various other questions about your medical history? If so, you probably realize the difficulty associated with trying to locate, remember and track this information.</p>
+    <p>HealtheMe is a completely <em>&ldquo;open-source&rdquo;</em> <strong>Personal Health and Wellness Management System (PHWMS)</strong> that helps you manage your health information and puts <span class="emphasis">you</span> in charge of your health!</p>
+    <h2>HealtheMe Benefits</h2>
+    <ul id="benefits">
+        <li>Easily manage health records for yourself and your family members</li>
+        <li>Securely share information with those you trust</li>
+        <li>Completely open-source technology</li>
+    </ul>
+</div>

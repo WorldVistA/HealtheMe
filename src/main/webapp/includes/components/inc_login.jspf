@@ -1,0 +1,66 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+<%--
+    Document   : inc_login.jspf
+    Created on : June 23, 2009, 10:45:00 PM
+    Author     : Daniel Shaw (dshaw.com)
+--%>
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+
+<style>
+    #message { color: #c00 }
+    .login-success { padding: 10px }
+    .main-logout { display:block; padding: .5em; }
+</style>
+<script type="text/javascript" src="${ctx_static}/js/validate.login.js"></script>
+
+<div id="auth" class="ui-helper-hidden">
+    <div id="auth-welcome">Member Login</div>
+    <form id="loginform" action="j_security_check" method="post">
+        <div class="details">
+            <div id="message" class="error"></div>
+            <div class="login-box">
+                <label for="username" class="username">Username: </label><input id="username" name="j_username" type="text" maxlength="64" />
+            </div>
+            <div class="login-box">
+                <label for="password" class="password">Password: </label><input id="password" name="j_password" type="password" maxlength="20" />
+            </div>
+            <div class="loginbutton-box">
+                <input id="loginbutton" type="submit" class="phr-input-button" value="Login" />
+            </div>
+            <div class="clear"> </div>
+            <%--
+            -  In case the user got here without a session, redirect
+            -  successful requests to the home page for authenticated
+            -  users.  (This is a non-standard, but useful field.)
+            --%>
+            <input type='hidden' name='j_uri' value='/'/>
+
+            <div class="login-help">
+                <a class="helplnk" href="${ctx}/help" title="Get help with HealtheMe">Forgot your password?</a>
+            </div>
+        </div><!-- /.details -->
+    </form><!-- /#loginform -->
+</div><!-- /#auth -->
+<script language="javascript">
+    $("div#auth").removeClass("ui-helper-hidden");
+</script>
+<noscript>
+    <strong>You must enable Javascript in your browser's settings before using the HealtheMe PHR.</strong>
+</noscript>

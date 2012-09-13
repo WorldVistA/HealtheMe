@@ -1,0 +1,45 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+<%--
+    Document   : inc_manage_bottomnav.jspf
+    Created on : Nov 28, 2009, 1:31:45 AM
+    Author     : Daniel Shaw (dshaw.com)
+--%>
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+
+<div id="user-bottomnav">
+    <a href="./">User Detail</a>
+    <span class="seperator"> | </span>
+    <a href="./edit">Edit Account</a>
+
+    <c:if test="${ isPatient }">
+        <span class="seperator"> | </span>
+        <a href="./identifiers">Manage Record Identifiers</a>
+    </c:if>
+
+    <span class="seperator"> | </span>
+    <a href="./reset">Manage Credentials</a>
+    <span class="seperator"> | </span>
+    <a href="./disable">Disable Account</a>
+
+    <c:if test="${ isLockedOut }">
+        <span class="seperator"> | </span>
+        <a href="./unlock">Unlock Account</a>
+    </c:if>
+</div><!-- /#user-bottomnav -->

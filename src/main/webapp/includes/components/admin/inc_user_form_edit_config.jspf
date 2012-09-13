@@ -1,0 +1,89 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+<%--
+    Document   : inc_user_form_edit_config.jspf
+    Created on : February 28, 2010, 11:08:00 PM
+    Author     : Daniel Shaw (dshaw.com)
+--%>
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+
+<c:set var="username" value="${ it.user.username }"/>
+<c:set var="userRoles" value="${ it.user.roles }"/>
+<c:set var="roles">
+    <c:forEach var="userRole" items="${ userRoles }">
+    ${ userRole.role }
+    </c:forEach>
+</c:set>
+
+<c:forEach var="userRole" items="${ it.user.roles }">
+    <c:choose>
+        <c:when test="${ userRole.role == 'ROLE_ADMIN'}">
+            <c:set var="role_admin" value="true"/>
+        </c:when>
+        <c:when test="${ userRole.role == 'ROLE_PATIENTADMIN'}">
+            <c:set var="role_patientadmin" value="true"/>
+        </c:when>
+        <c:when test="${ userRole.role == 'ROLE_CARETAKER'}">
+            <c:set var="role_caretaker" value="true"/>
+        </c:when>
+    </c:choose>
+</c:forEach>
+
+<c:set var="pagetitle" value="Edit User - ${ it.user.firstName } ${ it.user.lastName }"/>
+<c:set var="userId" value="${ it.user.userId }"/>
+<c:set var="title" value="${ it.user.title }"/>
+<c:set var="firstName" value="${ it.user.firstName }"/>
+<c:set var="middleName" value="${ it.user.middleName }"/>
+<c:set var="lastName" value="${ it.user.lastName }"/>
+<c:set var="suffix" value="${ it.user.suffix }"/>
+<c:set var="preferredName" value="${ it.user.preferredName }"/>
+<c:set var="isPatient" value="${ it.user.isPatient }"/>
+<c:set var="isLockedOut" value="${ it.user.isLockedOut }"/>
+
+<%-- contact info --%>
+<c:set var="email" value="${ it.user.email }"/>
+<c:set var="phoneHome" value="${ it.user.telnumHome }"/>
+<c:set var="phoneWork" value="${ it.user.telnumWork }"/>
+<c:set var="phoneMobile" value="${ it.user.telnumMobile }"/>
+<c:set var="fax" value="${ it.user.faxnum }"/>
+
+<%-- addresss --%>
+<c:set var="address1" value="${ it.user.primaryAddress.address1 }"/>
+<c:set var="address2" value="${ it.user.primaryAddress.address2 }"/>
+<c:set var="address3" value="${ it.user.primaryAddress.address3 }"/>
+<c:set var="city" value="${ it.user.primaryAddress.city }"/>
+<c:set var="state" value="${ it.user.primaryAddress.state }"/>
+<c:set var="zip" value="${ it.user.primaryAddress.zip }"/>
+
+<%-- data from Health Record --%>
+<c:if test="${ empty manage_area || manage_area == 'manage' }">
+    <c:set var="gender" value="${ it.user.primaryHealthRecord.fullGender }"/>
+    <c:set var="year">
+        <fmt:formatDate pattern="yyyy" value="${ it.user.primaryHealthRecord.dateOfBirthAsDate }" />
+    </c:set>
+    <c:set var="month">
+        <fmt:formatDate pattern="M" value="${ it.user.primaryHealthRecord.dateOfBirthAsDate }" />
+    </c:set>
+    <c:set var="day">
+        <fmt:formatDate pattern="d" value="${ it.user.primaryHealthRecord.dateOfBirthAsDate }" />
+    </c:set>
+    
+    <%-- preferences --%>
+    <c:set var="carenotebook" value="${ it.user.primaryHealthRecord.preferences.showCarenotebookString }" />
+</c:if>

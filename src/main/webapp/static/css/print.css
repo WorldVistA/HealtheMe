@@ -1,0 +1,157 @@
+/**
+ * Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* --- hide elements not used in print view --- */
+.phr-input-button,
+.modify,
+.datatable-header,
+.phr-input-button-align-right {
+    display: none
+}
+
+#outer-wrapper {
+    background: none;
+    padding: 0px;
+}
+
+#header2,
+#infolayer,
+#left,
+#right2,
+#footer,
+#phr-button-align-right {
+    display: none
+}
+
+.phr-hr-container-td {
+    border: 1px solid black;
+}
+
+.self {
+    background:none;
+}
+
+#main {
+    padding: 0px;
+    width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: black
+}
+body {
+    background: white
+}
+
+div#pager-center {
+    display:none
+}
+
+#outer-wrapper {
+    text-align: center;
+}
+
+#calleft,
+#calright,
+#sec-image,
+#footer-bottom,
+.s_arts,
+span.btn,
+div.clear,
+ul.tabnav,
+.toggle-action-box,
+a#all,
+#sort,
+.actionButtons,
+span#sorttext {
+    display:none
+}
+
+ul.content2 {
+    display: block;
+}
+
+div.content,
+.content2 li {
+    display:block;
+    overflow:visible;
+}
+
+.rec-header-box {
+    background: none;
+    clear:both !important;
+    float:none !important;
+}
+
+.rec-header-title {
+    float:none;
+    display: block;
+    overflow: visible;
+    width: 100%;
+    clear:both !important;
+    float:none !important;
+    margin: 20px;
+    text-decoration: underline;
+}
+
+#tabs-content {
+    border: none;
+}
+
+.record-container {
+    border: none;
+}
+
+#main-display-panel {
+    border: none;
+    padding: 0px;
+}
+
+.intro-definition {
+    border: 0px;
+}
+
+#data {
+    background: none;
+    padding: 0px;
+}
+
+.widget {
+    border: none;
+    border-width:0px;
+    margin: 0px;
+    padding: 0px;
+    background: none;
+}
+
+.widget-content-detail-box {
+    background: none;
+    padding: 0px;
+}
+
+.ui-tabs-selected {
+    border: none;
+    border-width:0px;
+}
+
+div#full-results {
+    padding-top: 25px;
+    margin-top: 25px;
+    clear:both !important;
+    float:none !important;
+    display:block;
+    text-align:left;
+}

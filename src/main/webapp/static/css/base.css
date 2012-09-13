@@ -1,0 +1,819 @@
+/**
+ * Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* --- BASE STYLES --- */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html { font-size: 100%; }
+
+body {
+    background:#BEC3C6 url(img/bg.jpg) repeat-x scroll 0 0;
+    font-family: arial,sans-serif;
+    font-size:  0.75em;
+}
+fieldset { border: 0 none; }
+h1 { font-size: 1.5em; } /* displayed at 24px */
+h1, h3 { color:#91C149 }
+h2 {
+    color:#333;
+    font-size:1.125em;
+}  /* displayed at 18px */
+h3 {font-size:0.95em}  /* displayed at 15px */
+h4 {font-size:0.75em}  /* displayed at 12px */
+
+h2.tip {
+    color:#FBCE44;
+    float:right;
+    text-decoration:underline;
+}
+
+img { border: 0 none }
+
+ul {
+    list-style-image:none;
+    list-style-position:outside;
+    list-style-type:none;
+}
+a[href $='.pdf'] {
+   background: transparent url(img/icons/PDF_Icon.png) no-repeat center left;
+   font-family: Georgia;
+   font-size: 1.3em;
+   padding:28px 62px;
+}
+a:link, a:visited { 
+    color: #3652A2;
+    text-decoration: none;
+}
+a:hover { text-decoration:underline; }
+
+/* --- END - BASE STYLES --- */
+
+/* ----- ids ----- */
+
+#auth {
+    border: 1px solid #666;
+    margin-bottom: 5px auto;
+    width:180px;
+}
+#auth .username,
+#auth .password
+{
+    font-weight: bold;
+}
+#auth #username,
+#auth #password
+{
+    width: 155px;
+}
+#auth-welcome {
+    background: #666;
+    color: #fff;
+    font-weight: bold;
+    padding: 2px;
+    text-align: center;
+}
+#copyright a {
+    color: #000;
+    text-decoration: none;
+}
+#dashboard h2 { color:#F37739; }
+#footer-contents a {
+    font-size: 1em;
+}
+#disclaimer {
+    background:url(img/top_gradient.gif) repeat-x 0 0;
+    border-top:1px solid #E7E7E7;
+    margin-top: 10px;
+}
+#disclaimer-content {
+    color:#666;
+    float:left;
+    font-size:1em;
+    margin:0 auto;
+    padding-left:10px;
+    text-align:center;
+    width:760px;
+}
+#disclaimer p {padding:5px 0; }
+#disclaimer p:first-child { font-size:.9em; }
+#disclaimer-wrapper {
+    margin:0 auto;
+    padding-top: 15px;
+    width:850px;
+}
+#dashboard .def-container,
+#emergency .def-container,
+#health-calendar .def-container,
+#healthcard .def-container,
+#library .def-container,
+#myaccount .def-container,
+#myprofile .def-container {
+    border:none;
+    padding:10px;
+}
+#header-section-label h1 { color:#333; }
+#info .info-text {
+    font-weight:bold;
+    font-style:italic;
+}
+#info p { 
+    display:inline;
+    padding-left:5px;
+}
+#info img { vertical-align:middle; }
+#left a {
+    display: block;
+    border-bottom: 1px dotted #666; /* 08-10-09 */
+    padding: 2px 4px;
+    margin: 1px;
+    color: #3652A2;
+}
+#left #ln-home {
+    -moz-border-radius: 2px;
+    background:#0A0A6B url(img/ln-home.gif) no-repeat scroll right center;
+    margin-top: 2px;
+ }
+#left .navhead {
+    -moz-border-radius: 2px;
+    margin: 4px 0;
+    padding: 3px;
+    border:0 none;
+    background-color: #666;
+    color: #fff;
+}
+#left a.active, /* style calculated by body tag connected with left nav link */
+#healthsummary #ln-healthsummary, /* currently not in alphabetical order, but in order of appearance in left nav */
+#medicalinformation #ln-medicalinformation,
+#medicalinformation-em #ln-medicalinformation-em,
+#medicalinformation-in #ln-medicalinformation-in,
+#medicalinformation-sc #ln-medicalinformation-sc,
+#medicalinformation-ph #ln-medicalinformation-ph,
+#providers #ln-providers,
+#familyhistory #ln-familyhistory,
+#familyhistory-fh #ln-familyhistory-fh,
+#familyhistory-mh #ln-familyhistory-mh,
+#nutrition #ln-nutrition,
+#logs #ln-logs,
+#logs-rc #ln-logs-rc,
+#logs-co #ln-logs-co,
+#logs-mi #ln-logs-mi,
+#logs-rs #ln-logs-rs,
+#logs-sp #ln-logs-sp,
+#logs-cs #ln-logs-cs,
+#transitions #ln-transitions,
+#education #ln-education,
+#education-si #ln-education-si,
+#education-sp #ln-education-sp,
+#education-cn #ln-education-cn,
+#employment #ln-employment,
+#medicalevents #ln-medicalevents,
+#allergies #ln-allergies,
+#medications #ln-medications,
+#labsandtests #ln-labsandtests,
+#vitals #ln-vitals,
+#vitals-bp #ln-vitals-bp,
+#vitals-hr #ln-vitals-hr,
+#vitals-bw #ln-vitals-bw,
+#vitals-bt #ln-vitals-bt,
+#vitals-p #ln-vitals-p,
+#vitals-bs #ln-vitals-bs,
+#vitals-ht #ln-vitals-ht,
+#vitals-pf #ln-vitals-pf,
+#vitals-bmi #ln-vitals-bmi,
+#immunizations #ln-immunizations,
+#familyhistory #ln-familyhistory,
+#socialhistory #ln-socialhistory,
+#procedures #ln-procedures,
+#visits #ln-visits,
+#ccr #ln-ccr,
+#docs #ln-docs,
+#caredocs #ln-caredocs,
+#health-calendar #ln-health-calendar,
+#exercise #ln-exercise,
+#journal #ln-care-journal,
+#family #ln-contacts-family,
+#provider #ln-contacts-provider,
+#insurance #ln-contacts-insurance,
+#pharmacy #ln-contacts-pharmacy,
+#myprofile #ln-myprofile,
+#myaccount #ln-myaccount-cp,
+#emergency #ln-emergency,
+#healthcard #ln-healthcard,
+#emcontact #ln-contacts-emergency,
+#sync #ln-import-sync,
+#infocard #ln-personalinfo-card
+{
+    background:#F3F1EB url(img/ln-active.gif) no-repeat scroll right center;
+    color: #666;
+    text-decoration:underline;
+}
+#ln-parent {
+    margin-left: 2px;
+}
+#ln-sub-1 {
+    margin-left: 8px;
+}
+#ln-vitals-sub,
+#ln-medicalinformation-sub,
+#ln-myaccount-sub,
+#ln-familyhistory-sub,
+#ln-logs-sub,
+#ln-education-sub{
+    display: none;
+    margin: 0 0 0 10px;
+}
+#login ul.steps img { vertical-align:middle; }
+#login ul.steps li { padding:0 0 5px 25px; }
+#login-container {
+    padding-left:10px;
+}
+#main p { 
+    margin:5px 0;
+    line-height:1.2em;
+}
+#main-content { font-size: 1.1em; }
+#main-content h1 { margin-bottom: 10px; }
+#main-content h2 { margin: 10px 0; }
+#main-content p {
+    color: #333;
+    line-height: 18px;
+    margin: 10px 8px;
+}
+#main-content ul#benefits { margin: 10px 0 0 10px; }
+#main-content ul#benefits li {
+    background: url(img/4.png) no-repeat -1px 5px;
+    line-height: 16px;
+    padding: 5px 0 5px 22px;
+}
+#vitals #ln-vitals-sub,
+.vitals #ln-vitals-sub,
+#medicalinformation #ln-medicalinformation-sub,
+.medicalinformation #ln-medicalinformation-sub,
+#myaccount #ln-myaccount-sub,
+.myaccount #ln-myaccount-sub,
+#familyhistory #ln-familyhistory-sub,
+.familyhistory #ln-familyhistory-sub,
+#logs #ln-logs-sub,
+.logs #ln-logs-sub,
+#education #ln-education-sub,
+.education #ln-education-sub
+{
+    display: block;
+}
+#ln-vitals-lp div {
+    padding: 0 0 0 .4em;
+}
+#record-nav-top {
+    font-weight: bold;
+    margin: 10px 0pt 5px;
+    padding: 1px;
+    text-align: center;
+}
+#rlinks{
+    -moz-border-radius:5px;
+    background: #fff;
+    border: 1px solid #CCCCCC;
+    margin: 5px 0;
+}
+#rlinks ul{
+    list-style-type: none;
+    padding: 0;
+}
+#rlinks li {
+    background: url(../icons/menu_icon.gif) no-repeat 0.2em 0.9em;
+    display: block;
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    margin-left:2px;
+    padding: 5px 12px;
+    text-decoration: none;
+}
+
+#profile { 
+    border: 1px solid #666;
+    margin-bottom: 5px;
+}
+#profile #profile-gen,
+#profile #profile-age,
+#profile #profile-wt,
+#profile #profile-ht,
+#profile-bmi,
+#profile #profilestatshead {
+    color: #333;
+    font-weight:bold;
+}
+#profile-current-record {
+    text-decoration: none;
+}
+#profile-name {
+    color:#333;
+    font-size: 1.2em;
+    font-weight:bold;
+}
+#profile-role {
+    color:#999;
+}
+#profile-welcome {
+    background: #666;
+    border-bottom: 1px dotted #666;
+    color: #fff;
+    margin-bottom: 4px;
+    padding: 3px 4px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+#profile-info { 
+    float:left;
+    padding:0 4px;
+}
+#profile .details {
+    color: #666;
+    margin: 5px;
+}
+#profile #profile-photo {
+    float: left;
+    height: 90px;
+    width: 90px;
+}
+#profile #profilestatshead {
+    background-color: #CDE3EE;
+    color: #555;
+    font-weight: bold;
+    margin: 5px 0 4px 0;
+    text-align: center;
+}
+#progress { text-align:center; }
+#ptopics {
+    background: #fff;
+    border: 1px solid #ccc;
+}
+#ptopics form {
+    padding: 2px;
+}
+#ptopics-inner {
+    background: #ccc;
+    padding: 3px 4px 6px;
+    margin: 2px;
+    color: #09096b;
+    font-weight: bold;
+}
+#quick-links li {
+    background: url('img/icons/bookmark.png') no-repeat left center;
+    background-size: 10px;
+    margin: 10px;
+    padding-left: 18px;
+}
+#quick-links ul {
+    /* list-style: square none inside; */
+    list-style-type: none;
+    
+}
+#quick-links {
+    border: 1px solid #CCC;
+    color: #333;
+}
+#quick-links .header-box{
+    background-color: #ccc;
+    font-weight: bold;
+    padding: 3px 4px;
+}
+#quick-links .contents-box {
+    padding:5px;
+}
+#top {
+    -moz-border-radius:5px;
+    background-color:#FCFCEF;
+    padding:5px 10px;
+}
+ul#source-exp { margin-top:6px; }
+ul#source-exp li { padding:4px 8px;	}
+ul#source-exp li:last-child { margin-bottom:0px; }
+
+/* ----- classes ----- */
+a.external {
+    background: url(img/icons/extlink.png) no-repeat scroll right center;
+    padding: 0 13px 0 0;
+}
+a.helplnk { color: #666; }
+.auth-none {
+    border: 2px solid red;
+    padding: 5px;
+}
+.b { font-weight:bold; }
+.btns-right {
+    color: #CCCCCC;
+    padding-top: 4px;
+    text-align: right;
+}
+.center {
+    text-align:center;
+}
+/* For modern browsers */
+.clear:before,
+.clear:after {
+    content: "";
+    display: table;
+}
+.clear:after {
+    clear: both;
+}
+/* For IE 6/7 (trigger hasLayout) */
+.clear {
+    zoom: 1;
+}
+.common-tasks li {
+    padding: 2px 2px;
+}
+.container-gen { margin:10px 0; }
+.container-gen-last { margin-top:10px; }
+.d {
+    -o-text-overflow: ellipsis;
+    -ms-text-overflow: ellipsis;
+    overflow:hidden;
+    padding:5px 0px;
+    text-overflow:ellipsis;
+}
+.datatable {
+    width: 100%;
+    background-color: #666;
+    border-collapse:collapse;
+}
+.datatable .modify {
+    text-align: center;
+}
+.datatable .sourcetext {
+    padding-top: 3px;
+}
+.datatable .sourcetext-b {
+    font-weight: bold;
+    padding-top: 3px;
+}
+.datatable thead { background-color: #666 }
+.datatable thead th {
+    padding: 2px 1px;
+    background-color: #666;
+    border: 1px solid #ccc;
+    color: #fff;
+    text-align: center;
+}
+.datatable2 th {
+    color: #444444;
+    font-weight: normal;
+}
+.datatable thead .edit {
+    width: 35px;
+}
+.datatable thead .delete {
+    width: 50px;
+}
+.datatable thead .source {
+    width: 120px;
+}
+.datatable td { 
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 3px;
+    vertical-align:middle;
+} 
+.datatable .source { 
+    padding: 2px 0 !important; /* reset */
+} 
+.datatable .tablefooter td {
+    background-color: #d2d6db;
+    color: #333;
+    font-weight: bold;
+    padding: 2px;
+}
+.datatable .paging { float: left }
+.datatable .pageinfo { float: right }
+.datatable-header {
+    padding-bottom: 2px;
+    width: 100%;
+}
+.def-container {
+    font-size:1em;
+    line-height:1.2em;
+    margin:10px 0;
+    padding:26px 10px 10px;
+    position:relative;
+    width:68%;
+}
+.def-title { 
+    -moz-border-radius:4px;
+    background-color:#4D2A6E;
+    color:#FFFFFF;
+    font-size:.9em;
+    font-weight:bold;
+    margin-left:-11px;
+    margin-top:-26px;
+    padding:2px 8px;
+    position:absolute;
+    text-transform:uppercase;
+    top:25px;
+}
+.detail { width:100%; }
+.detail th {
+    background-color: #CCC;
+    color: #000;
+    text-align: left;
+    padding: 4px 4px;
+    vertical-align: middle;
+}
+.detail td { 
+    padding: 4px 4px !important;
+    background-color: #ECECEC;
+    vertical-align: middle;
+}
+.disclaimer-img {
+    float:left;
+    margin-top:14px;
+}
+.e,
+.emphasis {
+    font-style: italic;
+    text-decoration: underline;
+}
+.editview { width:100%; }
+.editview th {
+    background-color: #CCC;
+    color: #000;
+    text-align: left;
+    padding: 4px 4px;
+    vertical-align: middle;
+}
+.editview td { 
+    padding: 4px 4px !important;
+    background-color: #ECECEC;
+    vertical-align: middle;
+}
+.editview textarea { width: 98%; }
+.error {
+    color:red;
+    font-weight:bold;
+}
+.exp-title { font-size:1.2em; }
+.externalsource	{
+    background: url(img/ccr-transparent.png) no-repeat scroll 0 0;
+    float:left;
+    height:22px;
+    margin:0 0px 0 0;
+    width:22px;
+}
+.fakelink { color: #3652A2; }
+.function-links .btd { cursor:pointer; }
+.hv_element {
+    padding:6px 4px;
+    width: 146px;
+}
+.inline-subtext {
+    color: #575757;
+    font-size: .9em;
+}
+.intro-definition {
+    background-color:transparent;
+    border:none;
+    margin: 8px 0;
+    padding:0;
+    width:70%;
+}
+.lbl { 
+    font-size:.9em;
+    font-weight:bold;
+}
+.loader { display:none; }
+.loading { background:transparent url(img/ajax-loader-sm.gif) no-repeat scroll left top; }
+.login-help {
+    font-size:0.9em;
+    font-weight: bold;
+}
+.no-edit {
+    color:#666;
+    font-size:.9em;
+    text-transform:uppercase;
+}
+.no-record {font-style:italic; }
+.phr-hr-container-td {
+    border: 1px dotted #666;
+    padding-top:5px;
+}
+.phr-input-button {
+    background-color: #0A0A6B !important;
+    border-color:#FFFFFF #CCCCCC #CCCCCC rgb(255, 255, 255);
+    border-style: solid;
+    border-width: 1px;
+    color: #FFFFFF !important;
+    font-size: 1em;
+    margin: 10px 0px;
+    padding: 2px 8px;
+    text-decoration: none !important;
+}
+.phr-input-button-align-left {
+    text-align: left;
+    margin: 10px 0px;
+}
+.phr-input-button-align-right {
+    text-align: right;
+    margin: 10px 0px;
+}
+.required, .req-indicator { color: #c00 }
+.section-info {	margin: 10px 0; }
+.source-text { font-weight:bold; }
+.sort-panel {
+    margin: 10px 0;
+    text-align: right;
+}
+.src-active {
+    font-size:.9em;
+    font-weight:bold;
+    text-transform:uppercase;
+}
+.rec-links { padding-left: 4px; }
+.req-info {
+    float: left;
+    color: #666;
+    width: 150px;
+}
+.seperator { color: #ABABAB; }
+.summary-title { color: #999; }
+.tip-container {
+    color:#666;
+    margin:15px auto 10px auto;
+    width:95%;
+}
+
+/* --- coversheet specific (should probably go in a separate stylesheet --- */
+.covermodule {
+    float: left;
+    width: 269px;
+    margin: 0 5px 10px;
+}
+.covermodule .nodata td {
+    color: #666;
+    text-align: center;
+    padding: 6px !important;
+}
+.labmodule {
+    float: left;
+    width: 550px;
+    margin: 0 5px 10px;
+}
+.m-actions { text-align:right }
+.m-actions input { /*font-size:.7em*/ }
+.m-clear { /* distinct from .clear incase we want to remove forced breaks */
+    clear:both !important;
+    float:none !important;
+}
+.m-header {
+    padding: 2px;
+    font-weight: bold;
+}
+.m-footer {
+    padding: 2px;
+    color:#333;
+}
+
+/* Home Style */
+.titleRow { padding: 0 5px; }
+.titleRow h2 {
+    color:#738AA5;
+    font-weight:bold;
+    margin:10px 5px 0;
+}
+.titleRow h4 {
+    color:#0A0A6B;
+    font-weight:bold;
+    margin:10px 5px 0;
+}
+.featureTable {
+    background: #fff url(../images/bg_cellGradient.jpg) no-repeat scroll 0 0;
+    border: 1px solid #EFEFEF;
+    vertical-align:top;
+}
+.content-home-container p {
+    line-height:1.6em;
+    margin-left: 2px;
+    margin-right: 2px;
+    padding: 5px;
+}
+
+.content-home-container .dateline {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.demo-head {
+    color:#333333;
+    font-weight:bold;
+    padding-bottom:5px;
+}
+.function-links .btd {
+    cursor:pointer;
+    left:-4px;
+    margin:0;
+    position:relative;
+    top:2px;
+}
+#record-link-list {
+    background:#FFFFFF none repeat scroll 0 0;
+    border:1px solid #0199CC;
+    display:none;
+    padding:13px;
+    top:59px;
+    width:168px;
+}
+#effect {
+    background-color: #fff;
+    border:2px solid #0199CC;
+    padding:13px;
+    position: relative;
+    width:166px;
+}
+table.history { 
+    -moz-border-radius: 4px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #E7E7E7;
+}
+table.history th { 
+    background-color: #E7E7E7;
+    color: #555;
+    padding: 1px 5px;
+}
+table.history td { padding: 2px; }
+#profile-container {
+    margin-top:10px;
+    position:relative;
+}
+#profile-photo {
+    margin: 0 auto; /* this centers the DIV */
+    width:90px;
+}
+#user-photo {
+    -moz-border-radius:3px;
+    -webkit-border-radius:3px;
+    background-color:#FFFFFF;
+    border:1px solid #BFBDBD;
+    float:right;
+    padding:3px;
+    text-align:center;
+    width:100px;
+}
+.section-panel {
+    background-color:#F9F9F1;
+    border:1px solid #DBD4AB;
+    padding:10px;
+}
+.user-photo-text {
+    color:#888577;
+    font-weight:bold;
+    margin:0;
+    text-align:center;
+}
+.profile-section-heading {
+    color:#333;
+    font-size:1.125em;
+    font-weight:bold;
+    padding-bottom:5px;
+}
+#credentials .def-container,
+#myaccount .def-container,
+#myprofile .def-container { padding:0; }
+
+/* notifier */
+div#notifier {
+    border: 1px solid #FF0000;
+    color:#FF0000;
+    display:none;
+    font-weight:bold;
+    font-size:.9em;
+    margin:10px auto;
+    position:relative;
+    padding: 4px 20px 4px 4px;
+    text-align:center;
+    text-transform:uppercase;
+    width:40%;
+}
+span.closebutton {
+    position:absolute;
+    right:5px;
+}
+/* /notifier */
+
+.add a { 
+    background:transparent url(../css/img/icons/add.png) center left no-repeat;
+    padding-left:20px;
+}

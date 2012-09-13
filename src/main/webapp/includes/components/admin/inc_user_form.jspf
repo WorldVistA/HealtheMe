@@ -1,0 +1,619 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+<%--
+    Document   : inc_user_form.jspf
+    Created on : February 6, 2010, 1:38:00 AM
+    Author     : Daniel Shaw (dshaw.com)
+--%>
+<%@ include file="/includes/taglibs.jspf" %>
+
+<jsp:useBean id="now" scope="application" class="java.util.Date" />
+<fmt:formatDate var='currentYear' value='${now}' pattern='yyyy'/>
+<c:set var="begin" value="1900"/>
+
+<%@ include file="/includes/components/admin/inc_ctx_base_config.jspf" %>
+<%--<c:set var="ajaxQueryString" value="ajax&area=${manage_area}"/>--%>
+<c:set var="ajaxQueryString" value="area=${manage_area}"/>
+
+<c:choose>
+    <c:when test="${ empty userId }">
+        <c:set var="action" value="add"/>
+        <c:set var="redirect" value="../"/>
+        <c:set var="pagetitle" value="Add New User"/>
+        <c:set var="lnavsub1" value="${ pagetitle }"/>
+        <%--  TODO: Fix CSS for "admin-user-add".
+            <c:set var="bodyid" value="${manage_area}-user-add"/>--%>
+        <c:set var="bodyid" value="manage-user-add"/>
+        <c:set var="formprocessor" value="${ctx}/form/users/?${ajaxQueryString}"/>
+        <c:set var="sectioninfo">
+            To enroll new user - add user to the system, add EMR identifiers, generate password, and print '<i>Welcome Letter</i>'.
+        </c:set>
+        <c:set var="state"><fmt:message key="default.state"/></c:set>
+    </c:when>
+    <c:otherwise>
+        <c:set var="action" value="edit"/>
+        <c:set var="redirect" value="./"/>
+        <c:set var="lnavsub1" value="Edit User"/>
+        <%-- TODO: Fix CSS for "admin-user-edit".
+            <c:set var="bodyid" value="${manage_area}-user-edit"/>--%>
+        <c:set var="bodyid" value="manage-user-edit"/>
+        <c:set var="formprocessor" value="${ctx}/form/users/${ userId }/update/?${ajaxQueryString}"/>
+    </c:otherwise>
+</c:choose>
+
+
+<head>
+    <title>${ manageTitle }${tsep}${ pagetitle }</title>
+
+    <meta name="requiresValidation" content="true">
+    <meta name="requiresJQUI" content="true">
+
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/manage.css" />
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/manage-additions.css" />
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/paging.css" />
+    <style type="text/css">
+        <%-- replacements for inlined styles --%>
+        .section-panel { margin-bottom:5px }
+        .req-marker { color:#333;padding:2px 2px 0; }
+        .dob-fld { padding-top:15px }
+        #roles option { padding: 5px 10px }
+        .pilot-tip { float:right; padding:5px; width:280px; }
+        #loader-dialog img { display: block; margin: 40px auto; }
+    </style>
+
+    <%-- hem.js defines core functionality for health-e-Me --%>
+    <script type="text/javascript" src="${ctx_static}/js/hem.js"></script>
+    <%@ include file="/includes/inc_hem_js.jspf" %>
+
+    <%@ include file="/includes/js/jquery_form_js.jspf" %>
+    <script type="text/javascript" src="${ctx_static}/js/validate.admin.userform.js"></script>
+    <script type="text/javascript">
+        (function($){
+            $.fn.extend({
+                checkUnique: function( callback ) {
+                    if (!HEM.env.uniqueUsernameApiPath && !HEM.env.defaultTimeout) {
+                        alert('Unable to perform Username lookup.');
+                    }
+                    if (!jQuery.isFunction( callback )) {
+                        callback = function(){};
+                    }
+                    var field = this;
+                    var value = field.val();
+                    if (value === undefined || value.length === 0) { return false }
+                    var url = HEM.env.uniqueUsernameApiPath+value+'/available/';
+
+                    // Lookup username. If not found, username is unique. Otherwise, it's already taken.'
+                    $.ajax({
+                        url: url,
+                        type: 'GET',
+                        timeout: HEM.env.defaultTimeout,
+                        dataType: 'json',
+                        success: callback,
+                        error: function(xhr) {
+                            if (xhr.status === 409) {
+                                HEM.page.form.placeError( HEM.validation.msgs.username.unique, field );
+                            }
+                        }
+                    });
+                }
+            });
+        })(jQuery);
+    </script>
+    <script type="text/javascript">
+        HEM.debug = false;
+
+        // initialize page namespace
+        HEM.page = {
+            form : {
+                target : '#userform',
+                // * Initialize validation.
+                // * Registers username event.blur handler.
+                init : function() {
+                    initValidation();
+                    // initiaiize progress dialog
+                    HEM.page.progress.init();
+                    this.initUniqueConstraint();
+                },
+                initUniqueConstraint : function() {
+                    $('#username').blur(function() {
+                        $(this).checkUnique();
+                    });
+                },
+                redirect : '${ redirect }'
+            }
+        };
+
+        // Progress bar
+        HEM.page.progress = {
+            target : '#loader-dialog',
+            init : function() {
+                $(this.target).dialog({ autoOpen: false, modal: true, draggable: false, resizable: false }); },
+
+            open : function() { $(this.target).dialog('open'); },
+            error : function() {
+                $(this.target)
+                .dialog('option', 'title', 'Error Submitting User.')
+                .dialog('option',
+                    'buttons', { 'OK' : function() { HEM.page.progress.close(); } }
+                );
+            },
+            text : function(text) { $(this.target).text(text); },
+            close : function() { $(this.target).dialog('close'); }
+        };
+
+        // Presubmit callback function for validation plugin.
+        HEM.page.form.checkUsername = function() {
+            $('#username').checkUnique();
+        };
+
+        // Submit function for validation plugin.
+        var oldSubmit = HEM.page.form.submitForm;
+        HEM.page.form.submitForm = function() {
+            HEM.page.progress.open();
+            var options = {
+                iframe : true,
+                success : function(responseText, statusText, xhr, form) {
+                    HEM.page.progress.close();
+                    location.href = HEM.page.form.redirect;
+                },
+                error : function(xhr, status) {
+                    HEM.page.progress.error();
+                    if (xhr.status === 409) {
+                        HEM.page.progress.text( HEM.validation.msgs.username.unique );
+                        HEM.page.form.placeError( HEM.validation.msgs.username.unique, $('#username') );
+                    } else {
+                        HEM.page.progress.text('Unable to submit user.');
+                    }
+                }
+            }
+            form = HEM.page.form.target;
+            oldSubmit.call(form, arguments);
+            return true;
+        };
+
+        // Configure validation rules
+        HEM.page.form.validationRules = {
+            userimage: { accept: "jpg|jpeg" },
+            firstname: { required:true },
+            lastname: { required:true },
+            city: { required:true },
+            state: { required:true },
+            zip: { required:true },
+            username: { required:true, minlength:6, regexMatch:/^\w+$/i }
+        };
+        <c:if test="${ empty manage_area || manage_area == 'manage' }">
+        HEM.page.form.validationRules.month = { required:true, relies:['year','day'] };
+        HEM.page.form.validationRules.day = { required:true, relies:['month','year'] };
+        HEM.page.form.validationRules.year = { required:true, relies:['month','day'] };
+        HEM.page.form.validationRules.gender = { required:true };
+        </c:if>
+        <c:if test="${ !empty manage_area && manage_area == 'admin' }">
+        HEM.page.form.validationRules.roles = { required:true };
+        </c:if>
+
+        // Error placement for validation plugin.
+        HEM.page.form.placeError = function(errorText, element) {
+            if(errorText.length > 1){
+                var errorExists=false;
+                $(element).nextAll().each(function(){
+                    if ($(this).hasClass("errorText")) {
+                        $(this).text(errorText);
+                        errorExists = true;
+                    }
+                });
+                if (!errorExists) {
+                    $(element).parent()
+                    .append('<span class="errorText">' + errorText + '</span>')
+                    .slideDown();
+                }
+            } else {
+                $(element).nextAll().each(function(){
+                    if ($(this).hasClass("errorText")) {
+                        $(this).remove();
+                    }
+                });
+            }
+        };
+
+        $(document).ready(function() {
+            HEM.page.form.init();
+            $('#username').focus();
+        });
+    </script>
+</head>
+<body id="${ bodyid }" class="manage">
+
+    <%@ include file="/includes/components/admin/inc_manage_leftnav.jspf" %>
+
+    <div id="user-display-panel">
+
+        <h1>${ pagetitle }</h1>
+
+        <div class="section-info">${ sectioninfo }</div>
+
+        <form id="userform" name="userform" action="${ formprocessor }" method="post" enctype="application/x-www-form-urlencoded">
+            <%--"multipart/form-data" | "application/x-www-form-urlencoded"--%>
+
+            <div id="account-information-panel" class="section-panel">
+                <%-- TODO: NOTE Pilot specific content. --%>
+                <div class="container rt pilot-tip">
+                    <h3>Helpful Tip</h3>
+                    <p>Username must be unique within the system and may only use values A-Z, a-z, 0-9.</p>
+                </div>
+
+                <fieldset id="fldsetDemographics">
+                    <legend>Account Information</legend>
+
+                    <div id="username-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="username">
+                                Username
+                                <span class="required" title="Required field">*</span>
+                            </label>
+                        </div>
+                        <div class="regforminput">
+                            <c:if test="${ action == 'add' }">
+                                <input type="text" id="username" name="username" value="${ username }" title="username" size="20" maxlength="64" />
+                            </c:if>
+                            <c:if test="${ action == 'edit' }">
+                                ${ username }
+                            </c:if>
+                        </div>
+                    </div><!-- /#username-fld -->
+
+                    <!--
+                    <div id="picture-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="picture">
+                                User Image
+                            </label>
+                        </div>
+                        <div class="regforminput">
+                            <c:if test="${ action == 'add' }">
+                                <input type="file" id="userimage" name="userimage" accept="image/jpeg" title="User Image"/>
+                            </c:if>
+                        </div>
+                    </div>--><!-- /#picture-fld -->
+                    <div class="clear"> </div>
+
+                    <c:if test="${ !empty manage_area && manage_area == 'admin' }">
+                        <div id="userroles-fld" class="regforminput">
+                            <div class="regformlabel">
+                                <label for="roles">
+                                    User Roles
+                                    <span class="required" title="Required field">*</span>
+                                </label>
+                            </div>
+                            <div class="regforminput">
+                                <c:if test="${ action == 'add' }">
+                                    <select id="roles" name="roles" title="User Roles" size="2">
+                                        <option value="ROLE_ADMIN" <c:if test="${ role_admin }">selected</c:if> >Admin</option>
+                                        <option value="ROLE_PATIENTADMIN" <c:if test="${ role_patientadmin }">selected</c:if> >Patient Administrator</option>
+                                        <option value="ROLE_CARETAKER" <c:if test="${ role_caretaker }">selected</c:if> >Care Coordinator</option>
+                                    </select>
+                                </c:if>
+                                <c:if test="${ action == 'edit' }">
+                                    <%@ include file="/includes/components/admin/inc_userroles_list.jspf" %>
+                                </c:if>
+                            </div>
+                        </div><!-- /#userid-fld -->
+                    </c:if>
+
+                </fieldset><!-- /#fldsetDemographics -->
+                <div class="clear"> </div>
+            </div><!--/#account-information-panel-->
+
+            <div id="personal-information-panel" class="section-panel">
+
+                <fieldset id="fldsetPersonalInfo">
+                    <legend>Personal Information</legend>
+                    <div id="firstname-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label class="req" for="firstname">
+                                First Name
+                                <span class="required" title="Required field">*</span>
+                            </label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="text" id="firstname" name="firstname" value="${ firstName }" title="First Name" maxlength="32" size="20">
+                        </div>
+                    </div>
+                    <div id="middlename-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label class="req" for="middlename">
+                                Middle Name
+                            </label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="text" id="middlename" name="middlename" value="${ middleName }" title="Middle Name" maxlength="32" size="20">
+                        </div>
+                    </div>
+                    <div id="lastname-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label class="req" for="lastname">
+                                Last Name
+                                <span class="required" title="Required field">*</span>
+                            </label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="text" id="lastname" name="lastname" value="${ lastName }" title="Last Name" maxlength="32" size="20">
+                        </div>
+                    </div>
+                    <div id="address1-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="address1">
+                                Address 1
+                            </label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="text" id="address1" name="address1" value="${ address1 }" title="Address Line 1" maxlength="32" size="26">
+                        </div>
+                    </div><!-- /#address1-fld -->
+                    <div id="address2-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="address2">
+                                Address 2
+                            </label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="text" id="address2" name="address2" value="${ address2 }" title="Address Line 2" maxlength="32" size="26">
+                        </div>
+                    </div><!-- /#address2-fld -->
+                    <div id="address3-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="address3">
+                                Address 3
+                            </label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="text" id="address3" name="address3" value="${ address3 }" title="Address Line 3" maxlength="32" size="26">
+                        </div>
+                    </div><!-- /#address3-fld -->
+                    <div id="full-city-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="city">
+                                City
+                                <span class="required" title="Required field">*</span>
+                            </label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="text" id="city" name="city" value="${ city }" title="City" maxlength="32" size="20">
+                        </div>
+                    </div>
+                    <div id="full-state-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="state">
+                                State
+                                <span class="required" title="Required field">*</span>
+                            </label>
+                        </div>
+                        <div class="regforminput">
+                            <select id="state" name="state" title="State">
+                                <option value="">- Select One -</option>
+                                <option value="AL" <c:if test="${ state == 'AL' }">selected</c:if> >Alabama</option>
+                                <option value="AK" <c:if test="${ state == 'AK' }">selected</c:if> >Alaska</option>
+                                <option value="AZ" <c:if test="${ state == 'AZ' }">selected</c:if> >Arizona</option>
+                                <option value="AR" <c:if test="${ state == 'AR' }">selected</c:if> >Arkansas</option>
+                                <option value="CA" <c:if test="${ state == 'CA' }">selected</c:if> >California</option>
+                                <option value="CO" <c:if test="${ state == 'CO' }">selected</c:if> >Colorado</option>
+                                <option value="CT" <c:if test="${ state == 'CT' }">selected</c:if> >Connecticut</option>
+                                <option value="DE" <c:if test="${ state == 'DE' }">selected</c:if> >Delaware</option>
+                                <option value="DC" <c:if test="${ state == 'DC' }">selected</c:if> >District of Columbia</option>
+                                <option value="FL" <c:if test="${ state == 'FL' }">selected</c:if> >Florida</option>
+                                <option value="GA" <c:if test="${ state == 'GA' }">selected</c:if> >Georgia</option>
+                                <option value="HI" <c:if test="${ state == 'HI' }">selected</c:if> >Hawaii</option>
+                                <option value="ID" <c:if test="${ state == 'ID' }">selected</c:if> >Idaho</option>
+                                <option value="IL" <c:if test="${ state == 'IL' }">selected</c:if> >Illinois</option>
+                                <option value="IN" <c:if test="${ state == 'IN' }">selected</c:if> >Indiana</option>
+                                <option value="IA" <c:if test="${ state == 'IA' }">selected</c:if> >Iowa</option>
+                                <option value="KS" <c:if test="${ state == 'KS' }">selected</c:if> >Kansas</option>
+                                <option value="KY" <c:if test="${ state == 'KY' }">selected</c:if> >Kentucky</option>
+                                <option value="LA" <c:if test="${ state == 'LA' }">selected</c:if> >Louisiana</option>
+                                <option value="ME" <c:if test="${ state == 'ME' }">selected</c:if> >Maine</option>
+                                <option value="MD" <c:if test="${ state == 'MD' }">selected</c:if> >Maryland</option>
+                                <option value="MA" <c:if test="${ state == 'MA' }">selected</c:if> >Massachusetts</option>
+                                <option value="MI" <c:if test="${ state == 'MI' }">selected</c:if> >Michigan</option>
+                                <option value="MN" <c:if test="${ state == 'MN' }">selected</c:if> >Minnesota</option>
+                                <option value="MS" <c:if test="${ state == 'MS' }">selected</c:if> >Mississippi</option>
+                                <option value="MO" <c:if test="${ state == 'MO' }">selected</c:if> >Missouri</option>
+                                <option value="MT" <c:if test="${ state == 'MT' }">selected</c:if> >Montana</option>
+                                <option value="NE" <c:if test="${ state == 'NE' }">selected</c:if> >Nebraska</option>
+                                <option value="NV" <c:if test="${ state == 'NV' }">selected</c:if> >Nevada</option>
+                                <option value="NH" <c:if test="${ state == 'NH' }">selected</c:if> >New Hampshire</option>
+                                <option value="NJ" <c:if test="${ state == 'NJ' }">selected</c:if> >New Jersey</option>
+                                <option value="NM" <c:if test="${ state == 'NM' }">selected</c:if> >New Mexico</option>
+                                <option value="NY" <c:if test="${ state == 'NY' }">selected</c:if> >New York</option>
+                                <option value="NC" <c:if test="${ state == 'NC' }">selected</c:if> >North Carolina</option>
+                                <option value="ND" <c:if test="${ state == 'ND' }">selected</c:if> >North Dakota</option>
+                                <option value="OH" <c:if test="${ state == 'OH' }">selected</c:if> >Ohio</option>
+                                <option value="OK" <c:if test="${ state == 'OK' }">selected</c:if> >Oklahoma</option>
+                                <option value="OR" <c:if test="${ state == 'OR' }">selected</c:if> >Oregon</option>
+                                <option value="PA" <c:if test="${ state == 'PA' }">selected</c:if> >Pennsylvania</option>
+                                <option value="RI" <c:if test="${ state == 'RI' }">selected</c:if> >Rhode Island</option>
+                                <option value="SC" <c:if test="${ state == 'SC' }">selected</c:if> >South Carolina</option>
+                                <option value="SD" <c:if test="${ state == 'SD' }">selected</c:if> >South Dakota</option>
+                                <option value="TN" <c:if test="${ state == 'TN' }">selected</c:if> >Tennessee</option>
+                                <option value="TX" <c:if test="${ state == 'TX' }">selected</c:if> >Texas</option>
+                                <option value="UT" <c:if test="${ state == 'UT' }">selected</c:if> >Utah</option>
+                                <option value="VT" <c:if test="${ state == 'VT' }">selected</c:if> >Vermont</option>
+                                <option value="VA" <c:if test="${ state == 'VA' }">selected</c:if> >Virginia</option>
+                                <option value="WA" <c:if test="${ state == 'WA' }">selected</c:if> >Washington</option>
+                                <option value="WV" <c:if test="${ state == 'WV' }">selected</c:if> >West Virginia</option>
+                                <option value="WI" <c:if test="${ state == 'WI' }">selected</c:if> >Wisconsin</option>
+                                <option value="WY" <c:if test="${ state == 'WY' }">selected</c:if> >Wyoming</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="full-zip-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="zip">
+                                Zip
+                                <span class="required" title="Required field">*</span>
+                            </label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="text" id="zip" name="zip" value="${ zip }" title="Zip" maxlength="32" size="10">
+                        </div>
+                    </div>
+                    <%-- Don't include Health Record options in admin interface. --%>
+                    <c:if test="${ manage_area != 'admin' }">
+                        <div id="dob-fld" class="regforminput">
+                            <div class="regformlabel">
+                                <label for="dob">
+                                    Date of Birth
+                                    <span class="required" title="Required field">*</span>
+                                </label>
+                            </div>
+                            <div class="regforminput">
+                                <select id="month" name="month">
+                                    <option value=""> - Month - </option>
+                                    <option value="1" <c:if test="${ month == 1 }">selected</c:if> >January</option>
+                                    <option value="2" <c:if test="${ month == 2 }">selected</c:if> >Febuary</option>
+                                    <option value="3" <c:if test="${ month == 3 }">selected</c:if> >March</option>
+                                    <option value="4" <c:if test="${ month == 4 }">selected</c:if> >April</option>
+                                    <option value="5" <c:if test="${ month == 5 }">selected</c:if> >May</option>
+                                    <option value="6" <c:if test="${ month == 6 }">selected</c:if> >June</option>
+                                    <option value="7" <c:if test="${ month == 7 }">selected</c:if> >July</option>
+                                    <option value="8" <c:if test="${ month == 8 }">selected</c:if> >August</option>
+                                    <option value="9" <c:if test="${ month == 9 }">selected</c:if> >September</option>
+                                    <option value="10" <c:if test="${ month == 10 }">selected</c:if> >October</option>
+                                    <option value="11" <c:if test="${ month == 11 }">selected</c:if> >November</option>
+                                    <option value="12" <c:if test="${ month == 12 }">selected</c:if> >December</option>
+                                </select>
+
+                                <select id="day" name="day">
+                                    <option value=""> - Day - </option>
+                                    <c:forEach var="formDay" begin="1" end="31" step="1">
+                                        <option value="${formDay}" <c:if test="${ day == formDay }">selected</c:if>>${formDay}</option>
+                                    </c:forEach>
+                                </select>
+
+                                <select id="year" name="year">
+                                    <option value=""> - Year - </option>
+                                    <c:forEach var="formYear" begin="${ begin }" end="${ currentYear }" step="1">
+                                        <option value="${begin + (currentYear - formYear)}" <c:if test="${ year == begin + (currentYear - formYear) }">selected</c:if>>${begin + (currentYear - formYear)}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div><!-- /#dob-fld -->
+                        <div id="gender-fld" class="regforminput">
+                            <div class="regformlabel">
+                                <label for="gender">
+                                    Gender
+                                    <span class="required" title="Required field">*</span>
+                                </label>
+                            </div>
+                            <div class="regforminput">
+                                <input type="radio" name="gender" value="M" <c:if test="${ gender == 'M' || gender == 'Male' }">checked</c:if> id="male" /><label for="male"> Male</label>
+                                <input type="radio" name="gender" value="F" <c:if test="${ gender == 'F' || gender == 'Female' }">checked</c:if> id="female" /><label for="female"> Female</label>
+                            </div>
+                        </div><!--/#gender-fld-->
+                    </c:if>
+                </fieldset>
+
+            </div><!--/#personal-information-panel-->
+
+            <div id="contact-information-panel" class="section-panel">
+
+                <fieldset id="fldsetContactInfo">
+                    <legend>Contact Information</legend>
+
+                    <div id="email-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="email">Email</label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="text" id="email" name="email" value="${ email }" title="Email" size="20" maxlength="32" />
+                        </div>
+                    </div><!-- /#email-fld -->
+                    <div id="phonehome-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="phonehome">Phone (Home)</label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="text" id="phonehome" name="phonehome" value="${ phoneHome }" title="Email" size="20" maxlength="32" />
+                        </div>
+                    </div><!-- /#phonehome-fld -->
+                    <div id="phonework-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="phonework">Phone (Work)</label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="text" id="phonework" name="phonework" value="${ phoneWork }" title="Email" size="20" maxlength="32" />
+                        </div>
+                    </div><!-- /#phonework-fld -->
+                    <div id="phonemobile-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="phonemobile">Phone (Mobile)</label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="text" id="phonemobile" name="phonemobile" value="${ phoneMobile }" title="Email" size="20" maxlength="32" />
+                        </div>
+                    </div><!-- /#phonemobile-fld -->
+                    <div id="fax-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="fax">Fax</label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="text" id="fax" name="fax" value="${ fax }" title="Fax" size="20" maxlength="32" />
+                        </div>
+                    </div><!-- /#fax-fld -->
+                </fieldset><!-- /#fldsetContactInfo -->
+
+            </div><!--/#contact-information-panel-->
+
+            <%-- Don't include Health Record options in admin interface. --%>
+            <c:if test="${ manage_area != 'admin' }">
+            <div id="preferences-panel" class="section-panel">
+                <fieldset id="fldsetPreferences">
+                    <legend>Account Preferences</legend>
+                    <div id="carenotebook-fld" class="regforminput">
+                        <div class="regformlabel">
+                            <label for="carenotebook">Use Care Notebook?</label>
+                        </div>
+                        <div class="regforminput">
+                            <input type="checkbox" id="carenotebook" name="carenotebook" <c:if test="${ carenotebook eq true }">checked</c:if> title="Care Notebook" size="20" maxlength="32" />
+                        </div>
+                    </div><!-- /#carenotebook-fld -->
+            </div><!--/#preferences-panel-->
+            </c:if>
+            
+            <div class="req-marker">
+                <span class="required">*</span> Required field
+            </div>
+
+            <div class="phr-input-button-align-right">
+                <input type="hidden" id="by" name="by" value="${ pageContext.request.remoteUser }" />
+                <input type="reset" id="reset" class="phr-input-button" value="Reset Form"/>
+                <input type="button" class="phr-input-button" value="Cancel" onClick="window.location='./'"/>
+                <input type="submit" id="submit" value="Submit" class="submit phr-input-button" />
+            </div><!-- /.phr-input-button-align-right -->
+
+        </form>
+
+        <c:if test="${ action == 'edit' }">
+            <%@ include file="/includes/components/admin/inc_manage_bottomnav.jspf" %>
+        </c:if>
+
+    </div><!-- /#user-display-panel -->
+
+    <div id="loader-dialog" class="ui-helper-hidden" title="Submitting User...">
+        <img src="${ctx_static}/images/ajax-loader.gif" alt="[progress bar]" />
+    </div>
+
+</body>

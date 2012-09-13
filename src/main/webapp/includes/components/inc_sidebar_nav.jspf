@@ -1,0 +1,119 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+<div id="left">
+    <!-- left navigation -->
+
+    <a id="ln-home" href="${ctx_patient}/${ it.healthRecordId }/dashboard" class="navhead home">DASHBOARD</a>
+
+    <c:if test="${sessionScope.showCareNotebook eq true}">
+         
+    <div class="navhead">Care Notebook</div>
+
+    <div id="ln-parent">
+            <a id="ln-medicalinformation" href="${ctx_patient}/${ it.healthRecordId }/emergencyinformation/">Medical Information</a>
+            <div id="ln-medicalinformation-sub">
+                <a id="ln-medicalinformation-em" href="${ctx_patient}/${ it.healthRecordId }/emergencyinformation/">Emergency Information</a>
+                <a id="ln-medicalinformation-in" href="${ctx_patient}/${ it.healthRecordId }/insuranceinformation/">Insurance Information</a>
+                <a id="ln-medicalinformation-sc" href="${ctx_patient}/${ it.healthRecordId }/specialtyclinics/">Specialty Clinics</a>
+                <a id="ln-medicalinformation-ph" href="${ctx_patient}/${ it.healthRecordId }/pharmacies/">Pharmacies</a>
+            </div>
+            <a id="ln-providers" href="${ctx_patient}/${ it.healthRecordId }/careproviders">Care Providers</a>
+            <a id="ln-familyhistory" href="${ctx_patient}/${ it.healthRecordId }/familymembers/">Family History</a>
+            <div id="ln-familyhistory-sub">
+                <a id="ln-familyhistory-fh" href="${ctx_patient}/${ it.healthRecordId }/familymembers/">Family Members</a>
+                <a id="ln-familyhistory-mh" href="${ctx_patient}/${ it.healthRecordId }/familyhistory/">Medical History</a>
+            </div>
+<!--            <a id="ln-schedules" href="${ctx_patient}/${ it.healthRecordId }/schedules">Schedules</a>-->
+            <a id="ln-nutrition" href="${ctx_patient}/${ it.healthRecordId }/nutrition">Nutrition</a>
+            <a id="ln-logs" href="${ctx_patient}/${ it.healthRecordId }/respiratory/">Daily Care Logs</a>
+            <div id="ln-logs-sub">
+                <a id="ln-logs-rc" href="${ctx_patient}/${ it.healthRecordId }/respiratory/">Respiratory Care</a>
+                <a id="ln-logs-co" href="${ctx_patient}/${ it.healthRecordId }/communication/">Communication</a>
+                <a id="ln-logs-mi" href="${ctx_patient}/${ it.healthRecordId }/mobility/">Mobility Information</a>
+                <a id="ln-logs-rs" href="${ctx_patient}/${ it.healthRecordId }/rest/">Rest & Sleep</a>
+                <a id="ln-logs-sp" href="${ctx_patient}/${ it.healthRecordId }/social/">Social & Play</a>
+                <a id="ln-logs-cs" href="${ctx_patient}/${ it.healthRecordId }/stress/">Coping, Stress, & Tolerance</a>
+            </div>
+            <a id="ln-transitions" href="${ctx_patient}/${ it.healthRecordId }/transitions/">Transitions & Goals</a>
+            <a id="ln-education" href="${ctx_patient}/${ it.healthRecordId }/school/">Education</a>
+            <div id="ln-education-sub">
+                <a id="ln-education-si" href="${ctx_patient}/${ it.healthRecordId }/school/">School Information</a>
+                <a id="ln-education-sp" href="${ctx_patient}/${ it.healthRecordId }/schoolpersonnel/">School Personnel</a>
+                <a id="ln-education-cn" href="${ctx_patient}/${ it.healthRecordId }/meetings/">Counselor Meeting Notes</a>
+            </div>
+            <a id="ln-employment" href="${ctx_patient}/${ it.healthRecordId }/employment/">Employment</a>
+    </div>
+    </c:if>
+    
+    <div class="navhead">Health Record</div>
+
+    <div id="ln-parent">
+            <a id="ln-medicalevents" href="${ctx_patient}/${ it.healthRecordId }/medicalevents">Medical Events</a>
+            <a id="ln-allergies" href="${ctx_patient}/${ it.healthRecordId }/allergies">Allergies &amp; Reactions</a>
+            <a id="ln-medications" href="${ctx_patient}/${ it.healthRecordId }/medications">Medications</a>
+            <a id="ln-labsandtests" href="${ctx_patient}/${ it.healthRecordId }/results">Lab &amp; Test Results</a>
+            <a id="ln-vitals" href="${ctx_patient}/${ it.healthRecordId }/vitals">Vitals Measurements</a>
+            <div id="ln-vitals-sub">
+                <a id="ln-vitals-bp" href="${ctx_patient}/${ it.healthRecordId }/vitals-bp">Blood Pressure</a>
+                <a id="ln-vitals-hr" href="${ctx_patient}/${ it.healthRecordId }/vitals-hr">Pulse</a>
+                <a id="ln-vitals-bt" href="${ctx_patient}/${ it.healthRecordId }/vitals-bt">Body Temperature</a>
+                <a id="ln-vitals-p" href="${ctx_patient}/${ it.healthRecordId }/vitals-p">Pain Level</a>
+                <a id="ln-vitals-pf" href="${ctx_patient}/${ it.healthRecordId }/vitals-pf">Peak Flow</a>
+                <a id="ln-vitals-ht" href="${ctx_patient}/${ it.healthRecordId }/vitals-ht">Body Height</a>
+                <a id="ln-vitals-bw" href="${ctx_patient}/${ it.healthRecordId }/vitals-bw">Body Weight</a>
+                <a id="ln-vitals-bmi" href="${ctx_patient}/${ it.healthRecordId }/vitals-bmi">Body Mass Index (BMI)</a>
+                <a id="ln-vitals-bs" href="${ctx_patient}/${ it.healthRecordId }/vitals-bs">Fingerstick Blood Glucose</a>
+            </div>
+            <a id="ln-immunizations" href="${ctx_patient}/${ it.healthRecordId }/immunizations">Immunizations</a>
+            <a id="ln-visits" href="${ctx_patient}/${ it.healthRecordId }/visits">Appointments &amp; Visits</a>
+    </div>
+
+    <div class="navhead">Track Health</div>
+    <a id="ln-exercise" href="${ctx_patient}/${ it.healthRecordId }/exercise">Exercise</a>
+    <a id="ln-health-calendar" href="${ctx_patient}/${ it.healthRecordId }/calendar/">Health Calendar</a>
+
+    <div class="navhead">Documents &amp; Forms</div>
+    <a id="ln-caredocs" href="${ctx_patient}/${ it.healthRecordId }/caredocuments">Continuity Care Records</a>
+
+<%--
+    <a href="#" class="navhead">Track Health</a>
+    <a href="#">Health History</a>
+    <a href="#">Journals</a>
+
+    <a href="#" class="navhead">Get Care</a>
+    <a id="ln-care-givers" href="#caregivers">Care Givers</a>
+    <a href="#">Treatment Facilities</a>
+    <a href="#">My Coverage</a>
+    <a id="ln-care-calendar" href="#healthcalendar">Health Calendar</a>
+--%>
+<%--
+    <a href="${ctx_patient}/${ it.healthRecordId }/sync" class="navhead">Import Medical Records</a>
+    <a id="ln-import-sync" href="${ctx_patient}/${ it.healthRecordId }/sync">Sync External Data</a>
+--%>
+
+
+    <div class="navhead">Personal Information</div>
+    <a id="ln-myprofile" href="${ctx_patient}/${ it.healthRecordId }/profile">My Profile</a>
+    <a id="ln-myaccount" href="${ctx_patient}/${ it.healthRecordId }/account">My Account</a>
+    <div id="ln-myaccount-sub">
+        <a id="ln-myaccount-cp" href="${ctx_patient}/${ it.healthRecordId }/account">Change Password</a>
+    </div>
+<!--    <a id="ln-emergency" href="${ctx_patient}/${ it.healthRecordId }/ice">In Case of Emergency</a>-->
+    <a id="ln-healthcard" href="${ctx_patient}/${ it.healthRecordId }/healthcard">Health Information Card</a>
+
+</div><!-- /#left -->

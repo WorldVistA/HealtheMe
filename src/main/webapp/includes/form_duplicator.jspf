@@ -1,0 +1,60 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+ <script language="javascript">
+        $("#addForm").click(function() {
+            var newDate = new Date;
+            var newId = newDate.getTime();
+            var previouslyAdded = $(".addedDiv:last");
+            previouslyAdded.after("<hr /><br /><div id='"+newId+"' class='addedDiv'></div>");
+
+            previouslyAdded.find(":not(:hidden):not(.ui-datepicker-trigger):not(option)").clone().each(function() {
+                var item = $(this);
+                item.attr('id', function() {
+                    var val = $(this).attr('id');
+                    if (val != undefined) {
+                        var delim = val.lastIndexOf("_");
+                        return val.substring(0,  (delim + 1)) //chop off everything before delimiting underscore
+                            + (parseInt(val.substring(delim + 1)) + 1); //increment by 1
+                    }
+                    return undefined;
+                });
+
+                item.attr('name', function() {
+                    var val = $(this).attr('name');
+                    if (val != undefined) {
+                        var delim = val.lastIndexOf("_");
+                        return val.substring(0,  (delim + 1))
+                            + (parseInt(val.substring(delim + 1)) + 1);
+                    }
+                    return undefined;
+                });
+
+                if (item.is(":input")){
+                    item.val("");
+                    if (item.hasClass("datepicker")) {
+                        item.removeClass("hasDatepicker")
+                    }
+                } 
+                
+            }).appendTo("#" + newId);
+            
+            
+            $(".addedDiv:last .datepicker").datepicker({showOn: 'button', buttonImage: '${ctx_static}/images/cal.gif', buttonImageOnly: true, onSelect:function(){$(this).valid();}});
+            return false;
+        });
+    </script>

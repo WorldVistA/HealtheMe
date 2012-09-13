@@ -1,0 +1,50 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+<%--
+    Document   : inc_redirector.jspf
+    Created on : May 10, 2010
+    Author     : Chris McCall
+--%>
+
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+
+<% if (request.isUserInRole("ROLE_PATIENTADMIN")) {%>
+    <script type="text/javascript">
+        location.href = '${ctx_patientadmin}/';
+    </script>
+<% } else if (request.isUserInRole("ROLE_ADMIN")) {%>
+    <script type="text/javascript">
+        location.href = '${ctx_admin}/';
+    </script>
+<% } else if (request.isUserInRole("ROLE_CARETAKER")) {%>
+    <script type="text/javascript">
+        location.href = '${ctx_caretaker}/';
+    </script>
+<% } else if (request.isUserInRole("ROLE_PATIENT")) {%>
+    <script type="text/javascript">
+        <c:choose>
+            <c:when test="${empty firstLogin}">
+                location.href = '${ctx_patient}/${ it.healthRecordId }/dashboard';
+            </c:when>
+            <c:otherwise>
+                location.href = '${firstLogin}';
+            </c:otherwise>
+        </c:choose>
+    </script>
+<% } %>

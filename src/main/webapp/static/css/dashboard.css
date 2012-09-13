@@ -1,0 +1,77 @@
+/**
+ * Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* 
+    Document   : dashboard
+    Created on : Aug 30, 2012, 3:31:47 PM
+    Author     : jdoyle
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#dashboard h2 {
+    margin: 8px 0;
+}
+#dashboard #common-tasks li {
+    background: url(img/icons/fatcow/16x16/bullet_go.png) no-repeat 0;
+    text-indent: 20px;
+    line-height: 20px;
+}
+#dashboard #health-record-stats li,
+#dashboard #self-entered-stats li {
+    
+    margin: 8px 10px;
+}
+#dashboard #main-display-panel a {
+    color: #666;
+}
+#dashboard .clinical-stat,
+#dashboard .self-entered-stat {
+    color: #333;
+    float: left;
+    width: 250px;
+}
+#dashboard .clinical-stat p,
+#dashboard .self-entered-stat p {
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-left: 10px;
+}
+#dashboard .clinical-stat .header-box,
+#dashboard .self-entered-stat .header-box {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 4px;
+}
+#dashboard .count {
+    -moz-border-radius: 4px;
+    -moz-box-shadow: 1px 1px 1px #666 inset;
+    -webkit-border-radius: 4px;
+    -webkit-box-shadow: 1px 1px 1px #666 inset;
+    background-color: #91C149;
+    border-radius: 4px;
+    color: white;
+    font-size: .9em;
+    font-weight: bold;
+    margin-left: 4px;
+    padding: 1px 4px;
+    text-shadow: 1px 1px 0px #666;
+}
+#dashboard .self-entered-stat {
+    margin-left: 10px;
+}
+#dashboard .footnote {
+    font-style: italic;
+}

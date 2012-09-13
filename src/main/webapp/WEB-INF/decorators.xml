@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<!--
+    Document   : decorators.xml
+    Created on : May 25, 2009, 12:37 PM
+    Author     : Daniel Shaw (dshaw.com)
+    Description:
+        Handles SiteMesh decorator configuration.
+-->
+
+<decorators defaultdir="/decorators">
+
+    <excludes>
+        <pattern>/auth*</pattern>
+        <pattern>/*/caredocuments/*/xml*</pattern>
+        <pattern>/static/reference/html*</pattern>
+        <pattern>/assets*</pattern>
+        <!--
+        <pattern>/ajax*</pattern>
+        <pattern>/map*</pattern>
+        -->
+    </excludes>
+    <decorator name="none"/>
+
+    <decorator name="printable" page="print.jsp"/>
+    
+    <decorator name="landing" page="landing.jsp">
+        <pattern>/</pattern>
+        <pattern>/default*</pattern>
+    </decorator>
+
+    <decorator name="default" page="default.jsp">
+        <pattern>/locator*</pattern>
+        <pattern>/about*</pattern>
+        <pattern>/faq*</pattern>
+        <pattern>/help*</pattern>
+        <pattern>/contact*</pattern>
+        <pattern>/terms*</pattern>
+        <pattern>/privacy*</pattern>
+        <pattern>/access*</pattern>
+    </decorator>
+
+    <decorator name="nonav" page="nonav.jsp">
+        <pattern>/passwordchange*</pattern>
+        <pattern>/error/*</pattern>
+    </decorator>
+	
+	<decorator name="login" page="login.jsp">
+        <pattern>/login*</pattern>
+    </decorator>
+    
+    <decorator name="manage" page="manage.jsp">
+        <pattern>/admin*</pattern>
+        <pattern>/manage*</pattern>
+        <pattern>/providers*</pattern>
+    </decorator>
+
+    <decorator name="caretaker" page="caretaker.jsp">
+        <pattern>/caretaker*</pattern>
+    </decorator>
+	
+    <decorator name="iframe" page="iframe.jsp">
+        <pattern>*/phr/*/edit*</pattern>
+        <pattern>*/*-add*</pattern>
+    </decorator>
+
+    <decorator name="main" page="main.jsp">
+        <pattern>/*</pattern>
+    </decorator>
+
+</decorators>
+

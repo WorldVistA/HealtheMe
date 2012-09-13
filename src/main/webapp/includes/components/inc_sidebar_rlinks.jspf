@@ -1,0 +1,33 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+<%--
+    Document   : inc_sidebar_rlinks.jspf
+    Created on : November 4, 2009, 1:50:00 PM
+    Author     : Daniel Shaw (dshaw.com)
+--%>
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+
+<div id="rlinks">
+    <div>Related Links</div>
+    <ul>
+        <li><a target="new" href="http://www.wvdhhr.org/">WV Department of Health</a></li>
+        <li><a target="new" href="http://www.cms.hhs.gov/">Centers for Medicare &amp; Medicaid Services</a></li>
+        <li><a target="new" href="http://www.cdc.gov/h1n1flu/">H1N1 Flu Information</a></li>
+    </ul>
+</div><!-- /#rlinks -->

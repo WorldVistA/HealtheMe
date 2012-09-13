@@ -1,0 +1,116 @@
+/**
+ * Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* 
+    Document   : manage-additions.css
+    Created on : Dec 7, 2009, 11:52:00 PM
+    Author     : Daniel Shaw (dshaw.com)
+    Description:
+        Style for User Manager.
+*/
+
+/*
+ * #main-display-panel actually wraps the left navigation.
+ */
+.manage #main-display-panel {
+    border: 0;
+    min-height:120px;
+}
+
+/*
+ * replacement for #main-display-panel.
+ */
+.manage #user-display-panel {
+    position: relative;
+    border: solid 1px #CCCCCC;
+    overflow: hidden;
+    padding: 10px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+    min-height: 100px;
+    z-index:1;
+}
+
+/*
+ * help panel for user manager.
+ */
+.manage .help-panel,
+.manage .resource-help {
+    background-color:#FFFFFF;
+    border:1px solid #BFBDBD;
+    float: right;
+    width:150px;
+    margin: 0 0 10px 10px;
+    padding:15px 10px 10px 10px;
+    /*position:absolute;
+    right:10px;
+    top:10px;*/
+}
+
+/*
+ * Replacement for li.active which cannot be programmatically add the class "active".
+ */
+#manage-home #ln-manage-users,
+#manage-users #ln-manage-users,
+#manage-user-add #ln-manage-users,
+#manage-user-edit #ln-manage-users,
+#manage-help #ln-manage-help {
+    background-color:#FFFFFF;
+    border-right:medium none;
+    margin-left:-8px;
+    -moz-border-radius-topleft:2px;
+    -moz-border-radius-bottomleft:2px;
+    -webkit-border-radius-topleft:2px;
+    -webkit-border-radius-bottomleft:2px;
+    border-radius-topleft:2px;
+    border-radius-bottomleft:2px;
+}
+#manage-home #ln-manage-users a,
+#manage-users #ln-manage-users a,
+#manage-user-add #ln-manage-users a,
+#manage-user-edit #ln-manage-users a,
+#manage-help #ln-manage-help a{
+    background-color:#FFFFFF;
+    color:#000000;
+}
+
+/*
+ * Left nav sub navs are hidden by default.
+ */
+#left-nav .sub-1 {
+    display: none;
+}
+
+/*
+ * Display left nav sub navs on the appropriate pages.
+ */
+#manage-users #ln-manage-users .sub-1,
+#manage-user-add #ln-manage-users .sub-1,
+#manage-user-edit #ln-manage-users .sub-1 {
+    display: block;
+}
+
+/*
+ * Tweak the size of the text inputs to make #filter-panel fit.
+ */
+#filter-panel input[type='text'] { width: 90px; }
+
+/*
+ * Patient identifiers results table.
+ */
+#patienttable { width: 500px; border:1px solid #333333; }
+#patienttable th, #patienttable tD  { padding: 4px }
+#patienttable thead th { background-color: #E5E5E5 }

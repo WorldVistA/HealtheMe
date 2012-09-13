@@ -1,0 +1,88 @@
+/**
+ * Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *         http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+/* 
+    Document   : paging
+    Created on : Sep 14, 2009, 1:25:47 PM
+    Author     : cmccall
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#pager {
+    display:inline;
+    margin:0 auto;
+}
+
+#pager-center {
+    text-align:center;
+}
+#paging {
+	background-color:#FAFAFA;
+	padding: 4px;
+	text-align:center;
+}
+
+ul.pages {display: inline-block;}
+
+#pager ul.pages {
+    list-style-type:none;
+    white-space:nowrap;
+    border:none;
+    text-transform:uppercase;
+    font-size:.8em;
+    padding:0;
+}
+
+ul.pages li {
+	background-color:#FFF;
+    display:block;
+    list-style:none;
+    float:left;
+    border:1px solid #ccc;
+    text-decoration:none;
+    margin-right:5px;
+    padding:4px;
+}
+
+#pager ul.pages li:hover {
+	border:1px solid #666;
+}
+
+#pager ul.pages li.pgEmpty {
+    border:1px solid #ccc;
+    color:#DEDBD1;
+}
+
+#pager ul.pages li.pgCurrent {
+    background-color:#E5E5E5;
+	border:1px solid #666;
+    color:#000;
+    font-weight:bold;
+}
+
+.widget #full-results {
+    color:#666666;
+	font-size:0.9em;
+	text-transform:uppercase;
+}
+span#results-min,
+span#results-max,
+span#results-total{
+    font-weight: bold;
+}
+span#result-type{
+    text-transform: capitalize;
+}

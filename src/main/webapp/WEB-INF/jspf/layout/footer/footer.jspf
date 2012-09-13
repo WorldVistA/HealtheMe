@@ -1,0 +1,57 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+
+<div id="footer">
+    <div id="footer-contents" class="clear">
+        <ul class="footer-links">
+            <li class="footer-link-group">Quick Links
+                <ul>
+                    <li><a href="${ctx}/about">About Health<span class="e">e</span>Me</a></li>
+                    <li><a href="${ctx}/terms">Terms &amp; Conditions of Use</a></li>
+                    <li><a href="${ctx}/privacy">Privacy Statement</a></li>
+                    <li><a href="${ctx}/help">Help</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="footer-links">
+            <li class="footer-link-group">
+                <span id="join">Join the Community!</span>
+                <ul>
+                    <li><a class="external" href="http://code.osehra.org/journal/publication/11" target="new">Visit the Community</a></li>
+                    <li><a class="external" href="https://github.com/OSEHRA/HealtheMe">Download the Source Code</a></li>
+                    <li><a class="external" href="http://wiki.osehra.org/display/HealtheMe">Documentation</a></li>
+                    <li><a class="external" href="http://issues.osehra.org/browse/HEALTHEME">Suggest Features</a></li>
+                    <li><a class="external" href="http://issues.osehra.org/browse/HEALTHEME">Report Problems</a></li>
+                </ul>
+            </li>
+        </ul>
+        <div id="license" class="clear">
+            <div id="license-text">
+                <span id="license-logo"></span>
+                <p>Released as free <em>open source</em> software without warranties under <a class="external" href="http://www.apache.org/licenses/LICENSE-2.0.html" title="Apache License, Version 2.0" target="new">Apache License, Version 2.0 (APLv2)</a></p>
+            </div>
+        </div>
+        <div id="attributions">
+            <p>&copy;2012. All rights reserved.</p>
+            <p>Health<span class="e">e</span>Me is a trademark of <a class="external" href="http://www.krminc.com" title="KRM Associates Inc" target="new">KRM Associates Inc.</a></p>
+            <p>Apache feather logos are trademarks of The Apache Software Foundation. Other names and content appearing on the site may be trademarks of their respective owners.</p>
+        </div>
+    </div>
+</div>

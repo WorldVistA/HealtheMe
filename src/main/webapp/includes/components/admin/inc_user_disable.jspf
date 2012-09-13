@@ -1,0 +1,136 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+<%--
+    Document   : inc_user_disable.jspf
+    Created on : March 14, 2010, 11:28:00 PM
+    Author     : Daniel Shaw (dshaw.com)
+--%>
+<%@ include file="/includes/taglibs.jspf" %>
+
+<%@ include file="/includes/components/admin/inc_ctx_base_config.jspf" %>
+<c:set var="lnavsub1" value="Disable Account"/>
+<c:set var="pagetitle" value="${ user.fullName } - ${ lnavsub1 }"/>
+<%-- variable(s) bottomnav --%>
+<c:set var="isPatient" value="${ user.isPatient }"/>
+<c:set var="isLockedOut" value="${ user.isLockedOut }"/>
+
+
+<head>
+    <title>${ manageTitle }${tsep}${ pagetitle }</title>
+
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/manage.css" />
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/manage-additions.css" />
+    <style type="text/css">
+        #userform {
+            width: 24em;
+            margin: 0 auto 1em;
+        }
+        #userform .userform-buttons {
+            margin: 10px 0;
+            text-align: center;
+        }
+    </style>
+
+    <%-- hem.js defines core functionality for health-e-Me --%>
+    <script type="text/javascript" src="${ctx_static}/js/hem.js"></script>
+    <%@ include file="/includes/inc_hem_js.jspf" %>
+    <%@ include file="/includes/inc_hem_um_js.jspf" %>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            <c:choose>
+                <c:when test="${ not empty manage_area && manage_area == 'admin' }">
+                    <%--$("#user-photo").hide();--%>
+                </c:when>
+                <c:otherwise>
+                    HEM.user.image('${ it.primaryHealthRecord.fullGender }');
+
+                    if ($("#user-photo")) {
+                        var minheight = $("#user-photo").height();
+                        if ($('#profile-container').height() < minheight) {
+                            $('#profile-container').height(minheight + 20)
+                        }
+                    }
+                </c:otherwise>
+            </c:choose>
+
+            $('#password').focus();
+        });
+    </script>
+</head>
+<body id="manage-users" class="manage">
+
+    <%@ include file="/includes/components/admin/inc_manage_leftnav.jspf" %>
+
+    <div id="user-display-panel">
+
+        <h1>Account Status: <span class="user-fullname">${ user.fullName }</span></h1>
+
+        <div class="section-info">
+            Enable/disable user account.
+        </div>
+
+        <div id="profile-container" class="section-panel">
+
+            <div id="user-photo">
+                <div id="profile-photo"></div>
+                <p class="user-photo-text">${ user.firstName }</p>
+            </div>
+
+            <form id="userform" action="${ctx}/form/users/${ user.userId }/disable/?area=${manage_area}" method="post">
+
+                <div id="username-fld" class="regforminput">
+                    <div class="regformlabel">
+                        <label for="username">
+                            Username
+                        </label>
+                    </div>
+                    <div class="regforminput">
+                        ${ user.username }
+                    </div>
+                </div><!-- /#username-fld -->
+
+                <div id="active-fld" class="regforminput">
+                    <div class="regformlabel">
+                        <label for="active">
+                            Account Status
+                            <span class="required" title="Required field">*</span>
+                        </label>
+                    </div>
+                    <div class="regforminput">
+                        <input type="radio" name="active" value="true" <c:if test="${ user.active == true }">checked</c:if> id="enabled" /><label for="enabled"> Enabled</label>
+                        <input type="radio" name="active" value="false" <c:if test="${ user.active == false }">checked</c:if> id="disabled" /><label for="disabled"> Disabled</label>
+                    </div>
+                </div><!-- /#active-fld -->
+
+                <div class="userform-buttons">
+                    <input type="hidden" id="by" value="${ pageContext.request.remoteUser }" />
+                    <input type="button" class="phr-input-button" value="Cancel" onClick="window.location='./'"/>
+                    <input type="submit" id="submit" value="Update Status" class="submit phr-input-button" />
+                </div><!-- /.phr-input-button-align-right -->
+
+            </form>
+            <div class="clear"></div>
+
+        </div><!-- /#profile-container,.section-panel -->
+
+        <%@ include file="/includes/components/admin/inc_manage_bottomnav.jspf" %>
+
+    </div><!-- /#user-display-panel -->
+
+</body>

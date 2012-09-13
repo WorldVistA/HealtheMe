@@ -1,0 +1,545 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+<%--
+    Document   : inc_user_list.jspf
+    Created on : February 23, 2010, 11:35:00 PM
+    Author     : Daniel Shaw (dshaw.com)
+--%>
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+
+<%@ include file="/includes/components/admin/inc_ctx_base_config.jspf" %>
+
+<c:choose>
+    <c:when test="${empty param.results}">
+        <c:set scope="page" var="numResults" value="10"></c:set>
+    </c:when>
+    <c:otherwise>
+        <c:catch var="e">
+            <fmt:formatNumber minIntegerDigits="1" maxIntegerDigits="2" type="number" value="${param.results}" var="numResults" scope="page"></fmt:formatNumber>
+        </c:catch>
+        <c:if test="${e != null}">
+            <c:set scope="page" var="numResults" value="10"></c:set>
+        </c:if>
+        <c:if test="${numResults < 1}">
+            <c:set scope="page" var="numResults" value="10"></c:set>
+        </c:if>
+    </c:otherwise>
+</c:choose>
+
+<head>
+    <meta name="requiresJQUI" content="true">
+    <title>${ manageTitle }</title>
+
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/manage.css" />
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/manage-additions.css" />
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/widget.css" />
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/paging.css" />
+    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/paging-additions.css" />
+    <style type="text/css">
+        #filters {
+            background:#F3F1EB none repeat scroll 0 0;
+            border:1px solid #DEDBD1;
+            margin-bottom:15px;
+            padding:10px;
+        }
+        .debug-header { color: #95C983 }
+        .datatable-header td { vertical-align: bottom }
+        .addlink { display: inline }
+
+        /* reset width */
+        .req-info { width: auto; }
+        .phr-input-button { margin: 0 0 .8em 0; }
+
+        #quickuserform {
+            padding: 2em;
+        }
+        #quickuserform .input-table {
+            margin: auto;
+            border: 1px #e5e5e5 dashed;
+        }
+        #quickuserform .input-table td {
+            padding: .8em .8em .2em;
+        }
+        #quickuserform input { font-size: 1.1em }
+        #quickuserform .input-block { padding: .8em 0; vertical-align: middle; }
+        #quickuserform .input-block label {
+            zoom: 1;
+            display: inline-block;
+            width: 7.5em;
+        }
+        #quickuserform fieldset { padding: 1em 1em 1em 7.5em; }
+        .inline-block {
+            zoom: 1;
+            display: inline-block;
+        }
+        #quickuserform #roles-set {
+            vertical-align:middle;
+        }
+        #quickuserform #roles-set .role-description {
+            font-size: .8em;
+        }
+        #quickuserform #roles-set .role-radio {
+            width: 340px;
+            margin: 0 0 .2em 0;
+            vertical-align:middle;
+        }
+        #quickuserform #roles-set label {
+            width: auto;
+            padding: 0 0 0 .1em;
+        }
+
+        /* override widget link css */
+        .widget a {
+            color: #3652A2;
+            text-decoration: underline;
+        }
+        #userlist th { color:#000; }
+        .operations { color:#D2D2D2; }
+    </style>
+
+    <script type="text/javascript" src="${ctx_static}/js/jquery.DOMWindow.js"></script>
+    <script type="text/javascript" src="${ctx_static}/js/jquery.pager.js"></script>
+    <script type="text/javascript" src="${ctx_static}/js/json2.js"></script>
+    <script type="text/javascript" src="${ctx_static}/js/date.format.js"></script>
+
+    <script type="text/javascript" src="${ctx_static}/js/hem.js"></script>
+    <%@ include file="/includes/inc_hem_js.jspf" %>
+    <%@ include file="/includes/inc_hem_um_js.jspf" %>
+    <%-- TODO: integrate funcxtionality to hem.js --%>
+    <script type="text/javascript">
+        String.prototype.supplant = function (o) {
+            return this.replace(/{([^{}]*)}/g,
+                function (a, b) {
+                    var r = o[b];
+                    return typeof r === 'string' || typeof r === 'number' ? r : a;
+                }
+            );
+        };
+    </script>
+
+    <script type="text/javascript">
+        var ctx_base = '${ ctx_base }';
+        var isAdminArea = !!HEM.um.isAdminArea || false;
+        var area = '${ manage_area }';
+
+        var max = ${numResults}; //num per page
+        var pages = 0; //number of pages of results
+        var start = 0; //index of first element on page
+        var userCount = 0;
+        var orderBy;
+        var desc;
+        var defaultRolesFilter = (area === 'admin') ? 'ad,um,cc' : 'p,um'; // ad,um TODO: need to enable use of a list
+                                      // for a (all) to default to.
+
+        //define function to call when a page is clicked
+        PageClick = function(pageclickednumber) {
+            start = max*(pageclickednumber-1);
+            var filterUsername = $("#filter_username").val();
+            var filterEmail = $("#filter_email").val();
+            var filterRole = $("#filter_role").val();
+            switchToPage(pageclickednumber, getFilter(filterUsername, filterEmail, filterRole));
+        }
+
+        function getCount(filterUrlString) {
+            var url = HEM.env.apipath + '/users/count/';
+            if (filterUrlString != undefined) {
+                url += filterUrlString;
+            }
+
+            $.ajax({
+                url: url,
+                type: "GET",
+                contentType: "application/json",
+                timeout: 10000,
+                dataType: "json",
+                success: function(data) {
+                    if (max==0) max = data.count;
+                    userCount = data.count;
+                    pages = Math.ceil(userCount/max);
+                    setPager((start/max)+1);
+                    return userCount;
+                },
+                error: countError
+            });
+        }
+
+        function countError() {
+            userCount = 0;
+            pages = 0;
+            setPager(0);
+        }
+
+        function error(errorMessage) {
+            if (errorMessage == undefined) {
+                errorMessage = "An error occurred. Please try again.";
+            }
+            $('#userlistings').html('<tr><td colspan="6"><span class="error"><b>' + errorMessage + '</b></span></td></tr>');
+        }
+
+        //relies on getCount having been called and count to be populated
+        function setPager(currentPage) {
+            $("#pager").pager({pagenumber: currentPage, pagecount: pages, buttonClickCallback: PageClick });
+            doPagingText(userCount);
+        }
+
+        function switchToPage(pageNumber, filterUrlString){
+            $('#userlistings').html('');
+            var url = HEM.env.apipath + '/users/';
+            if (filterUrlString != undefined) {
+                url += filterUrlString;
+            }
+
+            setPager(pageNumber);
+            // *** perform AJAX get request for user data.
+            $.ajax({
+                url: url,
+                type: "GET",
+                processData: false,
+                contentType: "application/json",
+                timeout: 10000,
+                dataType: "text",  // not "json". postprocessed by JSON2.
+                success: userListingLoader,
+                error: errorHandler
+            });
+        }
+
+        // updates min, max, total
+        function doPagingText(totalUsers){
+            var minResults = start;
+            if (totalUsers>0) {
+                minResults +=1;
+            }
+            var maxResults = start+max;
+            if (totalUsers < maxResults){
+                maxResults = totalUsers;
+            }
+
+            if (maxResults < 1) maxResults = totalUsers;
+
+            $("#results-max").text(maxResults);
+            $("#results-min").text(minResults);
+            $('#results-total').text(totalUsers);
+        }
+
+        function getFilter(filterUsername, filterEmail, filterRole){
+            var filterURL = initialFilterURL = '?';
+            var addFilter = function(key, value) {
+                var str = '';
+                if (filterURL !== initialFilterURL) {
+                    str = '&';
+                }
+                return str+key+'='+value;
+            }
+
+            // evaluate parameter and build filter.
+            if (!!max) {
+                filterURL += addFilter('max', max);
+            }
+            if (!!start && typeof start === 'number' && start > 0) {
+                filterURL += addFilter('start', start);
+            }
+            if (!!orderBy  && !!orderBy.length) {
+                filterURL += addFilter('orderBy', orderBy);
+            }
+            if (!!desc  && !!desc.length) {
+                filterURL += addFilter('desc', desc);
+            }
+            if (!!area  && !!area.length) {
+                filterURL += addFilter('area', area);
+            }
+            if (filterUsername != undefined) {
+                filterURL += addFilter('u', filterUsername);
+            }
+            if (!!filterEmail) {
+                filterURL += addFilter('e', filterEmail);
+            }
+            if (!!filterRole) {
+                filterURL += addFilter('r', filterRole);
+            } else {
+                filterURL += addFilter('r', defaultRolesFilter);
+            }
+
+            return filterURL;
+        }
+
+        HEM.um.formatLastLogin = function(lastLogin, totalLogin) {
+            var returnString = '';
+            if (!lastLogin || lastLogin == 'undefined') {
+                returnString = '<i>None</i>';
+            } else {
+                returnString = '<b>Last:</b> ' + lastLogin;
+                if (totalLogin) {
+                    returnString += '<br /><b>Count: </b> ' + totalLogin;
+                }
+            }
+            return returnString;
+
+        };
+
+        function userListingLoader(data) {
+            // *** Parse with json library
+            try {
+                var result = JSON.parse(data);
+            }
+            catch (err) {
+                detectLogout(data);
+            }
+            // *** loop through user listings
+            if (result.user instanceof Array) {
+                var userHtml = '';
+                $.each(result.user, function(i,user) {
+                    if (user.userId) {
+                        userHtml += renderUserListing(user);
+                    }
+                });
+                $('#userlistings').html(userHtml);
+            } else {
+                //1 result
+                if (typeof(result.user) == "object") {
+                    $('#userlistings').html(renderUserListing(result.user));
+                } else {
+                    //0 results
+                    error("No Results returned. Please adjust your filter settings and try again.");
+                }
+            }
+        }
+
+        function renderUserListing(user) {
+            var userlisting = '';
+            var role;
+            var roles = '';
+            var rolesCount = 0;
+            var isAdmin = false;
+
+            if (user.roles.userRole.id) {
+                role = HEM.json.user.formatRole(user.roles.userRole.role);
+                if (role.toUpperCase() === 'ADMIN') {
+                    isAdmin = true;
+                }
+                roles += role+' ';
+            } else {
+                rolesCount = (user.roles.userRole.length ? user.roles.userRole.length : 0);
+                $.each(user.roles.userRole, function(j,r) {
+                    if (r.id) {
+                        role = HEM.json.user.formatRole(r.role);
+                        if (role.toUpperCase() === 'ADMIN') {
+                            isAdmin = true;
+                        }
+                        roles += role;
+                        roles += (j < rolesCount-1 ? ', ' : '');
+                    }
+                });
+            }
+
+            if (user.userId) {
+                userlisting += '\
+                    <tr id="userlisting-'+user.userId+'">\
+                    <td class="full-name">';
+                if (!isAdmin && !isAdminArea) {
+                    userlisting += '<a href="'+ctx_base+'/users/'+user.userId+'/">';
+                }
+                userlisting += user.lastName+', '+user.firstName;
+                if (!isAdmin && !isAdminArea) {
+                    userlisting += '</a>';
+                }
+                userlisting += '\
+                    <td class="email">'+HEM.json.user.formatEmail(user.email)+'</td>\
+                     <td class="username">'+user.username+'</td>\
+                     <td class="login-details">\
+                     '+HEM.um.formatLastLogin(user.lastLogin, user.totalLogin)+'\
+                     </td>\
+                     <td class="roles">'+roles+'</td>\
+                     <td class="operations">';
+                if (!isAdminArea && isAdmin) {
+                    userlisting += '&nbsp;';
+                } else {
+                    userlisting += '\
+                        <a href="./users/'+user.userId+'/"">Details</a>\
+                         | \
+                        <a href="./users/'+user.userId+'/edit"">Edit</a>\
+                         | \
+                        <a href="./users/'+user.userId+'/reset"">Reset</a>';
+                }
+                userlisting += '</td></tr>';
+            }
+            return userlisting;
+        }
+
+        function parseRole(role) {}
+
+        function errorHandler(xhr) {
+            if (xhr.responseText) {
+                if (xhr.statusText == "Precondition Failed") {
+                    error("Invalid filter. Please adjust your filter settings and try again.");
+                } else {
+                    error();
+                }
+            }
+            return;
+        }
+
+        function detectLogout(dataState) {
+            if(typeof(dataState) == "string") {
+                location.reload(true);
+                return;
+            }
+        }
+
+        $(document).ready(function() {
+            getCount(getFilter());
+            switchToPage(1, getFilter());
+
+            //form submit handler
+            $('form#filterForm').bind("submit",function(filter){
+                filter.preventDefault();
+                var filterNumResults = $("#filter_results_per_page").val();
+                var filterUsername = $("#filter_username").val();
+                var filterEmail = $("#filter_email").val();
+                var filterRole = $("#filter_role").val();
+
+                start = 0;
+                max = parseInt(filterNumResults);
+
+                var filter = getFilter(filterUsername, filterEmail, filterRole);
+
+                getCount(filter);
+                switchToPage(1, filter);
+            });
+        });
+    </script>
+</head>
+<body id="manage-home" class="manage">
+
+    <%@ include file="/includes/components/admin/inc_manage_leftnav.jspf" %>
+
+    <div id="user-display-panel">
+
+        <h1>${ pagetitle }</h1>
+
+        <div class="section-info">
+            <p>User Manager allows you to browse all the users in the system. Filters allow you to limit the users that you see.</p>
+        </div>
+
+        <div id="notifier">
+            <span class="notificationtext"></span>
+            <span class="closebutton"><a href="">X</a></span>
+        </div>
+
+        <div class="container-gen">
+            <table class="datatable-header">
+                <tr>
+                    <td id="datatable-header-displaying">
+                        <div class="panel-record-count">
+                            Displaying users <span id="results-min">0</span> to <span id="results-max">0</span> of <span id="results-total">0</span>.
+                            <span id="filter-reset">(<a href="">Reset Filter</a>)</span>
+                        </div>
+                    </td>
+                    <td align="right">
+                        <span class="addlink">
+                            <a href="${ctx_base}/enroll" title="Add New User"><img src="${ctx_static}/css/img/icons/add.png" /><span>Add New User</span></a>
+                        </span>
+                    </td>
+                </tr>
+            </table>
+        </div><!--/.container-gen-->
+
+        <div class="container-gen">
+            <div id="filter-panel">
+                <form action="./" id="filterForm">
+                    <div class="filter-heading">
+                        <span class="filter-header">Users Per Page:</span>
+                    </div>
+                    <div class="filter-input">
+                        <select name="filter_results_per_page" id="filter_results_per_page">
+                            <option value="0">All</option>
+                            <option value="10" selected=""> 10 </option>
+                            <option value="20"> 20 </option>
+                            <option value="50"> 50 </option>
+                            <option value="100"> 100 </option>
+                        </select>
+                    </div>
+                    <div class="filter-heading">
+                        <span class="filter-header">Username:</span>
+                    </div>
+                    <div class="filter-input">
+                        <input type="text" id="filter_username" />
+                    </div>
+                    <div class="filter-heading">
+                        <span class="filter-header">Name:</span>
+                    </div>
+                    <div class="filter-input">
+                        <input type="text" id="filter_email" />
+                    </div>
+                    <div class="filter-heading">
+                        <span class="filter-header">Role:</span>
+                    </div>
+                    <div class="filter-input">
+                        <select name="filter_role" id="filter_role">
+                            <option value="${ (empty manage_area || manage_area != 'admin') ? 'a' : 'ad,um,cc' }" selected="">All</option>
+                            <c:if test="${ empty manage_area || manage_area != 'admin' }">
+                            <option value="p">Patient</option>
+                            </c:if>
+                            <option value="um">Patient Admin</option>
+                            <c:if test="${ not empty manage_area && manage_area == 'admin' }">
+                            <option value="ad">Admin</option>
+                            </c:if>
+                            <c:if test="${ not empty manage_area && manage_area == 'admin' }">
+                            <option value="cc">Care Coordinator</option>
+                            </c:if>
+                        </select>
+                    </div>
+                    <div class="filter-heading">
+                        <input type="submit" value="Filter"/>
+                    </div>
+                </form>
+            </div><!--/#filter-panel-->
+        </div><!--/.container-gen-->
+
+        <table id="userlist" class="grid stripe table">
+            <thead>
+                <tr>
+                    <th class="full-name">Full Name</th>
+                    <th class="email">Email</th>
+                    <th class="username">Username</th>
+                    <th class="login-details">Login Details</th>
+                    <th class="roles">Roles</th>
+                    <th class="operations">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="userlistings">
+                <tr id="userlisting-userid">
+                    <td class="username"></td>
+                    <td class="email"></td>
+                    <td class="full-name"></td>
+                    <td class="login-details"></td>
+                    <td class="roles"></td>
+                    <td class="operations"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div id="pager-panel">
+            <div id="pager"><ul class="pages"><li class="pgNext pgEmpty">first</li><li class="pgNext pgEmpty">prev</li><li class="page-number pgCurrent">1</li><li class="page-number">2</li><li class="page-number">3</li><li class="page-number">4</li><li class="page-number">5</li><li class="pgNext">next</li><li class="pgNext">last</li></ul></div>
+        </div><!--/#pager-panel-->
+
+        <div class="clear"></div>
+        <%--<div id="progress" style="display:none"><span class="ajaxload"><img src="${ctx_static}/css/img/ajax-loader.gif" class="ajaxload"/></span></div>--%>
+
+    </div><!-- /#user-display-panel -->
+</body>

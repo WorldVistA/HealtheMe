@@ -1,0 +1,99 @@
+<%--
+
+    Copyright (C) 2012 KRM Associates, Inc. healtheme@krminc.com
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+            http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--%>
+<%--
+    Document   : inc_sessiontimer.jspf
+    Created on : Apr 1, 2010, 11:50:00 AM
+    Author     : Daniel Shaw (dshaw.com)
+--%>
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+
+<style>
+  a.ui-dialog-titlebar-close { display:none; }
+</style>
+<script src="${ctx_static}/js/jquery.countdown.pack.js"></script>
+<script type="text/javascript">
+    //ping the API if we want to Continue session
+    function keepSessionAlive() {
+        $.ajax({
+            url:'${apipath}/session/',
+            type:'GET',
+            timeout:5000
+        });
+    }
+
+    var sessionLength = ${ pageContext.session.maxInactiveInterval }, // in seconds
+    warning = false,
+    warningInterval = 5, // 5 minutes
+    $countdown = null,
+    $notifier = null,
+    watchCountdown = function(periods) {
+        if (warning) {
+            var mins = "" + periods[6];
+            if (mins.length == 1) {
+                mins = "0" + mins;
+            }
+            $notifier.dialog("option", "title", periods[5] + ":" + mins +" until session expiration" );
+        }
+
+        if (!warning && periods[5] && periods[5] < warningInterval) {
+            $notifier = $('<div class="modal-notifier">Your session is about to expire!<br />Press Continue to continue using the site or press Logout if you are finished. If neither is chosen, you will automatically be logged out within '+warningInterval+' minutes.</div>').dialog({
+                autoOpen: true,
+                modal: true,
+                draggable: false,
+                resizable: false,
+                closeOnEscape: false,
+                draggable: false,
+                title: warningInterval + ":00 until session expiration",
+                close: function() { return false },
+                buttons: {
+                    "Continue": function() {
+                        keepSessionAlive();
+                        $(this).dialog("close");
+                    },
+                    "Logout": function() {
+                        window.location="${ctx}/logout"
+                    }
+                }
+            });
+            warning = true;
+        } else if (warning && periods[5] && periods[5] > warningInterval) {
+            warning = false;
+        }
+    };
+
+    doCountDown = function() {
+        $countdown = $('<div id="newcountdown" />').countdown({until: sessionLength+'s',
+            compact: true,
+            tickInterval: 1,
+            onTick: watchCountdown,
+            expiryUrl: '${ctx}/logout'
+        });
+    }
+
+    resetCountDown = function() {
+        if (warning) { $countdown.countdown('change', {until: sessionLength+'s'}); }
+    }
+
+    $(document).ready(function() {
+        doCountDown();
+    });
+
+    //reset countdown on successful ajax
+    $(document).ajaxComplete(resetCountDown);
+</script>
