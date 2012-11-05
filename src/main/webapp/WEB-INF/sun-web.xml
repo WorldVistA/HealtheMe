@@ -19,13 +19,13 @@
 <!DOCTYPE sun-web-app PUBLIC "-//Sun Microsystems, Inc.//DTD Application Server 9.0 Servlet 2.5//EN" "http://www.sun.com/software/appserver/dtds/sun-web-app_2_5-0.dtd">
 <sun-web-app error-url="">
   <context-root>/hem</context-root>
-  <class-loader delegate="true"/>
   <session-config>
     <cookie-properties>
       <property name="cookieSecure" value="dynamic"/>
       <property name="cookieComment" value="PHR Session tracking cookie"/>
     </cookie-properties>
   </session-config>
+  <class-loader delegate="true"/>
   <jsp-config>
     <property name="keepgenerated" value="true">
       <description>Keep a copy of the generated servlet class' java code.</description>
