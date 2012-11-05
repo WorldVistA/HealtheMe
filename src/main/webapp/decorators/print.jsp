@@ -30,8 +30,6 @@
         <title><decorator:title default="" />${ projectname }</title>
 
         <%@ include file="/includes/inc_css.jsp" %>
-        <!-- use specialized set of js includes for printing -->
-        <%@ include file="/includes/inc_js_print.jsp" %>
         <decorator:head />
         <!-- use specialized stylesheet for printing  -->
         <link rel="stylesheet" type="text/css" href="${ctx_static}/css/print.css" media="screen, print"/>
