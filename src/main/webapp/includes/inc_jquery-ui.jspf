@@ -22,8 +22,26 @@
 
     Note: all active sessions require JQUI for modal displays. Additionally, pages can require JQUI manually
 --%>
-<% String requiresJQUI = thePage.getProperty("meta.requiresJQUI"); %>
-<% if ((!session.isNew()) && (request.getRemoteUser() != null) || (requiresJQUI != null && "true".equals(requiresJQUI))){ %>
+<c:set var="requiresJQUI"><decorator:getProperty property='meta.requiresJQUI'/></c:set>
+<c:choose>
+    <c:when test="${requiresJQUI}">
+
+<link type="text/css" href="${ctx_static}/css/redmond/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
+<style type="text/css">
+    .ui-state-highlight {
+        margin: 0px 0px 8px;
+        padding: 8px;
+    }
+    .ui-state-highlight a {
+        color: white;
+    }
+</style>
+<script type="text/javascript" src="${ctx_static}/js/jquery-ui-1.7.2.custom.min.js"></script>
+
+    </c:when>
+    <c:otherwise>
+
+<% if ((!session.isNew()) && (request.getRemoteUser() != null)){ %>
     <link type="text/css" href="${ctx_static}/css/redmond/jquery-ui-1.7.2.custom.css" rel="stylesheet" />
     <style type="text/css">
         .ui-state-highlight {
@@ -36,3 +54,6 @@
     </style>
     <script type="text/javascript" src="${ctx_static}/js/jquery-ui-1.7.2.custom.min.js"></script>
 <% } %>
+
+    </c:otherwise>
+</c:choose>

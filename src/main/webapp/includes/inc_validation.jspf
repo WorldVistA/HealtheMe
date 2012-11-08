@@ -15,14 +15,11 @@
     limitations under the License.
 
 --%>
-<% String requiresValidation = thePage.getProperty("meta.requiresValidation"); %>
-
-<% if(requiresValidation != null && "true".equals(requiresValidation)){ %>
-    <%--<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>--%>
-    <!-- css for validation-->
-    <link rel="stylesheet" type="text/css" href="${ctx_static}/css/validate.css" />
-
-    <!-- js for validation-->
-    <script type="text/javascript" src="${ctx_static}/js/jquery.validate.js"></script>
-    <script type="text/javascript" src="${ctx_static}/js/json2.js"></script>
-<% } %>
+<c:set var="validation"><decorator:getProperty property='meta.requiresValidation'/></c:set>
+<c:if test='${validation}'>
+        <!-- css for validation-->
+        <link rel="stylesheet" type="text/css" href="${ctx_static}/css/validate.css" />
+        <!-- js for validation-->
+        <script type="text/javascript" src="${ctx_static}/js/jquery.validate.js"></script>
+        <script type="text/javascript" src="${ctx_static}/js/json2.js"></script>
+</c:if>
