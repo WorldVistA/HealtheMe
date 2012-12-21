@@ -153,51 +153,26 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--<dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>3.3.1.GA</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-annotations</artifactId>
-            <version>3.4.0.GA</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.4.0.GA</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>3.0.0.ga</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-commons-annotations</artifactId>
-            <version>3.3.0.ga</version>
-        </dependency>-->
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
-            <version>1.6</version>
+            <version>1.6.2</version>
         </dependency>
-        <dependency>
-            <groupId>joda-time</groupId>
-            <artifactId>joda-time-jsptags</artifactId>
-            <version>1.0.2</version>
-        </dependency>
+		<dependency>
+		    <groupId>joda-time</groupId>
+		    <artifactId>joda-time-jsptags</artifactId>
+		    <version>1.1.1</version>
+		</dependency>
         <dependency>
             <groupId>opensymphony</groupId>
             <artifactId>sitemesh</artifactId>
             <version>2.4.2</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-core</artifactId>
-            <version>2.0.4</version>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>org.springframework.security</groupId> -->
+<!--             <artifactId>spring-security-core</artifactId> -->
+<!--             <version>2.0.4</version> -->
+<!--         </dependency> -->
         <dependency>
             <groupId>toplink.essentials</groupId>
             <artifactId>toplink-essentials</artifactId>
@@ -225,16 +200,16 @@
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.5.2</version>
         </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
-            <version>0.9.9</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>0.9.9</version>
-        </dependency>
+<!--         <dependency> -->
+<!--             <groupId>ch.qos.logback</groupId> -->
+<!--             <artifactId>logback-core</artifactId> -->
+<!--             <version>0.9.9</version> -->
+<!--         </dependency> -->
+<!--         <dependency> -->
+<!--             <groupId>ch.qos.logback</groupId> -->
+<!--             <artifactId>logback-classic</artifactId> -->
+<!--             <version>0.9.9</version> -->
+<!--         </dependency> -->
 
         <!-- compile time -->
         <dependency>
@@ -288,43 +263,7 @@
         <projectname>HealtheMe PHR</projectname>
 
         <jersey.version>1.1.3-ea</jersey.version>
-
-        <phr-host />
-        <phr-port />
-
-        <smtp-host>mail.krminc.com</smtp-host>
-        <from-email>healtheme@krminc.com</from-email>
-
-        <db-user>healtheme</db-user>
-        <db-passwd>*yourpassword*</db-passwd>
-        <db-host>localhost</db-host>
-        <db-port>3306</db-port>
-        <db-name>phr</db-name>
-        <db-dialect>mysql</db-dialect>
-        <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
-        <jdbc-url>jdbc:${db-dialect}://${db-host}:${db-port}:${db-name}</jdbc-url>
-
-        <!-- Derby Config
-        <db-user>admin</db-user>
-        <db-passwd>adminadmin</db-passwd>
-        <db-host>localhost</db-host>
-        <db-port>1527</db-port>
-        <db-name>phr</db-name>
-        <jdbc-driver>org.apache.derby.jdbc.ClientDriver</jdbc-driver>
-        <jdbc-url>jdbc:derby://${db-host}:${db-port}:${db-name}</jdbc-url>
-        -->
-
-        <!--
-        <hibernate.dialect>org.hibernate.dialect.Oracle10gDialect</hibernate.dialect>
-        <hibernate.hbm2ddl.auto>hibernate.hbm2ddl.auto</hibernate.hbm2ddl.auto>
-        -->
-        <!-- debug options -->
-        <!--
-        <hibernate.show_sql>true</hibernate.show_sql>
-        <hibernate.format_sql>true</hibernate.format_sql>
-        <hibernate.use_sql_comments>true</hibernate.use_sql_comments>
-        <hibernate.generate_statistics>false</hibernate.generate_statistics>
-        -->
+        <project.encoding>UTF-8</project.encoding>
 
         <environment-specific-resources>resources-dev</environment-specific-resources><!-- resources-dev, resources-prod -->
 
@@ -356,44 +295,20 @@
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
                 <inherited>true</inherited>
                 <configuration>
                     <source>1.5</source>
                     <target>1.5</target>
-                    <encoding>MacRoman</encoding>
+                    <encoding>${project.encoding}</encoding>
                 </configuration>
             </plugin>
-            <!-- Run the application using "mvn glassfish:run"
-            <plugin>
-                <groupId>org.glassfish</groupId>
-                <artifactId>maven-glassfish-plugin</artifactId>
-            </plugin>
-             -->
-            <!--<plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>xslt-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>update-gf-deps</id>
-                        <phase>package</phase>  append to the packaging phase.
-                        <goals>
-                            <goal>transform</goal>  goals == mojos
-                        </goals>
-                        <configuration>
-                            <xslFile>src/main/xslt/gf.xsl</xslFile>
-                            <srcDir>.</srcDir>
-                            <srcIncludes>pom.xml</srcIncludes>
-                            <destDir>target/gf-pom-file</destDir>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>-->
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
                     <descriptors>
+                    	<!-- bundle the source into zip for snapshot of code used in .war -->
                         <descriptor>src/main/assembly/src.xml</descriptor>
-                        <descriptor>src/main/assembly/glassfish.xml</descriptor>
                     </descriptors>
                 </configuration>
                 <executions>
@@ -410,12 +325,13 @@
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <encoding>MacRoman</encoding>
+                    <encoding>${project.encoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.10</version>
                 <configuration>
                     <forkMode>pertest</forkMode>
 		    <!-- need more memory than the default for our unit tests -->
@@ -487,7 +403,7 @@
                     	<year>${project.inceptionYear}</year>
                    		<email>healtheme@krminc.com</email>
                     </properties>
-                    <encoding>UTF-8</encoding>
+                    <encoding>${project.encoding}</encoding>
                     <mapping>
                         <!-- add support for jspf -->
                         <jspf>DYNASCRIPT_STYLE</jspf>

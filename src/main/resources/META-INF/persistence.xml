@@ -18,56 +18,12 @@
 -->
 <persistence version="1.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
     <persistence-unit name="PHRPU" transaction-type="JTA">
-    <!--<provider>org.hibernate.ejb.HibernatePersistence</provider> uses TopLink if not specified. -->
         <jta-data-source>jdbc/phr</jta-data-source>
         <properties>
       <!--<property name="toplink.logging.level" value="FINE"/> NOTE: This produces a lot of information! -->
             <property name="toplink.logging.level" value="INFO"/>
             <property name="toplink.cache.shared.default" value="false"/>
       <!--http://www.oracle.com/technology/products/ias/toplink/JPA/essentials/toplink-jpa-extensions.html#TopLinkCaching-->
-        </properties>
-    </persistence-unit>
-    <persistence-unit name="PHRPU-DEV" transaction-type="RESOURCE_LOCAL">
-        <provider>oracle.toplink.essentials.PersistenceProvider</provider>
-        <class>com.krminc.phr.domain.clinical.SystemDataSources</class>
-        <class>com.krminc.phr.domain.clinical.SystemResourceEndpoints</class>
-        <class>com.krminc.phr.domain.clinical.CcrProblem</class>
-        <class>com.krminc.phr.domain.clinical.CcrProblemSource</class>
-        <class>com.krminc.phr.domain.clinical.CcrResult</class>
-        <class>com.krminc.phr.domain.clinical.CcrResultSource</class>
-        <class>com.krminc.phr.domain.clinical.CcrResultTest</class>
-        <class>com.krminc.phr.domain.clinical.CcrResultTestSource</class>
-        <class>com.krminc.phr.domain.clinical.CcrVitalSignResult</class>
-        <class>com.krminc.phr.domain.clinical.CcrVitalSignTest</class>
-        <class>com.krminc.phr.domain.clinical.CcrVitalSignTestSource</class>
-        <class>com.krminc.phr.domain.clinical.RecordIdentifier</class>
-        <class>com.krminc.phr.domain.clinical.Resource</class>
-        <class>com.krminc.phr.domain.clinical.ResourceCredential</class>
-        <class>com.krminc.phr.domain.clinical.ResourceStat</class>
-        <class>com.krminc.phr.domain.clinical.CcrDateTime</class>
-        <class>com.krminc.phr.domain.clinical.CcrMedication</class>
-        <class>com.krminc.phr.domain.clinical.CcrMedicationSource</class>
-        <class>com.krminc.phr.domain.clinical.CcrImmunization</class>
-        <class>com.krminc.phr.domain.clinical.CcrImmunizationSource</class>
-        <class>com.krminc.phr.domain.clinical.CcrDocument</class>
-        <class>com.krminc.phr.domain.clinical.CcrAlert</class>
-        <class>com.krminc.phr.domain.clinical.CcrAlertSource</class>
-        <class>com.krminc.phr.domain.clinical.CcrActor</class>
-        <class>com.krminc.phr.domain.clinical.HealthRecordParser</class>
-        <class>com.krminc.phr.domain.clinical.GenericResult</class>
-        <class>com.krminc.phr.domain.clinical.GenericResultTest</class>
-        <class>com.krminc.phr.domain.clinical.CcrSource</class>
-        <exclude-unlisted-classes>false</exclude-unlisted-classes>
-        <properties>
-      <!--<property name="toplink.logging.level" value="FINE"/> NOTE: This produces a lot of information! -->
-            <property name="toplink.logging.level" value="INFO"/>
-            <property name="toplink.cache.shared.default" value="false"/>
-      <!--http://www.oracle.com/technology/products/ias/toplink/JPA/essentials/toplink-jpa-extensions.html#TopLinkCaching-->
-            <property name="toplink.jdbc.user" value="root"/>
-            <property name="toplink.jdbc.password" value="Pa$$word1"/>
-            <property name="toplink.jdbc.url" value="jdbc:mysql://localhost:3306/phr"/>
-            <property name="toplink.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <!-- property name="toplink.ddl-generation" value="create-tables"/ -->
         </properties>
     </persistence-unit>
 </persistence>

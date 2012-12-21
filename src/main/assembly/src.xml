@@ -16,7 +16,7 @@
 
 -->
 <assembly>
-  <id>project</id>
+  <id>source</id>
   <formats>
     <format>zip</format>
   </formats>
