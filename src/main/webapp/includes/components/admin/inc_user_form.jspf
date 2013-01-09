@@ -538,7 +538,7 @@
                             <label for="email">Email</label>
                         </div>
                         <div class="regforminput">
-                            <input type="text" id="email" name="email" value="${ email }" title="Email" size="20" maxlength="32" />
+                            <input type="text" id="email" name="email" value="${ email }" title="Email" size="20" maxlength="200" />
                         </div>
                     </div><!-- /#email-fld -->
                     <div id="phonehome-fld" class="regforminput">
@@ -587,7 +587,7 @@
                             <label for="carenotebook">Use Care Notebook?</label>
                         </div>
                         <div class="regforminput">
-                            <input type="checkbox" id="carenotebook" name="carenotebook" <c:if test="${ carenotebook eq true }">checked</c:if> title="Care Notebook" size="20" maxlength="32" />
+                            <input type="checkbox" id="carenotebook" name="carenotebook" <c:if test="${ carenotebook eq true }">checked</c:if> title="Care Notebook" />
                         </div>
                     </div><!-- /#carenotebook-fld -->
             </div><!--/#preferences-panel-->
