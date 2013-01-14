@@ -50,7 +50,7 @@ $.validator.addMethod("isPhoneNumber",
             return true;
         }
     },
-    $.format("{0} phone number is invalid")
+    $.format("{0} number is invalid")
 );
 
 $.validator.addClassRules("phonenumber", { isPhoneNumber: '' });
@@ -58,9 +58,22 @@ $.validator.addClassRules("faxnumber", { isPhoneNumber: 'Fax' });
 
 $().ready(function() {
         $(":input").bind("onBlur" ,function(){
-            $(this).valid()}
+            $(this).valid();}
         );
-        $(".familymemberform").validate({
+        $(":input.isPrimary").change(function(){
+			var uncheckNames = new Array();
+			if($(this).val()=="true") {
+				var thisName = $(this).attr('name');
+				$('input[name!="' + thisName + '"]').filter('[value="true"]:checked').each(function(){
+					uncheckNames.push($(this).attr("name"));
+				});
+
+				for (var i = 0; i < uncheckNames.length; i++) {
+					$('input[name="' + uncheckNames[i] + '"]').filter('[value="false"]').attr("checked", "checked");
+				}
+			}
+		});
+        $(".contactform").validate({
             submitHandler: function(form) {
                 form.submit();
             },

@@ -27,12 +27,12 @@
 <html>
 <head>
     <meta name="requiresJQUI" content="true">
-    <title>HealtheMe - Care Notebook - Family Members</title>
+    <title>HealtheMe - Care Notebook - Contacts</title>
     <meta name="requiresJQUI" content="true">
     <meta name="requiresValidation" content="true">
     <link rel="stylesheet" type="text/css" href="${ctx_static}/css/widget.css" />
     <link rel="stylesheet" type="text/css" href="${ctx_static}/css/carenotebook.css" />
-    <script type="text/javascript" src="${ctx_static}/js/validate.familymember.js"></script>
+    <script type="text/javascript" src="${ctx_static}/js/validate.contact.js"></script>
     <script language="javascript">
         //set globals
         var ctx_static = "${ctx_static}";
@@ -40,20 +40,20 @@
     </script>
 </head>
 
-<body id="familyhistory-fh" class="familyhistory">
+<body id="contacts" class="contacts">
 
-        <h1>Family History</h1>
+        <h1>Contacts</h1>
 
         <div class="def-container">
             <div class="def-title">Purpose</div>
             This section is meant to provide you with a place to record all of the members of your family or those who may be contacted in case of emergency. Updated medical information that you record will help to make sure that your child receives proper medical treatment.
         </div>
         <br />
-        <h2>Family Members</h2>
+        <h2>Contacts</h2>
         <br />
 
 
-    <form class="familymemberform carenotebook" action="${ctx}/form/care/${ it.healthRecordId }/familymembers/post/" method="post" enctype="application/x-www-form-urlencoded">
+    <form class="contactform carenotebook" action="${ctx}/form/care/${ it.healthRecordId }/contacts/post/" method="post" enctype="application/x-www-form-urlencoded">
         
 
     <c:if test="${it.class.simpleName == 'FamilyMembers'}">
@@ -77,7 +77,9 @@
                 <option value="Father" <c:if test="${ member.familymemberType == 'Father' }">selected</c:if> >Father</option>
                 <option value="Brother" <c:if test="${ member.familymemberType == 'Brother' }">selected</c:if> >Brother</option>
                 <option value="Sister" <c:if test="${ member.familymemberType == 'Sister' }">selected</c:if> >Sister</option>
+                <option value="Grandparent" <c:if test="${ member.familymemberType == 'Grandparent' }">selected</c:if> >Grandparent</option>
                 <option value="Guardian" <c:if test="${ member.familymemberType == 'Guardian' }">selected</c:if> >Guardian</option>
+                <option value="Spouse" <c:if test="${ member.familymemberType == 'Spouse' }">selected</c:if> >Spouse</option>
                 <option value="Other" <c:if test="${ member.familymemberType == 'Other' }">selected</c:if> >Other</option>
             </select>
             <br />
@@ -171,6 +173,12 @@
             <input type="text" id="familymemberEmail_${status.count}" name="familymemberEmail_${status.count}" value="${ member.familymemberEmail }" title="Email Address" maxlength="100" size="20">
             <br />
 
+            <label for="familymemberPrimary_${status.count}">Primary emergency contact?</label>
+            <input type="radio" class="isPrimary" name="isPrimary_${status.count}" value="true" id="isPrimary_${status.count}" <c:if test="${ member.isPrimary == 'true'}">checked</c:if> title="Primary emergency contact?">Yes</input>
+            <input type="radio" class="isPrimary" name="isPrimary_${status.count}" value="false" id="isPrimary_${status.count}" <c:if test="${ member.isPrimary == 'false' || empty member.isPrimary }">checked</c:if> title="Primary emergency contact?">No</input>
+            <br />
+            <br />
+
             <label for="comments_${status.count}">Additional comments or notes:</label>
             <div style="clear: both"></div>
             <br />
@@ -185,7 +193,7 @@
     </c:if>
         
         <div class="add">
-            <a title="Add Another Family Member" id="addForm" href="#">Add Another Family Member</a>
+            <a title="Add Another Contact" id="addForm" href="#">Add Another Contact</a>
         </div>
         <div style="clear: both"></div><br />
         

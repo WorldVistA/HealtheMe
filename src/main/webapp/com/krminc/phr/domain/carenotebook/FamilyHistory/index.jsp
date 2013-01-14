@@ -26,7 +26,7 @@
 <html>
 <head>
     <meta name="requiresJQUI" content="true">
-    <title>HealtheMe - Care Notebook - Medical History</title>
+    <title>HealtheMe - Care Notebook - Family History</title>
     <meta name="requiresJQUI" content="true">
     <meta name="requiresValidation" content="true">
     <link rel="stylesheet" type="text/css" href="${ctx_static}/css/widget.css" />
@@ -47,7 +47,7 @@
     </style>
     
 </head>
-<body id="familyhistory-mh" class="familyhistory">
+<body id="familyhistory" class="familyhistory">
 
     <form class="carenotebook" name="familyhistory" id="familyhistory" action="${ctx}/form/care/${ it.healthRecordId }/familyhistory/post/" method="post" enctype="multipart/form-data">
 

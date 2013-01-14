@@ -696,7 +696,7 @@ public class Main {
         return new CareProviders(c, patientId);
     }
     
-    @Path(AppConfig.PATH_PATIENT_ROOT + "/{patientId}/familymembers/")
+    @Path(AppConfig.PATH_PATIENT_ROOT + "/{patientId}/contacts/")
     public FamilyMembers getFamilyMembers(
         @PathParam("patientId")  Long patientId
     ) {

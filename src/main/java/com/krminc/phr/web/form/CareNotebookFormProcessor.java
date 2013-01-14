@@ -546,7 +546,7 @@ public class CareNotebookFormProcessor {
         return Response.seeOther(uriInfo.getBaseUri().resolve(redirectUri)).build();
     }
    
-    @Path("{healthRecordId}/familymembers/post/")
+    @Path("{healthRecordId}/contacts/post/")
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     public Response alterFamilyMembers(
@@ -555,12 +555,23 @@ public class CareNotebookFormProcessor {
     ) {
         Boolean error = false;
         String errorString  = new String();
-        String redirectUri = "." + AppConfig.PATH_PATIENT_ROOT + "/" + healthRecordId + "/familymembers/?status=success";
+        String redirectUri = "." + AppConfig.PATH_PATIENT_ROOT + "/" + healthRecordId + "/contacts/?status=success";
 
         List<FamilyMember> memberList = remap(formParams, FamilyMember.class, healthRecordId);
+        Boolean hasAPrimary = false;
 
         //validate it all
         for (FamilyMember i : memberList) {
+
+			//prevent multiple primary contacts
+			if (i.getIsPrimary()) {
+				if (hasAPrimary) {
+					error = true;
+					errorString = "isprimary";
+				} else {
+					hasAPrimary = true;
+				}
+			}
 
             if (!ServiceUtils.isPhoneNumberOrEmpty(i.getDaytimePhoneNumber())) {
                 error = true;
@@ -609,7 +620,7 @@ public class CareNotebookFormProcessor {
 
                 }
             } catch (Exception e) {
-                logger.error("Family Member Save Failed", e);
+                logger.error("Emergency Contact Save Failed", e);
                 res = false;
             } finally {
                 persistenceSvc.close();
@@ -623,7 +634,7 @@ public class CareNotebookFormProcessor {
         }
 
         if (error) {
-            redirectUri = "." + AppConfig.PATH_PATIENT_ROOT + "/" + healthRecordId + "/familymembers/?status=" + errorString;
+            redirectUri = "." + AppConfig.PATH_PATIENT_ROOT + "/" + healthRecordId + "/contacts/?status=" + errorString;
         }
 
         return Response.seeOther(uriInfo.getBaseUri().resolve(redirectUri)).build();

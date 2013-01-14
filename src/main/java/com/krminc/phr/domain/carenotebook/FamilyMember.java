@@ -81,6 +81,8 @@ public class FamilyMember extends HealthSummary implements Serializable {
     private String faxNumber;
     @Column(name = "familymember_email", length = 100)
     private String familymemberEmail;
+    @Column(name = "is_primary")
+    private Boolean isPrimary;
     @Basic(optional = false)
     @Column(name = "rec_id", nullable = false)
     private long healthRecordId;
@@ -200,7 +202,24 @@ public class FamilyMember extends HealthSummary implements Serializable {
         this.familymemberEmail = familymemberEmail;
     }
 
-    @Override
+    public Boolean getIsPrimary() {
+		if (isPrimary == null) return false;
+		return isPrimary;
+	}
+
+	public void setIsPrimary(Boolean isPrimary) {
+		this.isPrimary = isPrimary;
+	}
+
+	public void setIsPrimary(String isPrimary) {
+		if (isPrimary.equalsIgnoreCase("true")) {
+			this.isPrimary = true;
+		} else {
+			this.isPrimary = false;
+		}
+	}
+
+	@Override
     public Long getHealthRecordId() {
         return healthRecordId;
     }
