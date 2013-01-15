@@ -26,7 +26,6 @@
 
 <html>
 <head>
-    <meta name="requiresJQUI" content="true">
     <title>HealtheMe - Care Notebook - Contacts</title>
     <meta name="requiresJQUI" content="true">
     <meta name="requiresValidation" content="true">
