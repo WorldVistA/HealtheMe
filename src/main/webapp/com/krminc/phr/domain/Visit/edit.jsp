@@ -59,7 +59,7 @@
 <body bgcolor="#ffffff" text="#000000" link="#0000cc" vlink="#551a8b" alink="#ff0000">
     <div id="lightBox">
         <div id="m_lightBox">
-            <h1>Add Visit</h1>
+            <h1>Edit Visit</h1>
             
             <span class="toolSummary">Note: This visit will appear under 'Self Entered' data.</span>
 
@@ -108,42 +108,61 @@
                 <div class="hv_element">
                     <label for="purpose">Purpose</label>
                     <select name="purpose" id="purpose">
-                        <option value="">- Select -</option>
-                        <option value="Acute Care">Acute Care</option>
-                        <option value="Advice/Health Education">Advice/Health Education</option>
-                        <option value="After-Hours Care">After-Hours Care</option>
-                        <option value="Ambulatory Care Services">Ambulatory Care Services</option>
-                        <option value="Care of Intensive Care Unit Patient">Care of Intensive Care Unit Patient</option>
-                        <option value="Checkup Examination">Checkup Examination</option>
-                        <option value="Consultation">Consultation</option>
-                        <option value="Custodial Care">Custodial Care</option>
-                        <option value="Defensive Medicine">Defensive Medicine</option>
-                        <option value="Dental Procedures">Dental Procedures</option>
-                        <option value="Diagnosis">Diagnosis</option>
-                        <option value="Diagnostic Services">Diagnostic Services</option>
-                        <option value="Dietary Services">Dietary Services</option>
-                        <option value="Disease Management">Disease Management</option>
-                        <option value="Emergency Health Services">Emergency Health Services</option>
-                        <option value="Follow-up Visit">Follow-up Visit</option>
-                        <option value="General Medical Treatment">General Medical Treatment</option>
-                        <option value="General Ophthalmological Services">General Ophthalmological Services</option>
-                        <option value="Hearing Screening">Hearing Screening</option>
-                        <option value="Hospitalization">Hospitalization</option>
-                        <option value="House Call">House Call</option>
-                        <option value="Immunization Programs">Immunization Programs</option>
-                        <option value="Immunization Visit">Immunization Visit</option>
-                        <option value="Intensive Care">Intensive Care</option>
-                        <option value="Labor and Delivery Admission">Labor and Delivery Admission</option>
-                        <option value="Long Term Hospitalization">Long Term Hospitalization</option>
-                        <option value="Medicine, Indigenous">Medicine, Indigenous</option>
-                        <option value="Nursing Assessment">Nursing Assessment</option>
-                        <option value="Nursing Home Care">Nursing Home Care</option>
-                        <option value="Nursing Services">Nursing Services</option>
-                        <option value="Physical Therapy">Physical Therapy</option>
-                        <option value="Referral">Referral</option>
-                        <option value="Taking Vital Signs">Taking Vital Signs</option>
-                        <option value="Well Child Visit">Well Child Visit</option>
-                        <option value="Well Person Screening">Well Person Screening</option>
+						<option value="">- Select -</option>
+						<option value="Acute Care">Acute Care</option>
+						<option value="Advice/Health Education">Advice/Health Education</option>
+						<option value="After-Hours Care">After-Hours Care</option>
+						<option value="Allergy Screening">Allergy Screening</option>
+						<option value="Ambulatory Care Services">Ambulatory Care Services</option>
+						<option value="Audiology">Audiology</option>
+						<option value="Behavior Health Medicine">Behavior Health Medicine</option>
+						<option value="Cardiology">Cardiology</option>
+						<option value="Care of Intensive Care Unit Patient">Care of Intensive Care Unit Patient</option>
+						<option value="Checkup Examination">Checkup Examination</option>
+						<option value="Consultation">Consultation</option>
+						<option value="Custodial Care">Custodial Care</option>
+						<option value="Defensive Medicine">Defensive Medicine</option>
+						<option value="Dental Procedures">Dental Procedures</option>
+						<option value="Dermatology">Dermatology</option>
+						<option value="Developmental Therapy">Developmental Therapy</option>
+						<option value="Diagnosis">Diagnosis</option>
+						<option value="Diagnostic Services">Diagnostic Services</option>
+						<option value="Dietary Services">Dietary Services</option>
+						<option value="Disease Management">Disease Management</option>
+						<option value="Ear, Nose, and Throat">Ear, Nose, and Throat</option>
+						<option value="Emergency Health Services">Emergency Health Services</option>
+						<option value="Endocrinology">Endocrinology</option>
+						<option value="Follow-up Visit">Follow-up Visit</option>
+						<option value="Gastroenterology">Gastroenterology</option>
+						<option value="General Medical Treatment">General Medical Treatment</option>
+						<option value="General Ophthalmological Services">General Ophthalmological Services</option>
+						<option value="Hearing Screening">Hearing Screening</option>
+						<option value="Hematology">Hematology</option>
+						<option value="Hospitalization">Hospitalization</option>
+						<option value="House Call">House Call</option>
+						<option value="Immunization Programs">Immunization Programs</option>
+						<option value="Immunization Visit">Immunization Visit</option>
+						<option value="Intensive Care">Intensive Care</option>
+						<option value="Labor and Delivery Admission">Labor and Delivery Admission</option>
+						<option value="Long Term Hospitalization">Long Term Hospitalization</option>
+						<option value="Medicine, Indigenous">Medicine, Indigenous</option>
+						<option value="Nephrology">Nephrology</option>
+						<option value="Neurology">Neurology</option>
+						<option value="Nursing Assessment">Nursing Assessment</option>
+						<option value="Nursing Home Care">Nursing Home Care</option>
+						<option value="Nursing Services">Nursing Services</option>
+						<option value="Nutrition Counseling">Nutrition Counseling</option>
+						<option value="Occupational Therapy">Occupational Therapy</option>
+						<option value="Orthopedics">Orthopedics</option>
+						<option value="Physical Therapy">Physical Therapy</option>
+						<option value="Pulmonology">Pulmonology</option>
+						<option value="Radiology">Radiology</option>
+						<option value="Referral">Referral</option>
+						<option value="Speech Therapy">Speech Therapy</option>
+						<option value="Taking Vital Signs">Taking Vital Signs</option>
+						<option value="Urology">Urology</option>
+						<option value="Well Child Visit">Well Child Visit</option>
+						<option value="Well Person Screening">Well Person Screening</option>
                     </select>
                 </div>
                 <div class="hv_element_comments">
