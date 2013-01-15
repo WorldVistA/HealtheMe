@@ -201,10 +201,10 @@
                            <div id="buttons-${i}" class="record-action-box">
                                <ul class="actionButtons" id="self-buttons-${i}">
                                     <li class="edit">
-                                        <a id ="target-link-${i}" href="${ctx_patient}/${it.healthRecordId}/medicalevent/0/edit" class="opensFrame" title="Edit Medical Event" id=""></a>
+                                        <a id ="target-link-${i}" href="${ctx_patient}/${it.healthRecordId}/visits/0/edit" class="opensFrame" title="Edit Visit" id=""></a>
                                     </li>
                                     <li class="delete">
-                                        <a href="#" title="Delete Medical Event" onClick="doDelete(${i});return false;"></a>
+                                        <a href="#" title="Delete Visit" onClick="doDelete(${i});return false;"></a>
                                     </li>
                                 </ul>
                                 <div class="actionButtons" id="clinical-buttons-${i}" style="display:none;">
