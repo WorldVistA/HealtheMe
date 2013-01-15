@@ -72,13 +72,60 @@
             <label for="providerType_${status.count}">Provider Type</label>
             <select id="providerType_${status.count}" name="providerType_${status.count}" value="${ provider.providerType }" title="Provider Type">
                 <option value="">- Select One -</option>
-                <option value="DCP" <c:if test="${ provider.providerType == 'DCP' }">selected</c:if> >Day Care Provider</option>
-                <option value="RCP" <c:if test="${ provider.providerType == 'RCP' }">selected</c:if> >Respite Care Provider</option>
-                <option value="OT" <c:if test="${ provider.providerType == 'OT' }">selected</c:if> >Occupational Therapist</option>
-                <option value="PT" <c:if test="${ provider.providerType == 'PT' }">selected</c:if> >Physical Therapist</option>
-                <option value="SLP" <c:if test="${ provider.providerType == 'SLP' }">selected</c:if> >Speech Language Pathologist</option>
-                <option value="HHP" <c:if test="${ provider.providerType == 'HHP' }">selected</c:if> >Home Health Provider</option>
-                <option value="Other" <c:if test="${ provider.providerType == 'Other' }">selected</c:if> >Other</option>
+				<option value="AI" <c:if test="${ provider.providerType == 'AI' }">selected</c:if> >Allergy and Immunology</option>
+				<option value="CAR" <c:if test="${ provider.providerType == 'CAR' }">selected</c:if> >Cardiology</option>
+				<option value="CAPP" <c:if test="${ provider.providerType == 'CAPP' }">selected</c:if> >Child and Adolescent Psychiatry and Psychotherapy</option>
+				<option value="DCP" <c:if test="${ provider.providerType == 'DCP' }">selected</c:if> >Day Care Provider</option>
+				<option value="DERM" <c:if test="${ provider.providerType == 'DERM' }">selected</c:if> >Dermatology</option>
+				<option value="DT" <c:if test="${ provider.providerType == 'DT' }">selected</c:if> >Developmental Therapy</option>
+				<option value="EM" <c:if test="${ provider.providerType == 'EM' }">selected</c:if> >Emergency Medicine</option>
+				<option value="EC" <c:if test="${ provider.providerType == 'EC' }">selected</c:if> >Endocrinology</option>
+				<option value="GE" <c:if test="${ provider.providerType == 'GE' }">selected</c:if> >Gastroenterology</option>
+				<option value="GS" <c:if test="${ provider.providerType == 'GS' }">selected</c:if> >General Surgery</option>
+				<option value="GER" <c:if test="${ provider.providerType == 'GER' }">selected</c:if> >Geriatrics</option>
+				<option value="HHP" <c:if test="${ provider.providerType == 'HHP' }">selected</c:if> >Home Health Provider</option>
+				<option value="ID" <c:if test="${ provider.providerType == 'ID' }">selected</c:if> >Infectious Diseases</option>
+				<option value="IM" <c:if test="${ provider.providerType == 'IM' }">selected</c:if> >Internal Medicine</option>
+				<option value="IVR" <c:if test="${ provider.providerType == 'IVR' }">selected</c:if> >Interventional Radiology</option>
+				<option value="IVT" <c:if test="${ provider.providerType == 'IVT' }">selected</c:if> >IV Therapy</option>
+				<option value="MB" <c:if test="${ provider.providerType == 'MB' }">selected</c:if> >Microbiology</option>
+				<option value="NEO" <c:if test="${ provider.providerType == 'NEO' }">selected</c:if> >Neonatology</option>
+				<option value="NEP" <c:if test="${ provider.providerType == 'NEP' }">selected</c:if> >Nephrology</option>
+				<option value="NEU" <c:if test="${ provider.providerType == 'NEU' }">selected</c:if> >Neurology</option>
+				<option value="NER" <c:if test="${ provider.providerType == 'NER' }">selected</c:if> >Neuroradiology</option>
+				<option value="NS" <c:if test="${ provider.providerType == 'NS' }">selected</c:if> >Neurosurgery</option>
+				<option value="NM" <c:if test="${ provider.providerType == 'NM' }">selected</c:if> >Nuclear Medicine</option>
+				<option value="OT" <c:if test="${ provider.providerType == 'OT' }">selected</c:if> >Occupational Therapist</option>
+				<option value="OPH" <c:if test="${ provider.providerType == 'OPH' }">selected</c:if> >Ophthalmology</option>
+				<option value="OMFS" <c:if test="${ provider.providerType == 'OMFS' }">selected</c:if> >Oro-Maxillo-Facial Surgery</option>
+				<option value="ORT" <c:if test="${ provider.providerType == 'ORT' }">selected</c:if> >Orthopedics</option>
+				<option value="PAT" <c:if test="${ provider.providerType == 'PAT' }">selected</c:if> >Pathology</option>
+				<option value="PEDC" <c:if test="${ provider.providerType == 'PEDC' }">selected</c:if> >Pediatric Cardiology</option>
+				<option value="PEDED" <c:if test="${ provider.providerType == 'PEDED' }">selected</c:if> >Pediatric Endocrinology and Diabetes</option>
+				<option value="PEDGHN" <c:if test="${ provider.providerType == 'PEDGHN' }">selected</c:if> >Pediatric Gastroenterology, Hepatology, and Nutrition</option>
+				<option value="PEDHO" <c:if test="${ provider.providerType == 'PEDHO' }">selected</c:if> >Pediatric Hematology and Oncology</option>
+				<option value="PEDID" <c:if test="${ provider.providerType == 'PEDID' }">selected</c:if> >Pediatric Infectious Diseases</option>
+				<option value="PEDN" <c:if test="${ provider.providerType == 'PEDN' }">selected</c:if> >Pediatric Nephrology</option>
+				<option value="PEDRM" <c:if test="${ provider.providerType == 'PEDRM' }">selected</c:if> >Pediatric Respiratory Medicine</option>
+				<option value="PEDRH" <c:if test="${ provider.providerType == 'PEDRH' }">selected</c:if> >Pediatric Rheumatology</option>
+				<option value="PEDS" <c:if test="${ provider.providerType == 'PEDS' }">selected</c:if> >Pediatric Surgery</option>
+				<option value="PED" <c:if test="${ provider.providerType == 'PED' }">selected</c:if> >Pediatrics</option>
+				<option value="PT" <c:if test="${ provider.providerType == 'PT' }">selected</c:if> >Physical Therapy and Rehabilitation</option>
+				<option value="PRAS" <c:if test="${ provider.providerType == 'PRAS' }">selected</c:if> >Plastic, Reconstructive, and Aesthetic Surgery</option>
+				<option value="PRI" <c:if test="${ provider.providerType == 'PRI' }">selected</c:if> >Primary Care</option>
+				<option value="PSY" <c:if test="${ provider.providerType == 'PSY' }">selected</c:if> >Psychiatry</option>
+				<option value="PH" <c:if test="${ provider.providerType == 'PH' }">selected</c:if> >Public Health</option>
+				<option value="PUL" <c:if test="${ provider.providerType == 'PUL' }">selected</c:if> >Pulmonology</option>
+				<option value="RAD" <c:if test="${ provider.providerType == 'RAD' }">selected</c:if> >Radiology</option>
+				<option value="RADT" <c:if test="${ provider.providerType == 'RADT' }">selected</c:if> >Radiotherapy</option>
+				<option value="REC" <c:if test="${ provider.providerType == 'REC' }">selected</c:if> >Respiratory Care</option>
+				<option value="RCP" <c:if test="${ provider.providerType == 'RCP' }">selected</c:if> >Respite Care Provider</option>
+				<option value="SLP" <c:if test="${ provider.providerType == 'SLP' }">selected</c:if> >Speech Language Pathologist</option>
+				<option value="TRC" <c:if test="${ provider.providerType == 'TRC' }">selected</c:if> >Transplant Care</option>
+				<option value="UR" <c:if test="${ provider.providerType == 'UR' }">selected</c:if> >Urology</option>
+				<option value="VM" <c:if test="${ provider.providerType == 'VM' }">selected</c:if> >Vascular Medicine</option>
+				<option value="VS" <c:if test="${ provider.providerType == 'VS' }">selected</c:if> >Vascular Surgery</option>
+				<option value="Other" <c:if test="${ provider.providerType == 'Other' }">selected</c:if> >Other</option>
             </select>
             <br />
 
