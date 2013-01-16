@@ -162,7 +162,7 @@
     
     <div class="def-container">
     	<div class="def-title">Definition</div>
-        Any occurrences which have relevance to your health.  Examples include diagnoses, surgeries, and illnesses.
+        Any occurrences which have relevance to your health.  Examples include medical diagnoses, surgeries, illnesses, chronic conditions, hospital admissions, injuries, or any other health events worth noting.
     </div>
     
     <%@ include file="/includes/components/phr/healthrecord/inc_tip_hrec_clinical_self.jspf" %>
