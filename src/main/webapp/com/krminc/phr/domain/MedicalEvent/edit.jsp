@@ -98,9 +98,9 @@
                         <option value="Resolved">Resolved</option>
                     </select>
                 </div>
-                <div class="hv_element">
-                    <label for="howended">How it Ended</label>
-                    <input class="hv_element_systolic_input" maxlength="512" value="${it.howEnded}" id="howended" name="howended" />
+                <div class="hv_element_comments">
+                    <label for="howended">Resolution/Treatment</label>
+                    <textarea maxlength="512" id="howended" name="howended" rows="3">${it.howEnded}</textarea>
                 </div>
                 <div class="hv_element_comments">
                     <label for="comments">Comments</label>
