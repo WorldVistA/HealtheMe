@@ -177,7 +177,6 @@ public class CareNotebookFormProcessor {
                 emergencyInfo.setEmergencyContactName(emergencycontact);
                 emergencyInfo.setEmergencyContactNumber(emergencynumber);
                 emergencyInfo.setEmergencyContactRelationship(contactrelationship);
-                emergencyInfo.setEmergencyDescription(emergencydescription);
                 emergencyInfo.setFatherName(fathername);
                 emergencyInfo.setFatherNumber(fathernumber);
                 emergencyInfo.setFireNumber(firenumber);
@@ -198,7 +197,6 @@ public class CareNotebookFormProcessor {
                 emergencyInfo.setSpecialtyName(specialtyname);
                 emergencyInfo.setSpecialtyNumber(specialtynumber);
                 emergencyInfo.setSpecialtyType(specialtytype);
-                emergencyInfo.setTreatmentDescription(treatmentdescription);
 
                 em.merge(emergencyInfo);
                 persistenceSvc.commitTx();
