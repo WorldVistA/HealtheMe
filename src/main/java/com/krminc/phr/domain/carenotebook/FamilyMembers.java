@@ -23,32 +23,100 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- *
  * @author cmccall
  */
 public class FamilyMembers {
-    private Vector<FamilyMember> members;
-    private Long healthRecordId;
+	private Vector<FamilyMember> members;
+	private Long healthRecordId;
 
-    public Long getHealthRecordId() {
-        return healthRecordId;
-    }
+	public Long getHealthRecordId() {
+		return healthRecordId;
+	}
 
-    public FamilyMembers(Vector<FamilyMember> members, Long healthRecordId) {
-        if (members.isEmpty() ) {
-            members.add (new FamilyMember(healthRecordId));
-        }
+	public FamilyMembers(Vector<FamilyMember> members, Long healthRecordId) {
+		if (members.isEmpty()) {
+			members.add(new FamilyMember(healthRecordId));
+		}
 
-        this.members = members;
-        this.healthRecordId = healthRecordId;
-    }
+		this.members = members;
+		this.healthRecordId = healthRecordId;
+	}
 
+	public List<FamilyMember> getMembers() {
+		return members;
+	}
 
-    public List<FamilyMember> getMembers() {
-        return members;
-    }
+	public void setMembers(Vector<FamilyMember> members) {
+		this.members = members;
+	}
 
-    public void setMembers(Vector<FamilyMember> members) {
-        this.members = members;
-    }
+	private String getNameByContactType(String specialtyString) {
+		for (FamilyMember member : members) {
+			if (member.getFamilymemberType().equalsIgnoreCase(specialtyString)) {
+				return member.getFamilymemberName();
+			}
+		}
+		return "";
+	}
+
+	private String getNumberByContactType(String specialtyString) {
+		for (FamilyMember member : members) {
+			if (member.getFamilymemberType().equalsIgnoreCase(specialtyString)) {
+				return member.getDaytimePhoneNumber();
+			}
+		}
+		return "";
+	}
+
+	public String getFatherName() {
+		return getNameByContactType("Father");
+	}
+
+	public String getFatherNumber() {
+		return getNumberByContactType("Father");
+	}
+
+	public String getMotherName() {
+		return getNameByContactType("Mother");
+	}
+
+	public String getMotherNumber() {
+		return getNumberByContactType("Mother");
+	}
+
+	public String getEmergencyContactName() {
+		for (FamilyMember member : members) {
+			if (member.getIsPrimary()) {
+				return member.getFamilymemberName();
+			}
+		}
+		return "";
+	}
+
+	public String getEmergencyContactRelationship() {
+		for (FamilyMember member : members) {
+			if (member.getIsPrimary()) {
+				return member.getFamilymemberType();
+			}
+		}
+		return "";
+	}
+
+	public String getEmergencyContactDaytimeNumber() {
+		for (FamilyMember member : members) {
+			if (member.getIsPrimary()) {
+				return member.getDaytimePhoneNumber();
+			}
+		}
+		return "";
+	}
+
+	public String getEmergencyContactEveningNumber() {
+		for (FamilyMember member : members) {
+			if (member.getIsPrimary()) {
+				return member.getEveningPhoneNumber();
+			}
+		}
+		return "";
+	}
 }

@@ -107,6 +107,18 @@ public class FamilyMember extends HealthSummary implements Serializable {
 
     public FamilyMember(Long healthRecordId) {
         this.healthRecordId = healthRecordId;
+        familymemberType = "";
+        familymemberName = "";
+        familymemberAddress = "";
+        familymemberAddress2 = "";
+        familymemberCity = "";
+        familymemberState = "";
+        daytimePhoneNumber = "";
+        eveningPhoneNumber = "";
+        faxNumber = "";
+        familymemberEmail = "";
+        comments = "";
+        isPrimary = false;
     }
 
     public Long getFamilymemberId() {

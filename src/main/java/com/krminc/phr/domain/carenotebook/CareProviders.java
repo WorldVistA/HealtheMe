@@ -27,30 +27,50 @@ import java.util.Vector;
  * @author cmccall
  */
 public class CareProviders {
-    
-    private Vector<CareProvider> providers;
-    private Long healthRecordId;
 
-    public Long getHealthRecordId() {
-        return healthRecordId;
-    }
+	private Vector<CareProvider> providers;
+	private Long healthRecordId;
 
-    public CareProviders(Vector<CareProvider> providers, Long healthRecordId) {
-        if (providers.isEmpty() ) {
-            providers.add (new CareProvider(healthRecordId));
-        }
+	public Long getHealthRecordId() {
+		return healthRecordId;
+	}
 
-        this.providers = providers;
-        this.healthRecordId = healthRecordId;
-    }
+	public CareProviders(Vector<CareProvider> providers, Long healthRecordId) {
+		if (providers.isEmpty()) {
+			providers.add(new CareProvider(healthRecordId));
+		}
 
+		this.providers = providers;
+		this.healthRecordId = healthRecordId;
+	}
 
-    public List<CareProvider> getProviders() {
-        return providers;
-    }
+	public List<CareProvider> getProviders() {
+		return providers;
+	}
 
-    public void setProviders(Vector<CareProvider> providers) {
-        this.providers = providers;
-    }
-    
+	public void setProviders(Vector<CareProvider> providers) {
+		this.providers = providers;
+	}
+
+	public String getPrimaryCareProviderName() {
+		for (CareProvider provider : getProviders()) {
+			if ((provider.getProviderType() != null)
+					&& (provider.getProviderType().equalsIgnoreCase("PRI"))) {
+				return provider.getProviderName();
+			}
+		}
+
+		return "";
+	}
+
+	public String getPrimaryCareProviderNumber() {
+		for (CareProvider provider : getProviders()) {
+			if ((provider.getProviderType() != null)
+					&& (provider.getProviderType().equalsIgnoreCase("PRI"))) {
+				return provider.getPhoneNumber();
+			}
+		}
+
+		return "";
+	}
 }

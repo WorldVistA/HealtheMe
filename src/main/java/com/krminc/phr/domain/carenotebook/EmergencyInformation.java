@@ -49,27 +49,15 @@ import org.slf4j.LoggerFactory;
     @NamedQuery(name = "EmergencyInformation.findAll", query = "SELECT m FROM EmergencyInformation m"),
     @NamedQuery(name = "EmergencyInformation.findByEmergencyinformationId", query = "SELECT m FROM EmergencyInformation m WHERE m.emergencyinformationId = :emergencyinformationId"),
     @NamedQuery(name = "EmergencyInformation.findByAmbulanceNumber", query = "SELECT m FROM EmergencyInformation m WHERE m.ambulanceNumber = :ambulanceNumber"),
-    @NamedQuery(name = "EmergencyInformation.findByPhysicianName", query = "SELECT m FROM EmergencyInformation m WHERE m.physicianName = :physicianName"),
-    @NamedQuery(name = "EmergencyInformation.findByPhysicianNumber", query = "SELECT m FROM EmergencyInformation m WHERE m.physicianNumber = :physicianNumber"),
     @NamedQuery(name = "EmergencyInformation.findByFireNumber", query = "SELECT m FROM EmergencyInformation m WHERE m.fireNumber = :fireNumber"),
     @NamedQuery(name = "EmergencyInformation.findByPoliceNumber", query = "SELECT m FROM EmergencyInformation m WHERE m.policeNumber = :policeNumber"),
     @NamedQuery(name = "EmergencyInformation.findByPoisonNumber", query = "SELECT m FROM EmergencyInformation m WHERE m.poisonNumber = :poisonNumber"),
-    @NamedQuery(name = "EmergencyInformation.findByFatherName", query = "SELECT m FROM EmergencyInformation m WHERE m.fatherName = :fatherName"),
-    @NamedQuery(name = "EmergencyInformation.findByFatherNumber", query = "SELECT m FROM EmergencyInformation m WHERE m.fatherNumber = :fatherNumber"),
-    @NamedQuery(name = "EmergencyInformation.findByMotherName", query = "SELECT m FROM EmergencyInformation m WHERE m.motherName = :motherName"),
-    @NamedQuery(name = "EmergencyInformation.findByMotherNumber", query = "SELECT m FROM EmergencyInformation m WHERE m.motherNumber = :motherNumber"),
-    @NamedQuery(name = "EmergencyInformation.findByEmergencyContactName", query = "SELECT m FROM EmergencyInformation m WHERE m.emergencyContactName = :emergencyContactName"),
-    @NamedQuery(name = "EmergencyInformation.findByEmergencyContactRelationship", query = "SELECT m FROM EmergencyInformation m WHERE m.emergencyContactRelationship = :emergencyContactRelationship"),
-    @NamedQuery(name = "EmergencyInformation.findByEmergencyContactNumber", query = "SELECT m FROM EmergencyInformation m WHERE m.emergencyContactNumber = :emergencyContactNumber"),
     @NamedQuery(name = "EmergencyInformation.findByHospitalName", query = "SELECT m FROM EmergencyInformation m WHERE m.hospitalName = :hospitalName"),
     @NamedQuery(name = "EmergencyInformation.findByHospitalNumber", query = "SELECT m FROM EmergencyInformation m WHERE m.hospitalNumber = :hospitalNumber"),
     @NamedQuery(name = "EmergencyInformation.findByHospitalAddress", query = "SELECT m FROM EmergencyInformation m WHERE m.hospitalAddress = :hospitalAddress"),
     @NamedQuery(name = "EmergencyInformation.findByHospitalAddress2", query = "SELECT m FROM EmergencyInformation m WHERE m.hospitalAddress2 = :hospitalAddress2"),
     @NamedQuery(name = "EmergencyInformation.findByHospitalCity", query = "SELECT m FROM EmergencyInformation m WHERE m.hospitalCity = :hospitalCity"),
     @NamedQuery(name = "EmergencyInformation.findByHospitalState", query = "SELECT m FROM EmergencyInformation m WHERE m.hospitalState = :hospitalState"),
-    @NamedQuery(name = "EmergencyInformation.findBySpecialtyName", query = "SELECT m FROM EmergencyInformation m WHERE m.specialtyName = :specialtyName"),
-    @NamedQuery(name = "EmergencyInformation.findBySpecialtyNumber", query = "SELECT m FROM EmergencyInformation m WHERE m.specialtyNumber = :specialtyNumber"),
-    @NamedQuery(name = "EmergencyInformation.findBySpecialtyType", query = "SELECT m FROM EmergencyInformation m WHERE m.specialtyType = :specialtyType"),
     @NamedQuery(name = "EmergencyInformation.findByHealthRecordId", query = "SELECT m FROM EmergencyInformation m WHERE m.healthRecordId = :healthRecordId"),
     @NamedQuery(name = "EmergencyInformation.findByDataSourceId", query = "SELECT m FROM EmergencyInformation m WHERE m.dataSourceId = :dataSourceId"),
     @NamedQuery(name = "EmergencyInformation.findByCareDocumentId", query = "SELECT m FROM EmergencyInformation m WHERE m.careDocumentId = :careDocumentId"),
@@ -88,30 +76,12 @@ public class EmergencyInformation extends HealthSummary implements Serializable 
     private Long emergencyinformationId;
     @Column(name = "ambulance_number", length = 25)
     private String ambulanceNumber;
-    @Column(name = "physician_name", length = 50)
-    private String physicianName;
-    @Column(name = "physician_number", length = 25)
-    private String physicianNumber;
     @Column(name = "fire_number", length = 25)
     private String fireNumber;
     @Column(name = "police_number", length = 25)
     private String policeNumber;
     @Column(name = "poison_number", length = 25)
     private String poisonNumber;
-    @Column(name = "father_name", length = 50)
-    private String fatherName;
-    @Column(name = "father_number", length = 25)
-    private String fatherNumber;
-    @Column(name = "mother_name", length = 50)
-    private String motherName;
-    @Column(name = "mother_number", length = 25)
-    private String motherNumber;
-    @Column(name = "emergency_contact_name", length = 50)
-    private String emergencyContactName;
-    @Column(name = "emergency_contact_relationship", length = 100)
-    private String emergencyContactRelationship;
-    @Column(name = "emergency_contact_number", length = 25)
-    private String emergencyContactNumber;
     @Column(name = "hospital_name", length = 50)
     private String hospitalName;
     @Column(name = "hospital_number", length = 25)
@@ -124,12 +94,6 @@ public class EmergencyInformation extends HealthSummary implements Serializable 
     private String hospitalCity;
     @Column(name = "hospital_state", length = 100)
     private String hospitalState;
-    @Column(name = "specialty_name", length = 50)
-    private String specialtyName;
-    @Column(name = "specialty_number", length = 25)
-    private String specialtyNumber;
-    @Column(name = "specialty_type", length = 100)
-    private String specialtyType;
     @Basic(optional = false)
     @Column(name = "rec_id", nullable = false)
     private Long healthRecordId;
@@ -161,22 +125,18 @@ public class EmergencyInformation extends HealthSummary implements Serializable 
     public EmergencyInformation(Long hrid) {
         super(hrid);
         this.healthRecordId = hrid;
+        ambulanceNumber = "";
+        fireNumber = "";
+        policeNumber = "";
+        poisonNumber = "";
+        hospitalName = "";
+        hospitalNumber = "";
+        hospitalAddress = "";
+        hospitalAddress2 = "";
+        hospitalCity = "";
+        hospitalState = "";
+        comments = "";
     }
-
-    /**
-     *
-     * @param medicalinformationId
-     */
-//    public EmergencyInformation(Long medicalinformationId) {
-//        this.medicalinformationId = medicalinformationId;
-//    }
-
-//    public EmergencyInformation(Long medicalinformationId, long recId, long dataSourceId, Date dateAdded) {
-//        this.medicalinformationId = medicalinformationId;
-//        this.recId = recId;
-//        this.dataSourceId = dataSourceId;
-//        this.dateAdded = dateAdded;
-//    }
 
     /**
      *
@@ -185,10 +145,6 @@ public class EmergencyInformation extends HealthSummary implements Serializable 
     public Long getEmergencyinformationId() {
         return emergencyinformationId;
     }
-
-//    public void setMedicalinformationId(Long medicalinformationId) {
-//        this.medicalinformationId = medicalinformationId;
-//    }
 
     /**
      *
@@ -204,38 +160,6 @@ public class EmergencyInformation extends HealthSummary implements Serializable 
      */
     public void setAmbulanceNumber(String ambulanceNumber) {
         this.ambulanceNumber = ambulanceNumber;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getPhysicianName() {
-        return physicianName;
-    }
-
-    /**
-     *
-     * @param physicianName
-     */
-    public void setPhysicianName(String physicianName) {
-        this.physicianName = physicianName;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getPhysicianNumber() {
-        return physicianNumber;
-    }
-
-    /**
-     *
-     * @param physicianNumber
-     */
-    public void setPhysicianNumber(String physicianNumber) {
-        this.physicianNumber = physicianNumber;
     }
 
     /**
@@ -284,102 +208,6 @@ public class EmergencyInformation extends HealthSummary implements Serializable 
      */
     public void setPoisonNumber(String poisonNumber) {
         this.poisonNumber = poisonNumber;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getFatherName() {
-        return fatherName;
-    }
-
-    /**
-     *
-     * @param fatherName
-     */
-    public void setFatherName(String fatherName) {
-        this.fatherName = fatherName;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getFatherNumber() {
-        return fatherNumber;
-    }
-
-    /**
-     *
-     * @param fatherNumber
-     */
-    public void setFatherNumber(String fatherNumber) {
-        this.fatherNumber = fatherNumber;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getMotherName() {
-        return motherName;
-    }
-
-    /**
-     *
-     * @param motherName
-     */
-    public void setMotherName(String motherName) {
-        this.motherName = motherName;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getMotherNumber() {
-        return motherNumber;
-    }
-
-    /**
-     *
-     * @param motherNumber
-     */
-    public void setMotherNumber(String motherNumber) {
-        this.motherNumber = motherNumber;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getEmergencyContactName() {
-        return emergencyContactName;
-    }
-
-    /**
-     *
-     * @param emergencyContactName
-     */
-    public void setEmergencyContactName(String emergencyContactName) {
-        this.emergencyContactName = emergencyContactName;
-    }
-
-    public String getEmergencyContactNumber() {
-        return emergencyContactNumber;
-    }
-
-    public void setEmergencyContactNumber(String emergencyContactNumber) {
-        this.emergencyContactNumber = emergencyContactNumber;
-    }
-
-    public String getEmergencyContactRelationship() {
-        return emergencyContactRelationship;
-    }
-
-    public void setEmergencyContactRelationship(String emergencyContactRelationship) {
-        this.emergencyContactRelationship = emergencyContactRelationship;
     }
 
     /**
@@ -482,66 +310,10 @@ public class EmergencyInformation extends HealthSummary implements Serializable 
      *
      * @return
      */
-    public String getSpecialtyName() {
-        return specialtyName;
-    }
-
-    /**
-     *
-     * @param specialtyName
-     */
-    public void setSpecialtyName(String specialtyName) {
-        this.specialtyName = specialtyName;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getSpecialtyNumber() {
-        return specialtyNumber;
-    }
-
-    /**
-     *
-     * @param specialtyNumber
-     */
-    public void setSpecialtyNumber(String specialtyNumber) {
-        this.specialtyNumber = specialtyNumber;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getSpecialtyType() {
-        return specialtyType;
-    }
-
-    /**
-     *
-     * @param specialtyType
-     */
-    public void setSpecialtyType(String specialtyType) {
-        this.specialtyType = specialtyType;
-    }
-
-    /**
-     *
-     * @return
-     */
     @Override
     public Long getHealthRecordId() {
         return healthRecordId;
     }
-
-//    /**
-//     *
-//     * @param healthRecordId
-//     */
-//    public void setHealthRecordId(Long healthRecordId) {
-//        this.healthRecordId = healthRecordId;
-//    }
 
     /**
      *

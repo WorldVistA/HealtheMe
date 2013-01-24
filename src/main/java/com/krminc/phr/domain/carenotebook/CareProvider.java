@@ -105,9 +105,21 @@ public class CareProvider extends HealthSummary implements Serializable {
     public CareProvider() {
     }
 
-    public CareProvider(Long healthRecordId) {
-        this.healthRecordId = healthRecordId;
-    }
+	public CareProvider(Long healthRecordId) {
+		this.healthRecordId = healthRecordId;
+		providerType = "";
+		providerName = "";
+		providerContact = "";
+		providerAgency = "";
+		providerAddress = "";
+		providerAddress2 = "";
+		providerCity = "";
+		providerState = "";
+		phoneNumber = "";
+		faxNumber = "";
+		providerEmail = "";
+		comments = "";
+	}
 
     public Long getProviderId() {
         return providerId;

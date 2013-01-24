@@ -75,27 +75,15 @@ public class CareNotebookFormProcessor {
     public Response alterEmergencyInformation(
         @PathParam("healthRecordId") Long healthRecordId,
         @FormParam("ambulancenumber") String ambulancenumber,
-        @FormParam("physicianname") String physicianname,
-        @FormParam("physiciannumber") String physiciannumber,
         @FormParam("firenumber") String firenumber,
         @FormParam("policenumber") String policenumber,
         @FormParam("poisonnumber") String poisonnumber,
-        @FormParam("fathername") String fathername,
-        @FormParam("fathernumber") String fathernumber,
-        @FormParam("mothername") String mothername,
-        @FormParam("mothernumber") String mothernumber,
-        @FormParam("emergencycontact") String emergencycontact,
-        @FormParam("contactrelationship") String contactrelationship,
-        @FormParam("emergencynumber") String emergencynumber,
         @FormParam("hospitalname") String hospitalname,
         @FormParam("hospitalnumber") String hospitalnumber,
         @FormParam("hospitaladdress") String hospitaladdress,
         @FormParam("hospitaladdress2") String hospitaladdress2,
         @FormParam("hospitalcity") String hospitalcity,
         @FormParam("hospitalstate") String hospitalstate,
-        @FormParam("specialtyname") String specialtyname,
-        @FormParam("specialtynumber") String specialtynumber,
-        @FormParam("specialtytype") String specialtytype,
         @FormParam("emergencydescription") String emergencydescription,
         @FormParam("treatmentdescription") String treatmentdescription,
         @FormParam("comments") String comments
@@ -107,11 +95,6 @@ public class CareNotebookFormProcessor {
         if (!ServiceUtils.isPhoneNumberOrEmpty(ambulancenumber)) {
             error = true;
             errorString = "ambulancenumber";
-        }
-
-        if (!ServiceUtils.isPhoneNumberOrEmpty(physiciannumber)) {
-            error = true;
-            errorString = "physiciannumber";
         }
 
         if (!ServiceUtils.isPhoneNumberOrEmpty(firenumber)) {
@@ -129,30 +112,11 @@ public class CareNotebookFormProcessor {
             errorString = "poisonnumber";
         }
 
-        if (!ServiceUtils.isPhoneNumberOrEmpty(fathernumber)) {
-            error = true;
-            errorString = "fathernumber";
-        }
-
-        if (!ServiceUtils.isPhoneNumberOrEmpty(mothernumber)) {
-            error = true;
-            errorString = "mothernumber";
-        }
-
-        if (!ServiceUtils.isPhoneNumberOrEmpty(emergencynumber)) {
-            error = true;
-            errorString = "emergencynumber";
-        }
-
         if (!ServiceUtils.isPhoneNumberOrEmpty(hospitalnumber)) {
             error = true;
             errorString = "hospitalnumber";
         }
 
-        if (!ServiceUtils.isPhoneNumberOrEmpty(specialtynumber)) {
-            error = true;
-            errorString = "specialtynumber";
-        }
 
         boolean res = true;
 
@@ -170,15 +134,8 @@ public class CareNotebookFormProcessor {
                 }
 
                 emergencyInfo.setAmbulanceNumber(ambulancenumber);
-                //mi2.getCareDocumentId();
                 emergencyInfo.setComments(comments);
                 emergencyInfo.setDataSourceId(healthRecordId);
-                //mi2.setDateAdded(null);
-                emergencyInfo.setEmergencyContactName(emergencycontact);
-                emergencyInfo.setEmergencyContactNumber(emergencynumber);
-                emergencyInfo.setEmergencyContactRelationship(contactrelationship);
-                emergencyInfo.setFatherName(fathername);
-                emergencyInfo.setFatherNumber(fathernumber);
                 emergencyInfo.setFireNumber(firenumber);
                 emergencyInfo.setHospitalAddress(hospitaladdress);
                 emergencyInfo.setHospitalAddress2(hospitaladdress2);
@@ -186,18 +143,8 @@ public class CareNotebookFormProcessor {
                 emergencyInfo.setHospitalName(hospitalname);
                 emergencyInfo.setHospitalNumber(hospitalnumber);
                 emergencyInfo.setHospitalState(hospitalstate);
-                //mi2.setMask();
-                emergencyInfo.setMotherName(mothername);
-                emergencyInfo.setMotherNumber(mothernumber);
-                emergencyInfo.setPhysicianName(physicianname);
-                emergencyInfo.setPhysicianNumber(physiciannumber);
                 emergencyInfo.setPoisonNumber(poisonnumber);
                 emergencyInfo.setPoliceNumber(policenumber);
-                //mi2.setSourceId();
-                emergencyInfo.setSpecialtyName(specialtyname);
-                emergencyInfo.setSpecialtyNumber(specialtynumber);
-                emergencyInfo.setSpecialtyType(specialtytype);
-
                 em.merge(emergencyInfo);
                 persistenceSvc.commitTx();
             } catch (Exception e) {
