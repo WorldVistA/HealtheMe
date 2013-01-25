@@ -9,7 +9,7 @@ CREATE TABLE phr.schema_changes (
 	major_release_number varchar(2) NOT NULL,
 	minor_release_number varchar(2) NOT NULL,
 	point_release_number varchar(4) NOT NULL,
-	script_name varchar(50) NOT NULL,
+	script_name varchar(256) NOT NULL,
 	date_applied TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

@@ -7,7 +7,7 @@ START TRANSACTION;
 INSERT INTO phr.schema_changes (major_release_number, minor_release_number, point_release_number, script_name, date_applied) VALUES (
 	"01",
 	"00",
-	"0001",
+	"0002",
 	'remove duplicated columns for emergency info of carenotebook',
 	NOW()
 );
