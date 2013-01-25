@@ -40,7 +40,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Nutrition.findByFoodLikes", query = "SELECT n FROM Nutrition n WHERE n.foodLikes = :foodLikes"),
     @NamedQuery(name = "Nutrition.findByFoodDislikes", query = "SELECT n FROM Nutrition n WHERE n.foodDislikes = :foodDislikes"),
     @NamedQuery(name = "Nutrition.findByFeedingModifications", query = "SELECT n FROM Nutrition n WHERE n.feedingModifications = :feedingModifications"),
-    @NamedQuery(name = "Nutrition.findByFoodAllergies", query = "SELECT n FROM Nutrition n WHERE n.foodAllergies = :foodAllergies"),
     @NamedQuery(name = "Nutrition.findByHealthRecordId", query = "SELECT n FROM Nutrition n WHERE n.healthRecordId = :healthRecordId"),
     @NamedQuery(name = "Nutrition.findByDataSourceId", query = "SELECT n FROM Nutrition n WHERE n.dataSourceId = :dataSourceId"),
     @NamedQuery(name = "Nutrition.findByCareDocumentId", query = "SELECT n FROM Nutrition n WHERE n.careDocumentId = :careDocumentId"),
@@ -64,8 +63,6 @@ public class Nutrition extends HealthSummary implements Serializable {
     private String foodDislikes;
     @Column(name = "feeding_modifications", length = 200)
     private String feedingModifications;
-    @Column(name = "food_allergies", length = 200)
-    private String foodAllergies;
     @Basic(optional = false)
     @Column(name = "rec_id", nullable = false)
     private long healthRecordId;
@@ -136,14 +133,6 @@ public class Nutrition extends HealthSummary implements Serializable {
 
     public void setFeedingModifications(String feedingModifications) {
         this.feedingModifications = feedingModifications;
-    }
-
-    public String getFoodAllergies() {
-        return foodAllergies;
-    }
-
-    public void setFoodAllergies(String foodAllergies) {
-        this.foodAllergies = foodAllergies;
     }
 
     /**

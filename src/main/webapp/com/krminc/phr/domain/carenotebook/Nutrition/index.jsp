@@ -25,7 +25,6 @@
 <%@ include file="/includes/inc_displaytag_decorators.jspf" %>
 <html>
 <head>
-    <meta name="requiresJQUI" content="true">
     <title>HealtheMe - Care Notebook - Nutrition Information</title>
     <meta name="requiresJQUI" content="true">
     <meta name="requiresValidation" content="true">
@@ -74,19 +73,17 @@
         <br />
         <textarea id="feedingModifications" name="feedingModifications" rows="4" cols="20">${ it.feedingModifications }</textarea>
         <br />
-        
-        <label for="foodAllergies">Food Allergies:</label>
-        <div style="clear: both"></div>
-        <br />
-        <textarea id="foodAllergies" name="foodAllergies" rows="4" cols="20">${ it.foodAllergies }</textarea>
-        <br />
-        
+
         <label for="comments">Additional comments or notes:</label>
         <div style="clear: both"></div>
         <br />
         <textarea id="comments" name="comments" rows="4" cols="20">${ it.comments }</textarea>
         <br />
-
+        <br />
+		<h2>Food Allergy Information</h2><br />
+		Please use the <a href="${ctx_patient}/${ it.healthRecordId}/allergies">Allergies</a> section to record a history of food allergies.<br />
+		Be sure to save any changes made to this section by clicking the Save button
+		 below before leaving.<br />
         <br />
         <br />
         <input type="submit" value="Save" title="Save" name="submitform" id="submitform" />
