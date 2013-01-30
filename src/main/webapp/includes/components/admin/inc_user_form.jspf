@@ -483,7 +483,7 @@
                                 <select id="month" name="month">
                                     <option value=""> - Month - </option>
                                     <option value="1" <c:if test="${ month == 1 }">selected</c:if> >January</option>
-                                    <option value="2" <c:if test="${ month == 2 }">selected</c:if> >Febuary</option>
+                                    <option value="2" <c:if test="${ month == 2 }">selected</c:if> >February</option>
                                     <option value="3" <c:if test="${ month == 3 }">selected</c:if> >March</option>
                                     <option value="4" <c:if test="${ month == 4 }">selected</c:if> >April</option>
                                     <option value="5" <c:if test="${ month == 5 }">selected</c:if> >May</option>
@@ -538,7 +538,7 @@
                             <label for="email">Email</label>
                         </div>
                         <div class="regforminput">
-                            <input type="text" id="email" name="email" value="${ email }" title="Email" size="20" maxlength="32" />
+                            <input type="text" id="email" name="email" value="${ email }" title="Email" size="20" maxlength="200" />
                         </div>
                     </div><!-- /#email-fld -->
                     <div id="phonehome-fld" class="regforminput">
@@ -587,7 +587,7 @@
                             <label for="carenotebook">Use Care Notebook?</label>
                         </div>
                         <div class="regforminput">
-                            <input type="checkbox" id="carenotebook" name="carenotebook" <c:if test="${ carenotebook eq true }">checked</c:if> title="Care Notebook" size="20" maxlength="32" />
+                            <input type="checkbox" id="carenotebook" name="carenotebook" <c:if test="${ carenotebook eq true }">checked</c:if> title="Care Notebook" />
                         </div>
                     </div><!-- /#carenotebook-fld -->
             </div><!--/#preferences-panel-->
