@@ -36,7 +36,7 @@
         <div class="details">
             <div id="message" class="error"></div>
             <div class="login-box">
-                <label for="username" class="username">Username: </label><input id="username" name="j_username" type="text" maxlength="64" />
+                <label for="username" class="username">Username: </label><input id="username" name="j_username" type="text" maxlength="64" autofocus />
             </div>
             <div class="login-box">
                 <label for="password" class="password">Password: </label><input id="password" name="j_password" type="password" maxlength="20" />

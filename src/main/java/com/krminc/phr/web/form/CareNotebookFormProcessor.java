@@ -721,7 +721,6 @@ public class CareNotebookFormProcessor {
         @FormParam("feedingSchedule") String feedingSchedule,
         @FormParam("foodLikes") String foodLikes,
         @FormParam("foodDislikes") String foodDislikes,
-        @FormParam("feedingModifications") String feedingModifications,
         @FormParam("comments") String comments
     ) {
         Boolean error = false;
@@ -746,7 +745,6 @@ public class CareNotebookFormProcessor {
                 nutritionInfo.setFeedingSchedule(feedingSchedule);
                 nutritionInfo.setFoodLikes(foodLikes);
                 nutritionInfo.setFoodDislikes(foodDislikes);
-                nutritionInfo.setFeedingModifications(feedingModifications);
                 nutritionInfo.setComments(comments);
                 nutritionInfo.setDataSourceId(healthRecordId);
 
@@ -1570,6 +1568,69 @@ public class CareNotebookFormProcessor {
         return Response.seeOther(uriInfo.getBaseUri().resolve(redirectUri)).build();
     }
     
+    @Path("{healthRecordId}/nutritionevents/post/")
+    @POST
+    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    public Response alterNutritionEvent(
+        MultivaluedMap<String,String> formParams,
+        @PathParam("healthRecordId") Long healthRecordId
+    ) {
+        Boolean error = false;
+        String errorString  = new String();
+        String redirectUri = "." + AppConfig.PATH_PATIENT_ROOT + "/" + healthRecordId + "/nutritionevents/?status=success";
+
+        List<NutritionEvent> eventList = remap(formParams, NutritionEvent.class, healthRecordId);
+
+        boolean res = true;
+
+        if (!error) {
+
+            PersistenceService persistenceSvc = PersistenceService.getInstance();
+            try {
+                EntityManager em = persistenceSvc.getEntityManager();
+
+                for (NutritionEvent i : eventList) {
+                    if (res) {
+                        persistenceSvc.beginTx();
+                        if (i.getEventId() != null) {
+                            NutritionEvent existingEntry = em.find(NutritionEvent.class, i.getEventId());
+                            if (existingEntry.getHealthRecordId().compareTo(healthRecordId) == 0) {
+                                i.setDataSourceId(healthRecordId);
+                                em.merge(i);
+                                persistenceSvc.commitTx();
+                            } else {
+                                logger.error("Non-matching HRID on merge attempt");
+                                res = false;
+                            }
+                        } else {
+                            i.setDataSourceId(healthRecordId);
+                            em.merge(i);
+                            persistenceSvc.commitTx();
+                        }
+                    }
+
+                }
+            } catch (Exception e) {
+                logger.error("NutritionEvent Save Failed", e);
+                res = false;
+            } finally {
+                persistenceSvc.close();
+            }
+
+        }
+
+        if (!res) {
+            error = true;
+            errorString = "saveerror";
+        }
+
+        if (error) {
+            redirectUri = "." + AppConfig.PATH_PATIENT_ROOT + "/" + healthRecordId + "/nutritionevents/?status=" + errorString;
+        }
+
+        return Response.seeOther(uriInfo.getBaseUri().resolve(redirectUri)).build();
+    }
+
    private <T> List<T> remap (MultivaluedMap<String, String> map, Class<T> type, Long healthRecordId) {
        HashMap<Long, T> pairsBySuffix = new HashMap<Long, T>();
        Pattern numberRx = Pattern.compile("_(\\d+)$");

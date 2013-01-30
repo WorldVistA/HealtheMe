@@ -37,7 +37,7 @@
         var patientId = ${it.healthRecordId};
     </script>
 </head>
-<body id="nutrition" class="nutrition">
+<body id="nutrition-np" class="nutrition">
 
     <form class="carenotebook" name="nutrition" id="nutrition" action="${ctx}/form/care/${ it.healthRecordId }/nutrition/post/" method="post" enctype="multipart/form-data">
 
@@ -66,12 +66,6 @@
         <div style="clear: both"></div>
         <br />
         <textarea id="foodDislikes" name="foodDislikes" rows="4" cols="20">${ it.foodDislikes }</textarea>
-        <br />
-
-        <label for="feedingModifications">Food or Feeding Modifications: (example: food/liquid textures, special equipment or routine, etc.)</label>
-        <div style="clear: both"></div>
-        <br />
-        <textarea id="feedingModifications" name="feedingModifications" rows="4" cols="20">${ it.feedingModifications }</textarea>
         <br />
 
         <label for="comments">Additional comments or notes:</label>

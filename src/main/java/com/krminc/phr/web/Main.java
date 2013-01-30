@@ -843,7 +843,13 @@ public class Main {
 				"com.krminc.phr.domain.carenotebook", "Meeting");
 		return new Meetings(c, patientId);
 	}
-
+    @Path(AppConfig.PATH_PATIENT_ROOT + "/{patientId}/nutritionevents/")
+    public NutritionEvents getNutritionEvents(
+        @PathParam("patientId")  Long patientId
+    ) {
+        Vector<NutritionEvent> c = (Vector) patientCareResources(patientId, "com.krminc.phr.domain.carenotebook", "NutritionEvent");
+        return new NutritionEvents(c, patientId);
+    }
 	/* --- Non-Domain Object Controllers --- */
 	/**
 	 * Login service controller

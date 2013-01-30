@@ -34,8 +34,16 @@
             </div>
             <a id="ln-contacts" href="${ctx_patient}/${ it.healthRecordId }/contacts/">Contacts</a>
             <a id="ln-providers" href="${ctx_patient}/${ it.healthRecordId }/careproviders">Care Providers</a>
-            <a id="ln-familyhistory" href="${ctx_patient}/${ it.healthRecordId }/familyhistory/">Family History</a>
-            <a id="ln-nutrition" href="${ctx_patient}/${ it.healthRecordId }/nutrition">Nutrition</a>
+            <a id="ln-familyhistory" href="${ctx_patient}/${ it.healthRecordId }/familymembers/">Family History</a>
+            <div id="ln-familyhistory-sub">
+                <a id="ln-familyhistory-fh" href="${ctx_patient}/${ it.healthRecordId }/familymembers/">Family Members</a>
+                <a id="ln-familyhistory-mh" href="${ctx_patient}/${ it.healthRecordId }/familyhistory/">Medical History</a>
+            </div>
+            <a id="ln-nutrition" href="${ctx_patient}/${ it.healthRecordId }/nutrition/">Nutrition</a>
+            <div id="ln-nutrition-sub">
+                <a id="ln-nutrition-np" href="${ctx_patient}/${ it.healthRecordId }/nutrition/">Nutrition Preferences</a>
+                <a id="ln-nutrition-ne" href="${ctx_patient}/${ it.healthRecordId }/nutritionevents/">Nutrition Events</a>
+                </div>
             <a id="ln-logs" href="${ctx_patient}/${ it.healthRecordId }/respiratory/">Daily Care Logs</a>
             <div id="ln-logs-sub">
                 <a id="ln-logs-rc" href="${ctx_patient}/${ it.healthRecordId }/respiratory/">Respiratory Care</a>

@@ -168,6 +168,8 @@ a:hover { text-decoration:underline; }
 #familyhistory #ln-familyhistory,
 #contacts #ln-contacts,
 #nutrition #ln-nutrition,
+#nutrition-np #ln-nutrition-np,
+#nutrition-ne #ln-nutrition-ne,
 #logs #ln-logs,
 #logs-rc #ln-logs-rc,
 #logs-co #ln-logs-co,
@@ -231,6 +233,7 @@ a:hover { text-decoration:underline; }
 #ln-medicalinformation-sub,
 #ln-myaccount-sub,
 #ln-logs-sub,
+#ln-nutrition-sub,
 #ln-education-sub{
     display: none;
     margin: 0 0 0 10px;
@@ -266,6 +269,8 @@ a:hover { text-decoration:underline; }
 .myaccount #ln-myaccount-sub,
 #logs #ln-logs-sub,
 .logs #ln-logs-sub,
+#nutrition #ln-nutrition-sub,
+.nutrition #ln-nutrition-sub,
 #education #ln-education-sub,
 .education #ln-education-sub
 {
