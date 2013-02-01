@@ -195,28 +195,14 @@
 
             <label class="indent" for="specialtytype">Specialty</label>
             <input type="text" id="specialtytype" name="specialtytype" value="${ it.specialtyType }" title="Specialty Type" maxlength="64" size="20">
-<%--            <br />
-            <div class="add">
-                <a href="#" title="Add Specialty Doctor">Add another Specialty Doctor</a>
-            </div>
-            <br />--%>
             <br />
             <br />
 
-            <h2>If your child has had a medical emergency in the past</h2>
-            <br />
+			<h2>Medical Emergency Information</h2><br />
+			Please use the <a href="${ctx_patient}/${ it.healthRecordId }/medicalevents">Medical Events</a> section to record a history of previous medical emergencies.<br />
+			Be sure to save any changes made to this section by clicking the Save button below before leaving.<br />
 
-            <label for="emergencydescription">What was the emergency?</label>
-            <div style="clear: both"></div>
             <br />
-            <textarea id="emergencydescription" name="emergencydescription" rows="4" cols="20">${ it.emergencyDescription }</textarea>
-            <br />
-            <br />
-
-            <label for="treatmentdescription">What worked best to treat it?</label>
-            <div style="clear: both"></div>
-            <br />
-            <textarea id="treatmentdescription" name="treatmentdescription" rows="4" cols="20">${ it.treatmentDescription }</textarea>
             <br />
 
             <label for="comments">Additional comments or notes:</label>
@@ -224,7 +210,6 @@
             <br />
             <textarea id="comments" name="comments" rows="4" cols="20">${ it.comments }</textarea>
             <br />
-
 
             <br />
             <br />

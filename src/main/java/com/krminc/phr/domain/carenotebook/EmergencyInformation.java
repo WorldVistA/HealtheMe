@@ -70,8 +70,6 @@ import org.slf4j.LoggerFactory;
     @NamedQuery(name = "EmergencyInformation.findBySpecialtyName", query = "SELECT m FROM EmergencyInformation m WHERE m.specialtyName = :specialtyName"),
     @NamedQuery(name = "EmergencyInformation.findBySpecialtyNumber", query = "SELECT m FROM EmergencyInformation m WHERE m.specialtyNumber = :specialtyNumber"),
     @NamedQuery(name = "EmergencyInformation.findBySpecialtyType", query = "SELECT m FROM EmergencyInformation m WHERE m.specialtyType = :specialtyType"),
-    @NamedQuery(name = "EmergencyInformation.findByEmergencyDescription", query = "SELECT m FROM EmergencyInformation m WHERE m.emergencyDescription = :emergencyDescription"),
-    @NamedQuery(name = "EmergencyInformation.findByTreatmentDescription", query = "SELECT m FROM EmergencyInformation m WHERE m.treatmentDescription = :treatmentDescription"),
     @NamedQuery(name = "EmergencyInformation.findByHealthRecordId", query = "SELECT m FROM EmergencyInformation m WHERE m.healthRecordId = :healthRecordId"),
     @NamedQuery(name = "EmergencyInformation.findByDataSourceId", query = "SELECT m FROM EmergencyInformation m WHERE m.dataSourceId = :dataSourceId"),
     @NamedQuery(name = "EmergencyInformation.findByCareDocumentId", query = "SELECT m FROM EmergencyInformation m WHERE m.careDocumentId = :careDocumentId"),
@@ -132,10 +130,6 @@ public class EmergencyInformation extends HealthSummary implements Serializable 
     private String specialtyNumber;
     @Column(name = "specialty_type", length = 100)
     private String specialtyType;
-    @Column(name = "emergency_description", length = 4000)
-    private String emergencyDescription;
-    @Column(name = "treatment_description", length = 4000)
-    private String treatmentDescription;
     @Basic(optional = false)
     @Column(name = "rec_id", nullable = false)
     private Long healthRecordId;
@@ -530,38 +524,6 @@ public class EmergencyInformation extends HealthSummary implements Serializable 
      */
     public void setSpecialtyType(String specialtyType) {
         this.specialtyType = specialtyType;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getEmergencyDescription() {
-        return emergencyDescription;
-    }
-
-    /**
-     *
-     * @param emergencyDescription
-     */
-    public void setEmergencyDescription(String emergencyDescription) {
-        this.emergencyDescription = emergencyDescription;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public String getTreatmentDescription() {
-        return treatmentDescription;
-    }
-
-    /**
-     *
-     * @param treatmentDescription
-     */
-    public void setTreatmentDescription(String treatmentDescription) {
-        this.treatmentDescription = treatmentDescription;
     }
 
     /**
