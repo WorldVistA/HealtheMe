@@ -258,7 +258,7 @@
                                                 <span id="target-dateadded-${i}"></span>
                                             </li>
                                             <li>
-                                                <div class="w-label">How it Ended</div>
+                                                <div class="w-label">Resolution/Treatment</div>
                                                 <div><span id="target-howended-${i}"></span></div>
                                             </li>
                                             <li class="notes">

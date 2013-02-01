@@ -55,7 +55,7 @@ $().ready(function() {
                 var comments = $("#comments").val();
                 var event = $("input#event").val();
                 var resolveddate = $("#resolveddate").val();
-                var howended = $("input#howended").val();
+                var howended = $("#howended").val();
                 var status = $("#status").val();
 
                 jsonObject = JSON.stringify({
