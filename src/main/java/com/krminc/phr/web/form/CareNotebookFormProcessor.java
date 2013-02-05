@@ -722,7 +722,6 @@ public class CareNotebookFormProcessor {
         @FormParam("foodLikes") String foodLikes,
         @FormParam("foodDislikes") String foodDislikes,
         @FormParam("feedingModifications") String feedingModifications,
-        @FormParam("foodAllergies") String foodAllergies,
         @FormParam("comments") String comments
     ) {
         Boolean error = false;
@@ -748,7 +747,6 @@ public class CareNotebookFormProcessor {
                 nutritionInfo.setFoodLikes(foodLikes);
                 nutritionInfo.setFoodDislikes(foodDislikes);
                 nutritionInfo.setFeedingModifications(feedingModifications);
-                nutritionInfo.setFoodAllergies(foodAllergies);
                 nutritionInfo.setComments(comments);
                 nutritionInfo.setDataSourceId(healthRecordId);
 
